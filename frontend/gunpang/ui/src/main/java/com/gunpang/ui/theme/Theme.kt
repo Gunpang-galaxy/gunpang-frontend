@@ -64,7 +64,7 @@ fun GunpangTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = gmarketsansTypo,
         content = content
     )
 }
