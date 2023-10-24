@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.gunpang.watch"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.gunpang.watch"
         minSdk = 28
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         vectorDrawables {
@@ -49,6 +49,12 @@ android {
 }
 
 dependencies {
+    // multi-module
+    // implementation(project(path=":common"))
+    implementation(project(path=":common"))
+    implementation(project(path=":ui"))
+    implementation(project(path=":domain"))
+    implementation(project(path=":data"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("com.google.android.gms:play-services-wearable:18.1.0")
