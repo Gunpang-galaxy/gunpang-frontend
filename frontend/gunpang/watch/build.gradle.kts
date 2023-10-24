@@ -49,6 +49,11 @@ android {
 }
 
 dependencies {
+    // multi-module
+    implementation(project(path=":common"))
+    implementation(project(path=":ui"))
+    implementation(project(path=":domain"))
+    implementation(project(path=":data"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("com.google.android.gms:play-services-wearable:18.1.0")
