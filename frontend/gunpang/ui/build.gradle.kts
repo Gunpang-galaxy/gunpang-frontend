@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.gunpang.ui"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 28
@@ -62,4 +62,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // compose-watch
+    implementation ("androidx.wear.compose:compose-material:1.1.2")
+    implementation ("androidx.wear.compose:compose-navigation:1.1.2")
+    implementation ("androidx.wear.compose:compose-foundation:1.1.2")
 }
