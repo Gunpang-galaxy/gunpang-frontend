@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Text
 import com.gunpang.ui.theme.galmuri
 
@@ -21,7 +22,7 @@ fun WatchChip(label: String,content: @Composable () -> Unit = {}) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = label, fontFamily = galmuri)
+            Text(text = label, fontFamily = galmuri,fontSize = 20.sp)
             Spacer(modifier = Modifier.width(4.dp))
             content()
         }

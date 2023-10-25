@@ -30,7 +30,7 @@ fun OnExerciseScreen() {
             modifier = Modifier.size(36.dp)
         )
         TimeShow(minute="33",second="10")
-        WatchDivider()
+        WatchDivider(width=100.dp)
         BpmShow(bpm="180")
         Image(
             painter = painterResource(id = R.drawable.baccus), // 여기서 'your_icon'을 실제 리소스 이름으로 바꾸어야 합니다.
@@ -42,7 +42,7 @@ fun OnExerciseScreen() {
 @Composable
 fun TimeShow(minute:String="10",second:String="10"){
     Row(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(8.dp),
         verticalAlignment = Alignment.Bottom
     ) {
         Text(text = minute, fontSize = 25.sp)
@@ -54,7 +54,7 @@ fun TimeShow(minute:String="10",second:String="10"){
 @Composable
 fun BpmShow(bpm:String="128"){
     Row(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier.padding(8.dp),
         verticalAlignment = Alignment.Bottom
     ) {
         Text(text = bpm, fontSize = 25.sp)
