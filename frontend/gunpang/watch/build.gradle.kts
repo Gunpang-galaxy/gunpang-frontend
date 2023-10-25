@@ -51,6 +51,7 @@ android {
 dependencies {
     // multi-module
     // implementation(project(path=":common"))
+
     implementation(project(path=":common"))
     implementation(project(path=":ui"))
     implementation(project(path=":domain"))
