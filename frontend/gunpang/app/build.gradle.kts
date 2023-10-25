@@ -54,7 +54,7 @@ dependencies {
     // implementation(project(path=":common"))
 
     implementation(project(path=":common"))
-    implementation(project(path=":ui"))
+    implementation(project(":app-ui"))
     implementation(project(path=":domain"))
     implementation(project(path=":data"))
     // android
