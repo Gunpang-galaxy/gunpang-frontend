@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.gunpang.common.R
 import com.gunpang.ui.theme.Gray600
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsans
@@ -40,5 +42,10 @@ fun topBar(){
                 )
             }
         },
+        actions = {
+            IconButton(onClick = { }) {
+                Icon(painter = painterResource(id = R.drawable.ic_top_nav_setting), contentDescription = "사용자 화면")
+            }
+        }
     )
 }
