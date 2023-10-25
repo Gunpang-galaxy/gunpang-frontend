@@ -1,5 +1,6 @@
 package com.gunpang.ui.app
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -17,23 +18,5 @@ import com.gunpang.ui.app.common.topBar
 @Composable
 @Preview
 fun AppMain(){
-    GunpangTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
 
-        ){
-            Scaffold(
-                topBar={ topBar() },
-                containerColor= Color.White,
-
-                bottomBar = { BottomNavBar() }
-            ) {
-                /**
-                 * TODO
-                 * 목표 설정 컴포저블
-                 * 캐릭터 컴포저블
-                 * */
-            }
-        }
-    }
 }
