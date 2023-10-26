@@ -3,12 +3,15 @@ package com.gunpang.ui.app.watch.history
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +33,12 @@ import com.gunpang.watch_ui.theme.galmuri
 fun HistoryScreen() {
     GunpangScreenWrapper {
         val listState = rememberScalingLazyListState()
+        Text(
+            text = "오늘 기록",
+            color = Color.White,
+            fontSize = 20.sp,
+            fontFamily = galmuri
+        )
 
         ScalingLazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -41,17 +50,17 @@ fun HistoryScreen() {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center){
                     Image(
-                        painter = painterResource(id = R.drawable.run), // 이미지 리소스 변경 필요
+                        painter = painterResource(id = R.drawable.food_bad_fried), // 이미지 리소스 변경 필요
                         contentDescription = null,
                         modifier = Modifier.weight(0.5f).padding(4.dp)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.run), // 이미지 리소스 변경 필요
+                        painter = painterResource(id = R.drawable.food_healthy_salad), // 이미지 리소스 변경 필요
                         contentDescription = null,
                         modifier = Modifier.weight(0.5f).padding(4.dp)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.run), // 이미지 리소스 변경 필요
+                        painter = painterResource(id = R.drawable.food_normal_rice), // 이미지 리소스 변경 필요
                         contentDescription = null,
                         modifier = Modifier.weight(0.5f).padding(4.dp)
                     )

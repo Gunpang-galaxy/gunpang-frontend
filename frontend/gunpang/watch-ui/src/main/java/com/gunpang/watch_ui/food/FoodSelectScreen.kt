@@ -37,7 +37,7 @@ fun FoodSelectScreen() {
     GunpangScreenWrapper {
         val listState = rememberScalingLazyListState()
         Image(
-            painter = painterResource(id = R.drawable.baccus), // 여기서 'your_icon'을 실제 리소스 이름으로 바꾸어야 합니다.
+            painter = painterResource(id = R.drawable.food_onigiri), // 여기서 'your_icon'을 실제 리소스 이름으로 바꾸어야 합니다.
             contentDescription = null,
             modifier = Modifier.size(36.dp)
         )
