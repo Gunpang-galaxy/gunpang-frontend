@@ -3,7 +3,6 @@ package com.gunpang.ui.app.common
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -36,7 +35,6 @@ fun CommonButton(
             .height(58.dp)
             .alpha(alpha),
         colors = ButtonDefaults.buttonColors(Navy200),
-        shape = Shapes.medium,
         ) {
             Text(
                 text = text,

@@ -35,7 +35,6 @@ import com.gunpang.ui.theme.Gray500
 import com.gunpang.ui.theme.Gray800
 import com.gunpang.ui.theme.Navy200
 import com.gunpang.ui.theme.Shapes
-import com.gunpang.ui.theme.galmuriTyop
 import com.gunpang.ui.theme.gmarketsansTypo
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,10 +42,12 @@ import com.gunpang.ui.theme.gmarketsansTypo
 fun HeightInfo(onHeightChange: (String) -> Unit) {
     var height by remember { mutableStateOf("") }
 
-    Row {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Text(
             text = "키",
-            style = galmuriTyop.titleMedium
+            style = gmarketsansTypo.titleLarge
         )
         TextField(
             keyboardOptions = KeyboardOptions(
@@ -72,7 +73,7 @@ fun HeightInfo(onHeightChange: (String) -> Unit) {
         )
         Text(
             text = "cm",
-            style = galmuriTyop.titleMedium
+            style = gmarketsansTypo.titleLarge
         )
     }
 }
@@ -144,7 +145,7 @@ fun PersonalInfo() {
     ) {
         Text(
             text = "신체 정보",
-            style = galmuriTyop.titleMedium,
+            style = gmarketsansTypo.headlineLarge,
             modifier = Modifier.padding(bottom = 50.dp),
             textAlign = TextAlign.Center
         )
