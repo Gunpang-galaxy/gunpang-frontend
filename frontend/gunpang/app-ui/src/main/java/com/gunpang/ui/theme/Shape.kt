@@ -5,5 +5,6 @@ import androidx.compose.material3.Shapes
 import androidx.compose.ui.unit.dp
 
 val Shapes = Shapes(
-    medium = RoundedCornerShape(15.dp) // button raidus
+    medium = RoundedCornerShape(15.dp), // button raidus
+    extraLarge = RoundedCornerShape(100.dp) // hp progress bar radius
 )

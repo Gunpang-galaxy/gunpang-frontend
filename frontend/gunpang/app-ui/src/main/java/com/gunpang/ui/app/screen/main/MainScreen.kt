@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gunpang.common.R
 import com.gunpang.ui.app.common.BottomNavBar
-import com.gunpang.ui.app.common.topBar
+import com.gunpang.ui.app.common.TopBar
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.GunpangTheme
 import com.gunpang.ui.theme.Navy50
@@ -40,10 +40,11 @@ import com.gunpang.ui.theme.gmarketsansBold
 @Composable
 fun MainScreen(){
     Scaffold(
-        topBar={ topBar() },
+        topBar={ TopBar() },
         containerColor= Color.White,
         bottomBar = { BottomNavBar() },
-        ) {}
+        ) {
+    }
 }
 
 
