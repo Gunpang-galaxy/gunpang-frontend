@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.Navy200
+import com.gunpang.ui.theme.Shapes
 import com.gunpang.ui.theme.gmarketsans
 
 @Composable
@@ -23,14 +24,17 @@ import com.gunpang.ui.theme.gmarketsans
 fun CommonButton(
     text: String = "연동하기",
     alpha: Float = 1f,
+    enabled: Boolean = true,
 ){
     Button(
+        enabled = enabled,
         onClick = { },
         modifier = Modifier
             .width(203.dp)
             .height(58.dp)
             .alpha(alpha),
         colors = ButtonDefaults.buttonColors(Navy200),
+        shape = Shapes.medium,
         ) {
             Text(
                 text = text,
