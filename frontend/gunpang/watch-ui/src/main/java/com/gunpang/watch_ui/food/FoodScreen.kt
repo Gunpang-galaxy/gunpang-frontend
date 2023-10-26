@@ -1,10 +1,12 @@
 package com.gunpang.ui.app.watch.food
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -20,9 +22,10 @@ import com.gunpang.watch_ui.theme.galmuri
 
 @Preview(name = "음식 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
-fun FoodScreen(){
-    GunpangScreenWrapper {
-
+fun FoodScreen() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Image(
             painter = painterResource(id = baccus), // 여기서 'your_icon'을 실제 리소스 이름으로 바꾸어야 합니다.
             contentDescription = null,
@@ -40,9 +43,9 @@ fun FoodScreen(){
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        WatchButton(text="밥먹이기") {
+        WatchButton(text = "밥먹이기") {
+
         }
-
-
     }
+
 }

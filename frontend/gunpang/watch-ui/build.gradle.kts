@@ -53,11 +53,19 @@ dependencies {
     implementation ("androidx.wear.compose:compose-navigation:1.1.2")
     implementation ("androidx.wear.compose:compose-foundation:1.1.2")
 
+    // compose runtime
+    implementation("androidx.compose.runtime:runtime:1.5.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.5.4")
+
+    // page indicator(https://github.com/tommybuonomo/dotsindicator)
+    implementation("com.tbuonomo:dotsindicator:5.0")
+    implementation("androidx.compose.foundation:foundation")
+
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // material3
     implementation("androidx.compose.material3:material3")
-
 }

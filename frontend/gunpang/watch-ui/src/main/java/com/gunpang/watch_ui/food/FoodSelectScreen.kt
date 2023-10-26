@@ -26,6 +26,7 @@ import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
+import com.gunpang.watch_ui.common.WatchDivider
 import com.gunpang.watch_ui.theme.Gray800
 import com.gunpang.watch_ui.theme.Gray900
 import com.gunpang.watch_ui.theme.Pink200
@@ -42,7 +43,7 @@ fun FoodSelectScreen() {
             modifier = Modifier.size(36.dp)
         )
 
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Text(
             text = "오늘 먹은 밥",
@@ -50,7 +51,8 @@ fun FoodSelectScreen() {
             fontSize = 20.sp,
             fontFamily = galmuri
         )
-        Spacer(modifier = Modifier.height(6.dp))
+        WatchDivider()
+
         val items = listOf("건강하게", "적당하게", "불량하게")
         var selectedIndex by remember { mutableStateOf(-1) }
         ScalingLazyColumn(
