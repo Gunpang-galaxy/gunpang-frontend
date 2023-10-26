@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -41,7 +40,7 @@ import com.gunpang.ui.theme.gmarketsansTypo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HeightInfo() {
+fun HeightInfo(onHeightChange: (String) -> Unit) {
     var height by remember { mutableStateOf("") }
 
     Row {
@@ -56,6 +55,7 @@ fun HeightInfo() {
             value = height,
             onValueChange = {
                 height = it
+                onHeightChange(it)
             },
             modifier = Modifier
                 .width(150.dp)
@@ -78,7 +78,7 @@ fun HeightInfo() {
 }
 
 @Composable
-fun GenderInfo() {
+fun GenderInfo(onGenderChange: (GenderCode?) -> Unit) {
     var selectedGender by remember { mutableStateOf<GenderCode?>(null) }
 
     Row(
@@ -87,8 +87,12 @@ fun GenderInfo() {
             .padding(top = 30.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        Button( // 남성 선택 버튼
-            onClick = { selectedGender = GenderCode.Male },
+        Button(
+            // 남성 선택 버튼
+            onClick = {
+                selectedGender = GenderCode.Male
+                onGenderChange(selectedGender)
+            },
             modifier = Modifier
                 .width(150.dp)
                 .height(50.dp),
@@ -104,8 +108,12 @@ fun GenderInfo() {
                 style = gmarketsansTypo.titleMedium
             )
         }
-        Button( // 여성 선택 버튼
-            onClick = { selectedGender = GenderCode.Female },
+        Button(
+            // 여성 선택 버튼
+            onClick = {
+                selectedGender = GenderCode.Female
+                onGenderChange(selectedGender)
+            },
             modifier = Modifier
                 .width(150.dp)
                 .height(50.dp),
@@ -140,13 +148,18 @@ fun PersonalInfo() {
             modifier = Modifier.padding(bottom = 50.dp),
             textAlign = TextAlign.Center
         )
-        HeightInfo()
-        GenderInfo()
+        HeightInfo() {
+            isHeightInfoFilled = it.isNotEmpty()
+        }
+        GenderInfo() {
+            isGenderInfoFilled = it != null
+        }
         Spacer( // 성별 선택 버튼과 입력 완료 버튼의 간격
             modifier = Modifier.height(100.dp)
         )
         CommonButton(
-            text = "입력 완료"
+            text = "입력 완료",
+            enabled = isHeightInfoFilled && isGenderInfoFilled,
         )
     }
 }
