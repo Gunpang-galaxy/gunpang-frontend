@@ -20,7 +20,7 @@ import com.gunpang.ui.theme.gmarketsans
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-fun topBar(){
+fun TopBar(){
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = Color.White,

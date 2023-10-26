@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.Navy200
+import com.gunpang.ui.theme.Shapes
 import com.gunpang.ui.theme.gmarketsans
 
 @Composable
@@ -26,6 +28,7 @@ fun commonButton(
 ){
     Button(
         onClick = { },
+        shape= Shapes.medium,
         modifier = Modifier
             .width(203.dp)
             .height(58.dp),
