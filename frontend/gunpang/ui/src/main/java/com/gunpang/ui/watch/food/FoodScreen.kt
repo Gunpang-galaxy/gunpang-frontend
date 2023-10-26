@@ -16,7 +16,7 @@ import androidx.wear.compose.material.Text
 import com.gunpang.common.R.drawable.*
 import com.gunpang.ui.theme.galmuri
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
-import com.gunpang.ui.app.watch.common.WatchButton
+import com.gunpang.ui.watch.common.WatchButton
 
 @Preview(name = "음식 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
@@ -40,7 +40,7 @@ fun FoodScreen(){
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        WatchButton("밥먹이기") {
+        WatchButton(text="밥먹이기") {
         }
 
 
