@@ -1,10 +1,6 @@
-package com.gunpang.ui.watch.food
+package com.gunpang.watch_ui.food
 
-import android.content.ClipData
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,11 +25,11 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
-import com.gunpang.ui.theme.Gray800
-import com.gunpang.ui.theme.Gray900
-import com.gunpang.ui.theme.Pink200
-import com.gunpang.ui.theme.galmuri
-import com.gunpang.ui.watch.common.WatchButton
+import com.gunpang.watch_ui.common.WatchButton
+import com.gunpang.watch_ui.theme.Gray800
+import com.gunpang.watch_ui.theme.Gray900
+import com.gunpang.watch_ui.theme.Pink200
+import com.gunpang.watch_ui.theme.galmuri
 
 @Preview(name = "음식 선택 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.AutoCenteringParams
@@ -20,9 +21,9 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
-import com.gunpang.ui.theme.galmuri
-import com.gunpang.ui.watch.common.WatchButton
-import com.gunpang.ui.watch.common.WatchChip
+import com.gunpang.watch_ui.common.WatchButton
+import com.gunpang.watch_ui.common.WatchChip
+import com.gunpang.watch_ui.theme.galmuri
 
 @Preview(name = "히스토리 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable

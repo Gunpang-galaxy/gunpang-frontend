@@ -1,4 +1,4 @@
-package com.gunpang.ui.watch.common
+package com.gunpang.watch_ui.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Text
-import com.gunpang.ui.theme.galmuri
+import com.gunpang.watch_ui.theme.galmuri
 
 @Composable
 fun WatchChip(label: String,  content: @Composable () -> Unit = {}) {

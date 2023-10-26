@@ -1,4 +1,4 @@
-package com.gunpang.ui.watch.exercise
+package com.gunpang.watch_ui.exercise
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
-import com.gunpang.ui.watch.common.WatchDivider
+import com.gunpang.watch_ui.common.WatchDivider
 import androidx.wear.compose.material.Text
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size

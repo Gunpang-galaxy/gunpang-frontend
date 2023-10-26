@@ -14,9 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material.Text
 import com.gunpang.common.R.drawable.*
-import com.gunpang.ui.theme.galmuri
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
-import com.gunpang.ui.watch.common.WatchButton
+import com.gunpang.watch_ui.common.WatchButton
+import com.gunpang.watch_ui.theme.galmuri
 
 @Preview(name = "음식 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable

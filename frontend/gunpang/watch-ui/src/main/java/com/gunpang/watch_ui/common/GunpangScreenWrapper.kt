@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.gunpang.ui.theme.Gray900
-import com.gunpang.ui.theme.GunpangTheme
+import com.gunpang.watch_ui.theme.Gray900
+import com.gunpang.watch_ui.theme.GunpangTheme
 
 @Composable
 fun GunpangScreenWrapper(

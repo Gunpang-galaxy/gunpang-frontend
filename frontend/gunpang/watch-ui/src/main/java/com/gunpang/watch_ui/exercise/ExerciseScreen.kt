@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
-import com.gunpang.ui.watch.common.WatchButton
+import com.gunpang.watch_ui.common.WatchButton
 
 @Preview(name = "운동 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
