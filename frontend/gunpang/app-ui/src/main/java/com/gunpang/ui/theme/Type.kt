@@ -98,15 +98,15 @@ val galmuriTyop = Typography(
     displayLarge = TextStyle(
         fontFamily = galmuri,
         fontWeight = FontWeight.Bold,
-        fontSize = 50.sp,
-        lineHeight = 54.sp,
+        fontSize = 25.sp,
+        lineHeight = 27.sp,
         letterSpacing = 0.5.sp
     ),
     displaySmall = TextStyle(
         fontFamily = galmuri,
         fontWeight = FontWeight.Medium,
-        fontSize = 32.sp,
-        lineHeight = 36.sp,
+        fontSize = 20.sp,
+        lineHeight = 18.sp,
         letterSpacing = 0.5.sp
     ),
     titleLarge = TextStyle(
