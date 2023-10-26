@@ -14,7 +14,7 @@ import androidx.activity.compose.setContent
 
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.Wearable
-import com.gunpang.ui.watch.WatchMain
+import com.gunpang.ui.app.watch.WatchMain
 
 class MainActivity : ComponentActivity() {
     companion object {
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 필수 권한 부여
-        grantPermissions()
+        //grantPermissions()
 
         // 모바일 - 워치 연결
         capabilityClient = Wearable.getCapabilityClient(this)

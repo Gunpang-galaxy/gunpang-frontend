@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.gunpang.common"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 28
