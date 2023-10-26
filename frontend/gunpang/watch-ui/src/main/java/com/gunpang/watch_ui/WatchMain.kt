@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +29,6 @@ import com.gunpang.common.R
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.theme.Gray300
 import com.gunpang.watch_ui.theme.Gray600
-import com.gunpang.watch_ui.theme.Green400
 import com.gunpang.watch_ui.theme.Green500
 import com.gunpang.watch_ui.theme.Navy600
 
@@ -57,7 +55,7 @@ fun WatchMain() {
 
         /*Avatar*/
         Image(
-            painter = painterResource(id = R.drawable.baccus), // 이미지 리소스 변경 필요
+            painter = painterResource(id = R.drawable.food_onigiri), // 이미지 리소스 변경 필요
             contentDescription = null,
             modifier = Modifier.size(96.dp)
         )

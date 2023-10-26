@@ -1,5 +1,6 @@
 package com.gunpang.watch_ui.common
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ fun WatchButton(text: String,  color: Color = Navy200, textColor :Color = Gray90
         onClick = { onClick },
         colors = ButtonDefaults.buttonColors(color),
         modifier = Modifier
+            .fillMaxWidth(0.8f)
             .padding(4.dp)  // 버튼 내부의 패딩 추가
 
     ) {
