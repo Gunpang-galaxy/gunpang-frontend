@@ -63,4 +63,12 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    // compose runtime
+    implementation("androidx.compose.runtime:runtime:1.5.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.5.4")
+
+    // page indicator(https://github.com/tommybuonomo/dotsindicator)
+    implementation("com.tbuonomo:dotsindicator:5.0")
+    implementation("androidx.compose.foundation:foundation")
 }

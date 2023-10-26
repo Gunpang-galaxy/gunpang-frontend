@@ -8,6 +8,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,12 +22,14 @@ import com.gunpang.ui.theme.gmarketsans
 @Preview(showBackground = true)
 fun CommonButton(
     text: String = "연동하기",
+    alpha: Float = 1f,
 ){
     Button(
         onClick = { },
         modifier = Modifier
             .width(203.dp)
-            .height(58.dp),
+            .height(58.dp)
+            .alpha(alpha),
         colors = ButtonDefaults.buttonColors(Navy200),
         ) {
             Text(
