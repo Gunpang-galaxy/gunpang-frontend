@@ -8,6 +8,7 @@ import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.gunpang.common.navigation.WatchNavItem
+import com.gunpang.domain.watch.WatchLandingViewModel
 import com.gunpang.ui.app.watch.MainScreen
 import com.gunpang.ui.app.watch.history.HistoryScreen
 import com.gunpang.watch_ui.exercise.afterExercise.AfterExercise
@@ -15,7 +16,7 @@ import com.gunpang.watch_ui.exercise.onExercise.OnExercise
 import com.gunpang.watch_ui.food.selectFood.SelectFoodScreen
 
 @Composable
-fun WatchMain (){
+fun WatchMain(watchLandingViewModel: WatchLandingViewModel) {
         // [0] 랜딩 중
         //LandingScreen()
         // [1] 랜딩 실패시
