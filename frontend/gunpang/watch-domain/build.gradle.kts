@@ -4,8 +4,8 @@ plugins {
 }
 
 android {
-    namespace = "com.gunpang.domain"
-    compileSdk = 34
+    namespace = "com.gunpang.watch_domain"
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 28
@@ -33,19 +33,10 @@ android {
 }
 
 dependencies {
-    //multi-module
-    implementation(project(path=":common"))
-    implementation(project(path=":data"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    //implementation("com.google.android.material:material:1.10.0")
-
-    // CapabilityClient
-    implementation("com.google.android.gms:play-services-wearable:18.1.0")
-    // RemoteActivityHelper
-    implementation("androidx.wear:wear-remote-interactions:1.0.0")
-
+    implementation("com.google.android.material:material:1.10.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
