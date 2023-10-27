@@ -1,11 +1,13 @@
-package com.gunpang.watch_ui.food
+package com.gunpang.watch_ui.food.selectFood
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,11 +21,13 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import androidx.wear.compose.material.AutoCenteringParams
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
+import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import com.gunpang.watch_ui.common.WatchDivider
@@ -31,19 +35,24 @@ import com.gunpang.watch_ui.theme.Gray800
 import com.gunpang.watch_ui.theme.Gray900
 import com.gunpang.watch_ui.theme.Pink200
 import com.gunpang.watch_ui.theme.galmuri
+import kotlinx.coroutines.CoroutineScope
 
-@Preview(name = "음식 선택 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FoodSelectScreen() {
+fun SelectFoodScreen(
+    mainPagerState: PagerState,
+    coroutineScope: CoroutineScope,
+    navController: NavHostController
+) {
     GunpangScreenWrapper {
         val listState = rememberScalingLazyListState()
         Image(
             painter = painterResource(id = R.drawable.food_onigiri), // 여기서 'your_icon'을 실제 리소스 이름으로 바꾸어야 합니다.
             contentDescription = null,
-            modifier = Modifier.size(36.dp)
+            modifier = Modifier.size(24.dp)
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(3.dp))
 
         Text(
             text = "오늘 먹은 밥",
@@ -75,6 +84,7 @@ fun FoodSelectScreen() {
             item {
                 // 건강하게
                 WatchButton("기록") {
+                    navController.navigate(WatchNavItem.Main.route)
                 }
             }
 

@@ -21,8 +21,7 @@ fun WatchChip(label: String,  content: @Composable () -> Unit = {}) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = label, fontFamily = galmuri)
-            Spacer(modifier = Modifier.width(4.dp))
-
+            Spacer(modifier = Modifier.width(3.dp))
             content()  // TODO 부분에 Composable 표시
         }
     }

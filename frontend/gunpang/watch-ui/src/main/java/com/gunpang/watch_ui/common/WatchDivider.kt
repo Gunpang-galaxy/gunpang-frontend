@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.Dp
 import com.gunpang.watch_ui.theme.Navy200
 
 @Composable
-fun WatchDivider(fraction: Float = 0.8f, thickness:Dp=2.dp) {
+fun WatchDivider(fraction: Float = 0.8f, thickness:Dp=4.dp) {
     Divider(
         color = Navy200,
         modifier = Modifier
