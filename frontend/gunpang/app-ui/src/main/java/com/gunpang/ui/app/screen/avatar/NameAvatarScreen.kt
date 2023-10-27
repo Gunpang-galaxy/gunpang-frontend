@@ -1,7 +1,6 @@
 package com.gunpang.ui.app.screen.avatar
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,13 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -24,21 +17,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.gunpang.common.R
 import com.gunpang.common.code.AvatarCode
 import com.gunpang.ui.app.common.CommonButton
-import com.gunpang.ui.theme.Gray500
-import com.gunpang.ui.theme.Gray800
-import com.gunpang.ui.theme.Shapes
+import com.gunpang.ui.app.common.CommonTextField
 import com.gunpang.ui.theme.gmarketsansTypo
 import kotlin.random.Random
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewAvatar(
     onNameChange: (String) -> Unit
@@ -71,30 +59,13 @@ fun NewAvatar(
                 modifier = Modifier.size(110.dp, 90.dp)
             )
         }
-        TextField( // 캐릭터 이름 입력
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-            ),
-            value = name,
+        CommonTextField( // 캐릭터 이름 입력
             onValueChange = {
                 name = it
                 onNameChange(it)
             },
-            modifier = Modifier
-                .width(200.dp)
-                .padding(top = 20.dp)
-                .border(color = Gray500, width = 1.dp, shape = Shapes.medium),
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent,
-                cursorColor = Gray800,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            singleLine = true, // enter 입력 불가
-            textStyle = LocalTextStyle.current.copy(
-                textAlign = TextAlign.Center,
-                fontFamily = gmarketsansTypo.titleMedium.fontFamily
-            )
+            keyboardType = KeyboardType.Text,
+            topPadding = 20,
         )
     }
 }
