@@ -21,7 +21,7 @@ import com.gunpang.watch_ui.theme.galmuri
 @Composable
 fun WatchButton(text: String,  color: Color = Navy200, textColor :Color = Gray800, onClick: () -> Unit) {
     Button(
-        onClick = { onClick },
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(color),
         modifier = Modifier
             .fillMaxWidth(0.8f)

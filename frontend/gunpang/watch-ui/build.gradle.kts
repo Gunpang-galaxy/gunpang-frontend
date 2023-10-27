@@ -68,4 +68,9 @@ dependencies {
 
     // material3
     implementation("androidx.compose.material3:material3")
+
+    // coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
+
 }

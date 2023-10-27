@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.watch.history
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,29 +21,36 @@ import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import androidx.wear.compose.material.AutoCenteringParams
 import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
+import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import com.gunpang.watch_ui.common.WatchChip
 import com.gunpang.watch_ui.common.WatchDivider
 import com.gunpang.watch_ui.theme.galmuri
+import kotlinx.coroutines.CoroutineScope
 
-@Preview(name = "히스토리 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+//@Preview(name = "히스토리 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HistoryScreen() {
+fun HistoryScreen(mainPagerState: PagerState,
+                  coroutineScope: CoroutineScope,
+                  navController: NavHostController
+) {
     GunpangScreenWrapper {
         val listState = rememberScalingLazyListState()
         Image(
-            painter = painterResource(id = R.drawable.food_onigiri), // 여기서 'your_icon'을 실제 리소스 이름으로 바꾸어야 합니다.
+            painter = painterResource(id = R.drawable.report),
             contentDescription = null,
-            modifier = Modifier.size(36.dp)
+            modifier = Modifier.size(24.dp)
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(3.dp))
         Text(
             text = "오늘 기록",
             color = Color.White,
@@ -95,6 +104,7 @@ fun HistoryScreen() {
 
             item {
                 WatchButton(text = "뒤로가기") {
+                    navController.navigate(WatchNavItem.Main.route)
                 }
             }
         }

@@ -14,7 +14,7 @@ import androidx.activity.compose.setContent
 
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.Wearable
-import com.gunpang.ui.app.watch.WatchMain
+import com.gunpang.watch_ui.WatchMain
 
 class MainActivity : ComponentActivity() {
     companion object {
