@@ -12,7 +12,7 @@ import com.gunpang.common.R
 // fontfamily (수정 필요할 듯)
 val gmarketsans = FontFamily(Font(R.font.gmarketsans_medium, FontWeight.Medium, FontStyle.Normal))
 val gmarketsansBold = FontFamily(Font(R.font.gmarketsans_bold, FontWeight.Medium, FontStyle.Normal))
-val gmarketsnasLight = FontFamily(Font(R.font.gmarketsans_light, FontWeight.Medium, FontStyle.Normal))
+val gmarketsansLight = FontFamily(Font(R.font.gmarketsans_light, FontWeight.Medium, FontStyle.Normal))
 val galmuri = FontFamily(Font(R.font.galmuri11, FontWeight.Medium, FontStyle.Normal))
 val galmuriBold = FontFamily(Font(R.font.galmuri11_bold, FontWeight.Medium, FontStyle.Normal))
 /**
