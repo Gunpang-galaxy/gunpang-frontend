@@ -4,32 +4,47 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.WatchLandingViewModel
+import com.gunpang.common.code.InitCode
+import com.gunpang.domain.watch.AvatarViewModel
 import com.gunpang.ui.app.watch.MainScreen
 import com.gunpang.ui.app.watch.history.HistoryScreen
 import com.gunpang.watch_ui.exercise.afterExercise.AfterExercise
 import com.gunpang.watch_ui.exercise.onExercise.OnExercise
 import com.gunpang.watch_ui.food.selectFood.SelectFoodScreen
+import com.gunpang.watch_ui.landing.LandingScreen
 
 @Composable
 fun WatchMain(watchLandingViewModel: WatchLandingViewModel) {
-        // [0] 랜딩 중
-        //LandingScreen()
-        // [1] 랜딩 실패시
+    //val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
+    //val watchViewModel = viewModel<WatchViewModel>(viewModelStoreOwner)
 
+    /*
+    if(watchLandingViewModel.initCode == InitCode.FINISH){
         // [2] 성공
-        WatchNavigation()
+        WatchMainNavigation()
+        return
+    }
+    // [1] 랜딩 중
+    LandingScreen(watchLandingViewModel)
+    */
+    WatchMainNavigation()
 }
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun WatchNavigation(){
+fun WatchMainNavigation(){
     val navController = rememberSwipeDismissableNavController()
     val mainPagerState = rememberPagerState(1)
     val coroutineScope = rememberCoroutineScope()
+
+    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
+    val watchViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
     SwipeDismissableNavHost(
         navController = navController,
         startDestination = WatchNavItem.Main.route
@@ -40,6 +55,7 @@ fun WatchNavigation(){
                 mainPagerState,
                 coroutineScope,
                 navController,
+                watchViewModel
             )
         }
         /** 히스토리 **/

@@ -1,4 +1,10 @@
 package com.gunpang.domain.watch
 
-class WatchViewModel {
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+
+class WatchViewModel(
+    application: Application
+): AndroidViewModel(application) {
+
 }
