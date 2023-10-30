@@ -1,4 +1,4 @@
-package com.gunpang.ui.app.screen.main
+package com.gunpang.ui.app.screen.main.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +28,6 @@ import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansBold
 import com.gunpang.ui.theme.gmarketsansLight
 import java.time.LocalDate
-import java.util.Date
 
 @Composable
 @Preview(
