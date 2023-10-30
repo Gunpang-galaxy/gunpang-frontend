@@ -1,4 +1,4 @@
-package com.gunpang.ui.app.screen.main
+package com.gunpang.ui.app.screen.main.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
