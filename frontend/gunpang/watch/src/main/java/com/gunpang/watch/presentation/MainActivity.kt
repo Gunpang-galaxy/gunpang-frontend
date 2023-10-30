@@ -15,18 +15,22 @@ import androidx.wear.remote.interactions.RemoteActivityHelper
 
 
 import com.google.android.gms.wearable.CapabilityClient
+import com.google.android.gms.wearable.CapabilityInfo
+import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
+import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.domain.watch.WatchLandingViewModel
 import com.gunpang.domain.watch.WatchLandingViewModelFactory
 import com.gunpang.watch_ui.WatchMain
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedListener  {
     companion object {
         private const val PERMISSION_CHECK = 100
     }
-
+    // 모바일 - 워치
     private lateinit var capabilityClient: CapabilityClient
     private lateinit var remoteActivityHelper: RemoteActivityHelper
+    private lateinit var messageClient: MessageClient
 
     // LandingViewModel
     private lateinit var watchLandingViewModelFactory : WatchLandingViewModelFactory
@@ -37,16 +41,17 @@ class MainActivity : ComponentActivity() {
         // 필수 권한 부여
         grantPermissions()
 
-
         // 모바일 - 워치 연결
         capabilityClient = Wearable.getCapabilityClient(this)
         remoteActivityHelper = RemoteActivityHelper(this)
+        messageClient = Wearable.getMessageClient(this)
 
         // Landing 과정에 필요한 ViewModel 생성
         watchLandingViewModelFactory =
             WatchLandingViewModelFactory(
                 capabilityClient,
                 remoteActivityHelper,
+                messageClient,
                 this.application
             )
         watchLandingViewModel = ViewModelProvider(this@MainActivity, watchLandingViewModelFactory)[WatchLandingViewModel::class.java]
@@ -57,9 +62,17 @@ class MainActivity : ComponentActivity() {
             WatchMain(watchLandingViewModel)
         }
     }
+
     private fun grantPermissions() {
         //TODO("필요한 권한 확인후, list에 넣을 것")
         //val needPermissions = listOf(Manifest.permission.HEART_BEAT)
         //ActivityCompat.requestPermissions(this,needPermissions,PERMISSION_CHECK);
+    }
+
+    /** 연결된 기기의 정보가 변경되었을 때 **/
+    override fun onCapabilityChanged(capabilityInfo: CapabilityInfo) {
+        if (DataApplicationRepository().getValue("playerId") == "") {
+            watchLandingViewModel.checkIfAppInstalled()
+        }
     }
 }

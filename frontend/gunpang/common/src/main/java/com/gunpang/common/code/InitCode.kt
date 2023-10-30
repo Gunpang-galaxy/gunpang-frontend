@@ -1,6 +1,6 @@
 package com.gunpang.common.code
 
-enum class InitCode(val des:String) {
+enum class InitCode(val description:String) {
     NOT_FOUND("기기 없음"),
     NOT_INSTALL("앱 설치 안됨"),
     NOT_LOGIN("로그인 필요"),
