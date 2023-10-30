@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">app</string>
+    <string name="app_name">건팡</string>
+    <string name="default_notification_channel_id">GunpangServiceChannel</string>
 </resources>
