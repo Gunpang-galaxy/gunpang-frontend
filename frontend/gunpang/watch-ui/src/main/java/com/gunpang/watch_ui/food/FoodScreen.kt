@@ -14,15 +14,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Text
 import com.gunpang.common.R.drawable.*
 import com.gunpang.common.navigation.WatchNavItem
-import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
+import com.gunpang.domain.watch.WatchFeedViewModel
+import com.gunpang.domain.watch.WatchRecordViewModel
 import com.gunpang.watch_ui.common.WatchButton
 import com.gunpang.watch_ui.theme.galmuri
 import kotlinx.coroutines.CoroutineScope
@@ -30,10 +31,13 @@ import kotlinx.coroutines.CoroutineScope
 //@Preview(name = "음식 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FoodScreen(pagerState: PagerState,
-               coroutineScope: CoroutineScope,
-               navController: NavHostController
+fun FoodScreen(
+    pagerState: PagerState,
+    coroutineScope: CoroutineScope,
+    navController: NavHostController
 ) {
+
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

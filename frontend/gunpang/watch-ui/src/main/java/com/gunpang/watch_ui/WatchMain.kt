@@ -11,10 +11,10 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.WatchLandingViewModel
-import com.gunpang.domain.watch.AvatarViewModel
-import com.gunpang.domain.watch.TodayHistoryViewModel
+import com.gunpang.domain.watch.WatchAvatarViewModel
+import com.gunpang.domain.watch.WatchRecordViewModel
 import com.gunpang.ui.app.watch.MainScreen
-import com.gunpang.ui.app.watch.history.HistoryScreen
+import com.gunpang.ui.app.watch.history.TodayRecordScreen
 import com.gunpang.watch_ui.exercise.afterExercise.AfterExercise
 import com.gunpang.watch_ui.exercise.onExercise.OnExercise
 import com.gunpang.watch_ui.food.selectFood.SelectFoodScreen
@@ -43,8 +43,9 @@ fun WatchMainNavigation(){
     val coroutineScope = rememberCoroutineScope()
 
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
-    val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
-    val todayHistoryViewModel = viewModel<TodayHistoryViewModel>(viewModelStoreOwner)
+    val watchAvatarViewModel = viewModel<WatchAvatarViewModel>(viewModelStoreOwner)
+    val watchRecordViewModel = viewModel<WatchRecordViewModel>(viewModelStoreOwner)
+
     SwipeDismissableNavHost(
         navController = navController,
         startDestination = WatchNavItem.Main.route
@@ -55,17 +56,17 @@ fun WatchMainNavigation(){
                 mainPagerState,
                 coroutineScope,
                 navController,
-                avatarViewModel
+                watchAvatarViewModel
             )
         }
         /** 히스토리 **/
         // TodayHistory
         composable(route=WatchNavItem.TodayHistory.route){
-            HistoryScreen(
+            TodayRecordScreen(
                 mainPagerState,
                 coroutineScope,
                 navController,
-                todayHistoryViewModel
+                watchRecordViewModel
             )
         }
         /** 운동 **/

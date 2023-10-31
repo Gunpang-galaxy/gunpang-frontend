@@ -21,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.AutoCenteringParams
 import androidx.wear.compose.material.ScalingLazyColumn
@@ -28,6 +30,7 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
 import com.gunpang.common.navigation.WatchNavItem
+import com.gunpang.domain.watch.WatchFeedViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import com.gunpang.watch_ui.common.WatchDivider
@@ -44,6 +47,10 @@ fun SelectFoodScreen(
     coroutineScope: CoroutineScope,
     navController: NavHostController
 ) {
+
+    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
+    val watchFeedViewModel = viewModel<WatchFeedViewModel>(viewModelStoreOwner)
+
     GunpangScreenWrapper {
         val listState = rememberScalingLazyListState()
         Image(
@@ -84,6 +91,9 @@ fun SelectFoodScreen(
             item {
                 // 건강하게
                 WatchButton("기록") {
+                    //TODO:기록
+                    //watchFeedViewModel.feedFood()
+
                     navController.navigate(WatchNavItem.Main.route)
                 }
             }

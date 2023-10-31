@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.gunpang.domain.watch.AvatarViewModel
+import com.gunpang.domain.watch.WatchAvatarViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.ui.app.watch.exercise.ExerciseScreen
 import com.gunpang.ui.app.watch.food.FoodScreen
@@ -34,17 +34,20 @@ import kotlinx.coroutines.CoroutineScope
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainScreen(mainPagerState: PagerState,
-               coroutineScope: CoroutineScope,
-               navController: NavHostController,
-               avatarViewModel: AvatarViewModel) {
+fun MainScreen(
+    mainPagerState: PagerState,
+    coroutineScope: CoroutineScope,
+    navController: NavHostController,
+    watchAvatarViewModel: WatchAvatarViewModel
+) {
 
     LaunchedEffect(true){
-        avatarViewModel.init()
+        // TODO : DB연결시 주석 해제
+        // watchAvatarViewModel.init()
     }
     GunpangScreenWrapper {
         if(isAvatarInfoConfigured())
-            MainSwipe( mainPagerState, coroutineScope , navController )
+            MainSwipe( mainPagerState, coroutineScope , navController ,watchAvatarViewModel)
         else
             Loading()
     }
@@ -57,9 +60,12 @@ fun isAvatarInfoConfigured(): Boolean {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainSwipe(  mainPagerState: PagerState,
-                coroutineScope: CoroutineScope,
-                navController: NavHostController){
+fun MainSwipe(
+    mainPagerState: PagerState,
+    coroutineScope: CoroutineScope,
+    navController: NavHostController,
+    watchAvatarViewModel: WatchAvatarViewModel
+){
     val pageCount by remember { mutableIntStateOf(3) }
     val pagerState = rememberPagerState(initialPage = 1)
     Column(
@@ -72,7 +78,7 @@ fun MainSwipe(  mainPagerState: PagerState,
         ) { page ->
             when (page) {
                 0 -> ExerciseScreen(mainPagerState, coroutineScope, navController)
-                1 -> AvatarScreen(mainPagerState, coroutineScope, navController)
+                1 -> AvatarScreen(mainPagerState, coroutineScope, navController,watchAvatarViewModel)
                 2 -> FoodScreen(mainPagerState, coroutineScope, navController)
             }
         }

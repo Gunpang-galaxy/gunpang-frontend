@@ -1,11 +1,16 @@
 package com.gunpang.data.api
 
+import com.gunpang.data.model.request.FoodReqDto
 import com.gunpang.data.model.response.TodayRecordResDto
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface TodayHistoryApi {
-    @GET("/records")
-    suspend fun todayRecord(@Query("date") date:String): Response<TodayRecordResDto>
+    @GET("/records/watch")
+    suspend fun watchTodayRecord(@Query("date") date:String): Response<TodayRecordResDto>
+    @POST("/records/food")
+    suspend fun watchRecordFood(@Body food : FoodReqDto): Response<Unit>
 }
