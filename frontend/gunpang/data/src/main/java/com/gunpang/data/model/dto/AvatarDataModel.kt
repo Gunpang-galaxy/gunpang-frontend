@@ -5,7 +5,7 @@ import com.gunpang.common.code.DeathCauseCode
 
 // TODO: 배경 단계 이미지 추가 시 stage type을 enum 코드로 변경
 data class AvatarDetailDto(
-    val avatarType: Int,
+    val avatarTypeId: Int,
     val name: String, // 이름
     val stage: String, // 배경 단계
     val status: AvatarStatusCode, // 상태(생존/사망/졸업)
@@ -18,7 +18,7 @@ data class AvatarDetailDto(
 
 data class CurrentAvatarInfoDto(
     val avatarId: Int,
-    val avatarType: Int,
+    val avatarTypeId: Int,
     val name: String, // 이름
     val stage: String, // 배경 단계
     val status: AvatarStatusCode, // 상태(생존/사망/졸업)

@@ -27,7 +27,7 @@ import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
 import com.gunpang.common.navigation.WatchNavItem
-import com.gunpang.domain.watch.TodayHistoryViewModel
+import com.gunpang.domain.watch.WatchRecordViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import com.gunpang.watch_ui.common.WatchChip
@@ -38,14 +38,15 @@ import kotlinx.coroutines.CoroutineScope
 //@Preview(name = "히스토리 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HistoryScreen(
+fun TodayRecordScreen(
     mainPagerState: PagerState,
     coroutineScope: CoroutineScope,
     navController: NavHostController,
-    todayHistoryViewModel: TodayHistoryViewModel
+    watchRecordViewModel: WatchRecordViewModel
 ) {
     LaunchedEffect(true){
-
+        //TODO:DB 연결시 해제
+        //watchRecordViewModel.init();
     }
     GunpangScreenWrapper {
         val listState = rememberScalingLazyListState()
@@ -74,21 +75,21 @@ fun HistoryScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center){
                     Image(
-                        painter = painterResource(id = R.drawable.food_bad_fried), // 이미지 리소스 변경 필요
+                        painter = painterResource(id = watchRecordViewModel.breakfastFoodType.imageId), // 이미지 리소스 변경 필요
                         contentDescription = null,
                         modifier = Modifier
                             .weight(0.5f)
                             .padding(4.dp)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.food_healthy_salad), // 이미지 리소스 변경 필요
+                        painter = painterResource(id = watchRecordViewModel.lunchFoodType.imageId), // 이미지 리소스 변경 필요
                         contentDescription = null,
                         modifier = Modifier
                             .weight(0.5f)
                             .padding(4.dp)
                     )
                     Image(
-                        painter = painterResource(id = R.drawable.food_normal_rice), // 이미지 리소스 변경 필요
+                        painter = painterResource(id = watchRecordViewModel.dinnerFoodType.imageId), // 이미지 리소스 변경 필요
                         contentDescription = null,
                         modifier = Modifier
                             .weight(0.5f)
@@ -99,11 +100,11 @@ fun HistoryScreen(
                 /*TODO: 아침, 점심, 저녁*/
             }
             item { WatchChip(label = "수면 시간"){
-                Text(text = "6시간30분", fontFamily = galmuri, fontSize = 25.sp)
+                Text(text = watchRecordViewModel.sleepTime, fontFamily = galmuri, fontSize = 25.sp)
                 }
             }
             item { WatchChip(label = "운동 시간"){
-                    Text(text = "6시간30분", fontFamily = galmuri, fontSize = 25.sp)
+                    Text(text = watchRecordViewModel.exerciseTime, fontFamily = galmuri, fontSize = 25.sp)
                 }
             }
 
