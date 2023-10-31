@@ -36,6 +36,14 @@ dependencies {
     //multi-module
     implementation(project(path=":common"))
 
+    // Retrofit 라이브러리
+    implementation("com.squareup.retrofit2:retrofit:2.6.4")
+
+    // Gson 변환기 라이브러리
+    implementation("com.squareup.retrofit2:converter-gson:2.6.4")
+
+
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")

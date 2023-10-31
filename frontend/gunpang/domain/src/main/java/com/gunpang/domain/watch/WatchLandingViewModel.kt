@@ -96,7 +96,7 @@ class WatchLandingViewModel(
     /** [3] 아바타 Config 진행하기 **/
     fun config(){
         viewModelScope.launch {
-
+            //TODO: avatar가 있는 지 확인
         }
     }
     private fun initPlayerId(){
