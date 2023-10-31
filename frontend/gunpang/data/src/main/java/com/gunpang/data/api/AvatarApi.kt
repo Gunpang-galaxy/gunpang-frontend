@@ -1,11 +1,12 @@
 package com.gunpang.data.api
 
-import com.gunpang.data.model.response.CurrentAvatarResDto
+import com.gunpang.data.model.response.WatchCurrentAvatarResDto
 import retrofit2.Response
 import retrofit2.http.GET
 
 interface AvatarApi {
-    @GET("/avatars/current")
-    suspend fun currentAvatar(): Response<CurrentAvatarResDto>
+    @GET("/avatars/watch-current")
+    suspend fun watchCurrentAvatar(): Response<WatchCurrentAvatarResDto>
+
 
 }

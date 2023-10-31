@@ -1,6 +1,6 @@
 package com.gunpang.data.model.response
 
-data class TodayHistoryResDto (
+data class TodayRecordResDto (
     val breakfastFoodType: String, // 아침 HEALTH, MEDIUM, UNHEALTH
     val lunchFoodType: String, // 점심
     val dinnerFoodType: String, // 저녁

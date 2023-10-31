@@ -2,12 +2,12 @@ package com.gunpang.domain.watch
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.gunpang.data.repository.TodayHistoryRepository
+import com.gunpang.data.repository.TodayRecordRepository
 
 class TodayHistoryViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    private val todayHistoryRepository: TodayHistoryRepository = TodayHistoryRepository()
+    private val todayRecordRepository: TodayRecordRepository = TodayRecordRepository()
 
 }
