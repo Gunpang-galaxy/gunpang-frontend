@@ -1,10 +1,11 @@
 package com.gunpang.data.model.response
 
+import com.gunpang.common.code.AvatarCode
 import com.gunpang.common.code.AvatarStatusCode
 import com.gunpang.data.model.dto.*
 
 data class RandomAvatarResDto(
-    val avatarType: Int,
+    val avatarTypeId: Int,
     val name: String, // 아바타 default name
 )
 
@@ -29,7 +30,7 @@ data class CurrentAvatarResDto(
 )
 
 data class WatchCurrentAvatarResDto(
-    val avatarType: Int,
+    val avatarTypeId: AvatarCode,
     val stage: String, // 배경 단계
     val status: AvatarStatusCode, // 상태(생존/사망/졸업)
     val healthPoint: Float, // 체력

@@ -22,12 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.gunpang.common.R
 import com.gunpang.common.navigation.WatchNavItem
+import com.gunpang.domain.watch.WatchAvatarViewModel
 import com.gunpang.watch_ui.theme.Gray300
 import com.gunpang.watch_ui.theme.Green500
 import kotlinx.coroutines.CoroutineScope
@@ -35,11 +34,14 @@ import kotlinx.coroutines.CoroutineScope
 //@Preview(name = "아바타 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AvatarScreen(pagerState: PagerState,
-                 coroutineScope: CoroutineScope,
-                 navController: NavHostController
+fun AvatarScreen(
+    pagerState: PagerState,
+    coroutineScope: CoroutineScope,
+    navController: NavHostController,
+    watchAvatarViewModel: WatchAvatarViewModel // already init in MainScreen
 ){
-    var progress by remember { mutableStateOf(0.5f) } // Initial progress value (0.5 = 50%)
+
+    var progress by remember { mutableStateOf(watchAvatarViewModel.healthPoint) } // Initial progress value (0.5 = 50%)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxHeight()
@@ -58,7 +60,7 @@ fun AvatarScreen(pagerState: PagerState,
         Spacer(modifier = Modifier.height(6.dp))
         /*Avatar*/
         Image(
-            painter = painterResource(id = R.drawable.avatar_chick), // 이미지 리소스 변경 필요
+            painter = painterResource(id = watchAvatarViewModel.avatarTypeId.imageId), // 이미지 리소스 변경 필요
             contentDescription = null,
             modifier = Modifier.size(96.dp).clickable {
                 navController.navigate(WatchNavItem.TodayHistory.route)
