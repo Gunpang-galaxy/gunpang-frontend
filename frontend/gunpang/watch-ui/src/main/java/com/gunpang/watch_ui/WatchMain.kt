@@ -11,14 +11,13 @@ import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.WatchLandingViewModel
-import com.gunpang.common.code.InitCode
 import com.gunpang.domain.watch.AvatarViewModel
+import com.gunpang.domain.watch.TodayHistoryViewModel
 import com.gunpang.ui.app.watch.MainScreen
 import com.gunpang.ui.app.watch.history.HistoryScreen
 import com.gunpang.watch_ui.exercise.afterExercise.AfterExercise
 import com.gunpang.watch_ui.exercise.onExercise.OnExercise
 import com.gunpang.watch_ui.food.selectFood.SelectFoodScreen
-import com.gunpang.watch_ui.landing.LandingScreen
 
 @Composable
 fun WatchMain(watchLandingViewModel: WatchLandingViewModel) {
@@ -44,7 +43,8 @@ fun WatchMainNavigation(){
     val coroutineScope = rememberCoroutineScope()
 
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
-    val watchViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
+    val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
+    val todayHistoryViewModel = viewModel<TodayHistoryViewModel>(viewModelStoreOwner)
     SwipeDismissableNavHost(
         navController = navController,
         startDestination = WatchNavItem.Main.route
@@ -55,7 +55,7 @@ fun WatchMainNavigation(){
                 mainPagerState,
                 coroutineScope,
                 navController,
-                watchViewModel
+                avatarViewModel
             )
         }
         /** 히스토리 **/
@@ -65,6 +65,7 @@ fun WatchMainNavigation(){
                 mainPagerState,
                 coroutineScope,
                 navController,
+                todayHistoryViewModel
             )
         }
         /** 운동 **/
