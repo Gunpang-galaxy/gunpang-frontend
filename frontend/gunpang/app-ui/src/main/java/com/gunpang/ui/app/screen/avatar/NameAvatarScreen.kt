@@ -36,7 +36,7 @@ fun NewAvatar(
     val randomAvatar = AvatarCode.values()[randomIndex]
 
     // 아바타 이름
-    var name by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf(randomAvatar.avatarDefaultName) }
 
     Column(
         modifier = Modifier.height(300.dp),
@@ -47,7 +47,7 @@ fun NewAvatar(
             contentAlignment = Alignment.BottomCenter
         ) {
             Image(
-                painter = painterResource(id = randomAvatar.image),
+                painter = painterResource(id = randomAvatar.imageId),
                 contentDescription = "아바타",
                 modifier = Modifier
                     .size(130.dp)
@@ -60,6 +60,7 @@ fun NewAvatar(
             )
         }
         CommonTextField( // 캐릭터 이름 입력
+            defaultValue = name,
             onValueChange = {
                 name = it
                 onNameChange(it)
