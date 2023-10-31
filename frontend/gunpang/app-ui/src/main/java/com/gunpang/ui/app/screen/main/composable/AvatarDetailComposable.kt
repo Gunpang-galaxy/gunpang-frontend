@@ -310,7 +310,7 @@ fun ShowMealRecord(
                 modifier = Modifier
                     .height(36.dp)
                     .width(36.dp),
-                painter = painterResource(id = mealRecordCode.image),
+                painter = painterResource(id = mealRecordCode.imageId),
                 contentDescription = "오늘 기록",
                 contentScale = ContentScale.Fit
             )
