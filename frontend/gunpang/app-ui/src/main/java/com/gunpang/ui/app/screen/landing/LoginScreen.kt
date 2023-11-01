@@ -23,11 +23,6 @@ import com.gunpang.ui.theme.galmuriTyop
 fun Login(
     loginViewModel: LoginViewModel
 ) {
-    // 로그인 확인
-    LaunchedEffect(key1 = true) {
-        loginViewModel.googlePlayLogin()
-    }
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
