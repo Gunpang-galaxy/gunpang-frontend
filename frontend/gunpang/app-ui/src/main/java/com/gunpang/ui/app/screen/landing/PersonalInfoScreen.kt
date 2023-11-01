@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.gunpang.common.code.GenderCode
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
@@ -112,7 +113,9 @@ fun GenderInfo(onGenderChange: (GenderCode?) -> Unit) {
 }
 
 @Composable
-fun PersonalInfo() {
+fun PersonalInfo(
+    navController: NavController
+) {
     var isHeightInfoFilled by remember { mutableStateOf(false) }
     var isGenderInfoFilled by remember { mutableStateOf(false) }
 
@@ -139,6 +142,9 @@ fun PersonalInfo() {
         CommonButton(
             text = "입력 완료",
             enabled = isHeightInfoFilled && isGenderInfoFilled,
+            onClick = {
+                navController.navigate("linkSamsungHealth")
+            }
         )
     }
 }

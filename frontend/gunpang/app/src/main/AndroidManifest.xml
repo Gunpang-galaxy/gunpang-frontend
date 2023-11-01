@@ -47,6 +47,10 @@
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
 
+        <!-- google play 로그인 -->
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/game_services_project_id"/>
+
     </application>
 
 </manifest>

@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.gunpang.common.code.DayCode
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
@@ -130,7 +131,9 @@ fun exerciseAvailable(minute: String): Boolean {
 }
 
 @Composable
-fun ExerciseGoal() {
+fun ExerciseGoal(
+    navController: NavController
+) {
     var selectedDay by remember { mutableIntStateOf(0) } // 선택한 날짜
     var minute by remember { mutableStateOf("") } // 입력한 시간
 
@@ -166,6 +169,9 @@ fun ExerciseGoal() {
         CommonButton(
             text = "입력",
             enabled = (selectedDay > 0 && exerciseAvailable(minute)),
+            onClick = {
+                navController.navigate("mainScreen")
+            }
         )
     }
 }

@@ -25,10 +25,11 @@ fun CommonButton(
     text: String = "연동하기",
     alpha: Float = 1f,
     enabled: Boolean = true,
+    onClick: () -> Unit = { }
 ){
     Button(
         enabled = enabled,
-        onClick = { },
+        onClick = onClick,
         shape= Shapes.medium,
         modifier = Modifier
             .width(203.dp)

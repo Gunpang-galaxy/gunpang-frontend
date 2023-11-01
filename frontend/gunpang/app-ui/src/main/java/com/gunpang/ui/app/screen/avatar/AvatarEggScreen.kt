@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.gunpang.common.code.AvatarEggCode
 import com.gunpang.ui.theme.gmarketsansTypo
 import kotlin.random.Random
@@ -26,7 +26,7 @@ import kotlin.random.Random
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AvatarEgg(
-    navController: NavHostController
+    navController: NavController
 ) {
     // 알 색상 랜덤 선택
     val randomIndex by remember { mutableIntStateOf(Random.nextInt(0, AvatarEggCode.values().size)) }
@@ -43,7 +43,7 @@ fun AvatarEgg(
         Surface( // 알 이미지
             onClick = {
                 if (touch > 1) touch--
-                else navController.navigate(Screen.NameAvatarScreen.route) // 알 부화 후 아바타 이름 짓기 페이지로 이동
+                else navController.navigate("nameAvatar") // 알 부화 후 아바타 이름 짓기 페이지로 이동
             },
         ) {
             Image(

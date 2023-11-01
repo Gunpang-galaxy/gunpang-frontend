@@ -15,12 +15,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.gunpang.common.R
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.theme.gmarketsansTypo
 
 @Composable
-fun LinkSamsungHealth() {
+fun LinkSamsungHealth(
+    navController: NavController
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,6 +56,9 @@ fun LinkSamsungHealth() {
         )
         CommonButton(
             text = "연동하기",
+            onClick = {
+                navController.navigate("avatarEgg")
+            }
         )
     }
 }

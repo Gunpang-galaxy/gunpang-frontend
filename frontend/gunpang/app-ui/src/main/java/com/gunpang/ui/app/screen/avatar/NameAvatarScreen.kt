@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.gunpang.common.R
 import com.gunpang.common.code.AvatarCode
 import com.gunpang.ui.app.common.CommonButton
@@ -36,7 +37,7 @@ fun NewAvatar(
     val randomAvatar = AvatarCode.values()[randomIndex]
 
     // 아바타 이름
-    var name by remember { mutableStateOf(randomAvatar.avatarDefaultName) }
+    var name = randomAvatar.avatarDefaultName
 
     Column(
         modifier = Modifier.height(300.dp),
@@ -59,6 +60,9 @@ fun NewAvatar(
                 modifier = Modifier.size(110.dp, 90.dp)
             )
         }
+        Box() {// NameAvatar 캐릭터 기본 이름 전달을 위한 composable
+            onNameChange(name)
+        }
         CommonTextField( // 캐릭터 이름 입력
             defaultValue = name,
             onValueChange = {
@@ -72,8 +76,10 @@ fun NewAvatar(
 }
 
 @Composable
-fun NameAvatar() {
-    var isNameFilled by remember { mutableStateOf(false) }
+fun NameAvatar(
+    navController: NavController
+) {
+    var name by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -88,12 +94,15 @@ fun NameAvatar() {
             text = "*4자 이내로 입력해 주세요",
             style = gmarketsansTypo.titleSmall,
         )
-        NewAvatar {
-            isNameFilled = (it.length < 5) && (it.isNotEmpty())
+        NewAvatar() {
+            name = it
         }
         CommonButton(
             text = "입력 완료",
-            enabled = isNameFilled,
+            enabled = (name.length < 5) && (name.isNotEmpty()),
+            onClick = {
+                navController.navigate("sleepGoal")
+            },
         )
     }
 }

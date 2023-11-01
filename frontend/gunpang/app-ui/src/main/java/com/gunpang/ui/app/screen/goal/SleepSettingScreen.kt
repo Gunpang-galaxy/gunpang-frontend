@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
 import com.gunpang.ui.theme.gmarketsansTypo
@@ -65,7 +66,9 @@ fun timeAvailable(hour: String, minute: String ): Boolean {
 }
 
 @Composable
-fun SleepGoal() {
+fun SleepGoal(
+    navController: NavController
+) {
     var startHour by remember { mutableStateOf("") }
     var startMinute by remember { mutableStateOf("") }
     var endHour by remember { mutableStateOf("") }
@@ -103,7 +106,10 @@ fun SleepGoal() {
         )
         CommonButton(
             text = "입력",
-            enabled = (timeAvailable(startHour, startMinute) && timeAvailable(endHour, endMinute))
+            enabled = (timeAvailable(startHour, startMinute) && timeAvailable(endHour, endMinute)),
+            onClick = {
+                navController.navigate("exerciseGoal")
+            }
         )
     }
 }
