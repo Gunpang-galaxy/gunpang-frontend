@@ -4,6 +4,5 @@ import com.gunpang.common.code.MealRecordCode
 import com.gunpang.common.code.TimeToEatCode
 
 data class FoodReqDto(
-    val timeToEat: TimeToEatCode,
     val foodType: MealRecordCode,
 )

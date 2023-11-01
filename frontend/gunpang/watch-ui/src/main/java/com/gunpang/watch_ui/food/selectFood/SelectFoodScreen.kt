@@ -29,6 +29,7 @@ import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
+import com.gunpang.common.code.MealRecordCode
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.WatchFeedViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
@@ -69,7 +70,7 @@ fun SelectFoodScreen(
         )
         WatchDivider()
 
-        val items = listOf("건강하게", "적당하게", "불량하게")
+        val items = listOf(MealRecordCode.HEALTHY, MealRecordCode.NORMAL, MealRecordCode.BAD)
         var selectedIndex by remember { mutableStateOf(-1) }
         ScalingLazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -84,7 +85,8 @@ fun SelectFoodScreen(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    WatchButton(items[index], color= backgroundColor, textColor=contentColor) {
+                    WatchButton(items[index].foodType, color= backgroundColor, textColor=contentColor) {
+                        selectedIndex = index
                     }
                 }
             }
@@ -92,7 +94,7 @@ fun SelectFoodScreen(
                 // 건강하게
                 WatchButton("기록") {
                     //TODO:기록
-                    //watchFeedViewModel.feedFood()
+                    watchFeedViewModel.feedFood(items[selectedIndex])
 
                     navController.navigate(WatchNavItem.Main.route)
                 }
