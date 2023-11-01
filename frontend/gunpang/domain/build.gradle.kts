@@ -58,8 +58,8 @@ dependencies {
     implementation("androidx.wear:wear-phone-interactions:1.0.1")
     // RemoteActivityHelper
 
-    // google games
-    implementation ("com.google.android.gms:play-services-games-v2:19.0.0")
+    // google login
+    implementation ("com.google.android.gms:play-services-auth:20.7.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
