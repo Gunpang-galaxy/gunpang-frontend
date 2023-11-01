@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">건팡</string>
     <string name="default_notification_channel_id">GunpangServiceChannel</string>
+    <string translatable="false"  name="game_services_project_id"> 1001425907106 </string>
 </resources>

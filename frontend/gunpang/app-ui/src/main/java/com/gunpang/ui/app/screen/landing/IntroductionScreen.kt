@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.theme.galmuriTyop
 import com.gunpang.ui.theme.Navy500
@@ -75,7 +76,9 @@ fun HabitIntroduction() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Introduction() {
+fun Introduction(
+    navController: NavController
+) {
     Column(
         modifier = Modifier.height(900.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -96,6 +99,10 @@ fun Introduction() {
         CommonButton(
             text = "시작하기",
             alpha = if (pagerState.currentPage == pageCount - 1) 1f else 0f,
+            enabled = pagerState.currentPage == pageCount - 1,
+            onClick = {
+                navController.navigate("personalInfo")
+            }
         )
         Spacer( // 시작하기 버튼과 dot indicator 사이의 간격
             modifier = Modifier.height(50.dp)

@@ -6,20 +6,27 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gunpang.common.R
+import com.gunpang.domain.app.landing.LoginViewModel
 import com.gunpang.ui.theme.galmuriTyop
 
 @Composable
-@Preview
-fun Login() {
+fun Login(
+    loginViewModel: LoginViewModel
+) {
+    // 로그인 확인
+    LaunchedEffect(key1 = true) {
+        loginViewModel.googlePlayLogin()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -47,10 +54,8 @@ fun Login() {
             painter = painterResource(id = R.drawable.google_login),
             contentDescription = "구글 로그인 버튼",
             modifier = Modifier
-                .size(250.dp, 50.dp)
-                .clickable {
-
-                }
+                .height(50.dp)
+                .clickable { loginViewModel.login() }
         )
     }
 }
