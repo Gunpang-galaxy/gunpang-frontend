@@ -3,6 +3,7 @@ package com.gunpang.watch_ui.avatar
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -44,6 +45,7 @@ fun AvatarScreen(
     var progress by remember { mutableStateOf(watchAvatarViewModel.healthPoint) } // Initial progress value (0.5 = 50%)
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxHeight()
     ) {
         /*ProgressBar*/
