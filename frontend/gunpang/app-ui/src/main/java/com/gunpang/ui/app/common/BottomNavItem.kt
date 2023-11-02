@@ -2,34 +2,29 @@ package com.gunpang.ui.app.common
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.ui.graphics.vector.ImageVector
+import com.gunpang.common.R
 
 
 data class BottomNavItem(
-    val name: String,
+    val label: String,
     val route: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
+    val imageId: Int,
 )
 
 var bottomNavItems = listOf<BottomNavItem>(
     BottomNavItem(
-        name="Home",
+        label= "Calender",
         route= "main",
-        selectedIcon= Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
+        imageId= R.drawable.ic_bottom_nav_cal,
     ),
     BottomNavItem(
-        name="Chart",
+        label="Main",
         route= "main",
-        selectedIcon= Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
+        imageId= R.drawable.ic_bottom_nav_home,
     ),
     BottomNavItem(
-        name="Calender",
+        label="Chart",
         route= "main",
-        selectedIcon= Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
+        imageId= R.drawable.ic_bottom_nav_chart,
     ),
 )

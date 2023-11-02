@@ -29,7 +29,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.gunpang.common.R
+import com.gunpang.domain.app.AppViewModel
 import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.TopBar
 import com.gunpang.ui.theme.Gray900
@@ -39,13 +41,19 @@ import com.gunpang.ui.theme.gmarketsans
 import com.gunpang.ui.theme.gmarketsansBold
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
-fun MainScreen(){
+fun MainScreen(
+    navController: NavController,
+    appViewModel: AppViewModel,
+){
     Scaffold(
-        topBar={ TopBar() },
+        topBar={
+            TopBar(
+                navController = navController,
+            )
+               },
         containerColor= Color.White,
-        bottomBar = { BottomNavBar() },
+        bottomBar = { BottomNavBar(navController = navController) },
         ) {
             paddingValues ->
             Surface(

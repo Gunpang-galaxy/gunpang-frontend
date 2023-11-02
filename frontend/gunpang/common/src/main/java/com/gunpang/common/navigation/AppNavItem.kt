@@ -13,4 +13,7 @@ sealed class AppNavItem(
     object SleepGoal: AppNavItem("sleepGoal", "수면 목표 화면")
     object ExerciseGoal: AppNavItem("exerciseGoal", "운동 목표 화면")
     object MainScreen: AppNavItem("mainScreen", "메인 화면")
+    object MyPageScreen: AppNavItem("myPageScreen", "내정보 화면")
+    object CalenderScreen: AppNavItem("calenderScreen", "달력 내 기록 화면")
+    object BodyCompositionScreen: AppNavItem("bodyCompositionScreen", "채성분 분석 화면")
 }
