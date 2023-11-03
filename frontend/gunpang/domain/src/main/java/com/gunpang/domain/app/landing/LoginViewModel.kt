@@ -10,7 +10,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.gunpang.common.code.InitCode
 import com.gunpang.data.repository.AuthRepository
@@ -29,10 +28,10 @@ class LoginViewModel(
 
     // 건팡 로그인
     fun login() {
-        Log.d("loginViewModel", "login 진입")
+        Log.d("login", "login 진입")
         val signInIntent = mGoogleSignInClient.signInIntent
         resultLauncher.launch(signInIntent)
-        Log.d("loginViewModel", "signInIntent: $signInIntent")
+        Log.d("login", "signInIntent: $signInIntent")
     }
 
     class LoginViewModelFactory(
