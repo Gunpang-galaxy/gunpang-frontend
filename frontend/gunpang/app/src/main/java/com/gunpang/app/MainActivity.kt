@@ -31,6 +31,7 @@ import com.google.android.gms.wearable.Wearable
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
+import com.gunpang.data.GunpangPreferenceUtil
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.AppViewModelFactory
 import com.gunpang.domain.app.landing.LoginViewModel
@@ -42,6 +43,9 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     companion object {
         private const val CAPABILITY_WEAR_APP = "watch_gunpang"
         private const val PLAY_STORE_APP_URI = "market://details?id=com.gunpang"
+
+        // 컨텍스트에 데이터 저장
+        private lateinit var gunpangPreferenceUtil: GunpangPreferenceUtil
     }
 
     // 모바일-워치 간 연결
@@ -52,19 +56,22 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     private lateinit var wearNodesWithApp: Set<Node>
     private lateinit var allConnectedNodes: List<Node>
 
-    // 로그인 시 사용하는 google data
+    // 구글 로그인
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var signInIntent: Intent
 
     // 로그인 view model
     private lateinit var loginViewModelFactory: LoginViewModel.LoginViewModelFactory
     private lateinit var loginViewModel: LoginViewModel
-
 
     // 앱 ViewModel -> Factory로 관리
     private lateinit var appViewModelFactory: AppViewModelFactory
     private lateinit var appViewModel: AppViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 컨텍스트에 데이터 저장
+        gunpangPreferenceUtil = GunpangPreferenceUtil(applicationContext)
+
         super.onCreate(savedInstanceState)
         Log.v("Android", "SDK_INT : " + Build.VERSION.SDK_INT)
 
@@ -80,22 +87,23 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         wearNodesWithApp = emptySet()
         allConnectedNodes = emptyList()
 
-        // google login 요청 options
+        // 구글 로그인
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("1001425907106-8g8c597uvcrdk1p5pso28jdhkl5qpemu.apps.googleusercontent.com")
             .requestEmail()
             .build()
-
-        // 로그인 시 사용하는 google data
         mGoogleSignInClient = applicationContext?.let { GoogleSignIn.getClient(it, gso) }!!
-//        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        signInIntent = mGoogleSignInClient.signInIntent
+        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            Log.d("login", "result: ${result.resultCode}")
+            if (result.resultCode == -1) { // 로그인 성공
+                val data: Intent? = result.data
+                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+                handleSignInResult(task)
+            }
+        }
 
         // 로그인 view model
-        loginViewModelFactory = LoginViewModel.LoginViewModelFactory(
-            mGoogleSignInClient,
-            resultLauncher,
-            this.application
-        )
+        loginViewModelFactory = LoginViewModel.LoginViewModelFactory(signInIntent, resultLauncher, this.application)
         loginViewModel =
             ViewModelProvider(this@MainActivity, loginViewModelFactory)[LoginViewModel::class.java]
 
@@ -169,25 +177,14 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
 
     // [로그인 관련 코드 START]
     // 로그인 시 사용하는 google data 수집
-    var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            Log.d("login", "result: ${result.resultCode}")
-            Log.d("login", "result: ${result.data.toString()}")
-            if (result.resultCode == 1) {
-                val data: Intent? = result.data
-                val task: Task<GoogleSignInAccount> =
-                    GoogleSignIn.getSignedInAccountFromIntent(data)
-                Log.d("login", "task: $task")
-                handleSignInResult(task)
-            }
-        }
-
-    // 로그인 시 사용하는 google data 수집
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        Log.d("login", "handleSignInResult 진입")
         try {
             val account = completedTask.getResult(ApiException::class.java)
+            val id = account?.id.toString()
             val email = account?.email.toString()
-            Log.d("login", "email: $email")
+            Log.d("login", "id: $id / email: $email")
+            gunpangPreferenceUtil.setString("playerId", id)
         } catch (e: ApiException) {
             Log.w("failed", "signInResult:failed code=" + e.statusCode)
         }
