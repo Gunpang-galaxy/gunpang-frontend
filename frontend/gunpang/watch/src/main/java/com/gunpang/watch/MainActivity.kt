@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.wear.remote.interactions.RemoteActivityHelper
@@ -22,7 +21,6 @@ import com.google.android.gms.wearable.CapabilityInfo
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Wearable
 import com.gunpang.data.repository.DataApplicationRepository
-import com.gunpang.domain.watch.ExerciseViewModel
 import com.gunpang.domain.watch.WatchLandingViewModel
 import com.gunpang.domain.watch.WatchLandingViewModelFactory
 import com.gunpang.watch_ui.WatchMain

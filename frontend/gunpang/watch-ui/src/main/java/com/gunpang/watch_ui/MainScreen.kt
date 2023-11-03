@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.gunpang.domain.watch.ExerciseViewModel
+import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.domain.watch.WatchAvatarViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.ui.app.watch.exercise.ExerciseScreen

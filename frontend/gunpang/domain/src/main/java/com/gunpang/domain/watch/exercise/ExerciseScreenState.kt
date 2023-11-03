@@ -1,4 +1,4 @@
-package com.gunpang.domain.watch
+package com.gunpang.domain.watch.exercise
 
 import com.example.exercisesamplecompose.service.ExerciseServiceState
 import com.gunpang.data.repository.ServiceState

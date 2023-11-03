@@ -12,7 +12,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.gunpang.domain.watch.ExerciseViewModel
+import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.ui.app.watch.exercise.ExerciseMenuScreen
 import kotlinx.coroutines.CoroutineScope

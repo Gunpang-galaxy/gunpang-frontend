@@ -1,4 +1,4 @@
-package com.gunpang.domain.watch
+package com.gunpang.domain.watch.exercise
 
 import androidx.health.services.client.data.LocationAvailability
 import com.gunpang.data.repository.ServiceState

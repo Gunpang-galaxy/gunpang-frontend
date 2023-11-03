@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Text
 import com.gunpang.common.navigation.WatchNavItem
-import com.gunpang.domain.watch.ExerciseViewModel
+import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import kotlinx.coroutines.CoroutineScope

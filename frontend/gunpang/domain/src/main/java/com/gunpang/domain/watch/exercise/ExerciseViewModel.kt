@@ -1,4 +1,4 @@
-package com.gunpang.domain.watch
+package com.gunpang.domain.watch.exercise
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

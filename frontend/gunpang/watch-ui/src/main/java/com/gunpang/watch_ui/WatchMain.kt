@@ -10,7 +10,7 @@ import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.gunpang.common.navigation.WatchNavItem
-import com.gunpang.domain.watch.ExerciseViewModel
+import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.domain.watch.WatchLandingViewModel
 import com.gunpang.domain.watch.WatchAvatarViewModel
 import com.gunpang.domain.watch.WatchRecordViewModel
