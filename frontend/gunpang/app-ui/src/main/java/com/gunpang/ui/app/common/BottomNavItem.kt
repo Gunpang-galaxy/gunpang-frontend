@@ -9,6 +9,7 @@ data class BottomNavItem(
     val label: String,
     val route: String,
     val imageId: Int,
+    val description: String = ""
 )
 
 var bottomNavItems = listOf<BottomNavItem>(
