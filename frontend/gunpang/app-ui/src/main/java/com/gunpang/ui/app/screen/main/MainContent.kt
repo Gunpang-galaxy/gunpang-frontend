@@ -31,11 +31,11 @@ fun MainContent(modifier: Modifier = Modifier
         .fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        var status : AvatarStatusCode = AvatarStatusCode.GRADUATED
+        var status : AvatarStatusCode = AvatarStatusCode.ALIVE
         Column(horizontalAlignment = Alignment.CenterHorizontally){
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .weight(weight = 2f)
+                .weight(weight = 2.5f)
                 .padding(top = 12.dp, bottom = 20.dp),
                 contentAlignment = Alignment.Center
             ){

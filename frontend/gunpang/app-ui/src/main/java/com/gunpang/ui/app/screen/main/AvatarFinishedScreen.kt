@@ -23,6 +23,7 @@ import com.gunpang.common.code.DeathCauseCode
 import com.gunpang.common.R
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.screen.main.composable.AvatarImage
+import com.gunpang.ui.app.screen.main.composable.AvatarName
 import com.gunpang.ui.app.screen.main.composable.LivingDate
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansBold

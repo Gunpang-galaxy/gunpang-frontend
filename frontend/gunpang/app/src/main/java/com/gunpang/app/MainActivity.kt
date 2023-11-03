@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
+import com.gunpang.domain.app.AppViewModel
+import com.gunpang.domain.app.AppViewModelFactory
 import com.gunpang.domain.app.landing.LoginViewModel
 import com.gunpang.ui.app.AppMain
 import com.gunpang.ui.app.screen.notification.NotificationDialogFragment
@@ -35,6 +37,11 @@ class MainActivity : ComponentActivity() {
     // 로그인 view model
     private lateinit var loginViewModelFactory : LoginViewModel.LoginViewModelFactory
     private lateinit var loginViewModel : LoginViewModel
+
+
+    // 앱 ViewModel -> Factory로 관리
+    private lateinit var appViewModelFactory: AppViewModelFactory
+    private lateinit var appViewModel: AppViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +64,11 @@ class MainActivity : ComponentActivity() {
         // 로그인 view model
         loginViewModelFactory = LoginViewModel.LoginViewModelFactory(mGoogleSignInClient, resultLauncher, this.application)
         loginViewModel = ViewModelProvider(this@MainActivity, loginViewModelFactory)[LoginViewModel::class.java]
+
+
+        // 앱 ViewModel (전역으로 관리하는지 확인 필요)
+        appViewModelFactory = AppViewModelFactory(this.application)
+        appViewModel = ViewModelProvider(this@MainActivity, appViewModelFactory)[AppViewModel::class.java]
 
         setContent {
             AppMain(loginViewModel = loginViewModel)

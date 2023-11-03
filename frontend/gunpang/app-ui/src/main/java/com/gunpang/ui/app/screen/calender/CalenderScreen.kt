@@ -1,6 +1,5 @@
-package com.gunpang.ui.app.screen.mypage
+package com.gunpang.ui.app.screen.calender
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -10,36 +9,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.gunpang.domain.app.AppViewModel
+import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.TopBar
 
-@Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun MyPageScreen(
+@Composable
+fun CalenderScreen(
     navController: NavController,
     appViewModel: AppViewModel
-){
+) {
     Scaffold(
         topBar = {
-            TopBar(
-                navController = navController,
-                title = "내 정보",
-                hasUndo = true,
-                )
+            TopBar(navController = navController, title = "내 기록")
         },
+        bottomBar = { BottomNavBar(navController) },
         containerColor = Color.White
     ) {
-        it ->
-        Surface(modifier = Modifier.padding(it)) {
-            Box(){
-                // TODO : 내 정보
-                //이메일
-                // 성별
-                // 출생
-                // 키
-                // 몸무게
-                // TODO : 로그아웃 버튼
-            }
+        it -> Surface(
+            modifier = Modifier.padding(it)
+        ) {
+            // TODO : 달력 화면 구성
         }
     }
 }
-
