@@ -27,3 +27,20 @@ data class CurrentAvatarInfoDto(
     val finishedDate: String, // 종료 날짜
 )
 
+////// 메인화면 하단 상태에 따른 아바타 정보
+data class AvatarAliveContent(
+    val breakfastFoodType: String,
+    val lunchFoodType: String,
+    val dinnerFoodType: String,
+    val exerciseTime : String,
+    val sleepAt : String,
+    val awakeAt : String
+)
+
+data class AvatarDeadContent(
+    val deathCause: String // 사망 원인
+)
+
+data class AvatarGraduatedContent(
+    val message: String // 졸업 축하 메시지
+)

@@ -15,7 +15,7 @@ data class DetailAvatarResDto(
     val hasNext: Int, // 다음 아바타 id, 없으면 -1
 )
 
-data class CurrentAvatarResDto(
+data class AppAvatarInfoResDto( // 메인 화면 아바타 정보 (app-current)
     val goal : AvatarGoalResDto, // 아바타 목표
     val avatarType: String, // 아바타 타입
     val name: String, // 아바타 이름
@@ -28,6 +28,7 @@ data class CurrentAvatarResDto(
     val hasNext: Int, // 다음 아바타 id, 없으면 -1
     val contents: Map<String, Any> // 아바타 상세 정보
 )
+
 
 data class WatchCurrentAvatarResDto(
     val avatarTypeId: AvatarCode,
