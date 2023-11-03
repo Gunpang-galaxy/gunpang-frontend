@@ -16,4 +16,6 @@ sealed class AppNavItem(
     object MyPageScreen: AppNavItem("myPageScreen", "내정보 화면")
     object CalenderScreen: AppNavItem("calenderScreen", "달력 내 기록 화면")
     object BodyCompositionScreen: AppNavItem("bodyCompositionScreen", "채성분 분석 화면")
+    object AvatarFinishScreen: AppNavItem("AvatarFinishScreen", "아바타 성장 종료 화면")
+
 }

@@ -21,13 +21,13 @@ import kotlinx.coroutines.launch
 
 class AvatarViewModel : ViewModel(){
 
-    private var avatarGoal : AvatarGoal = AvatarGoal() // 해당 아바타 목표
-    private var appAvatar : AppAvatar = AppAvatar() // 아바타 정보
-    private var contents: Any? = null // 아바타 컨텐츠
-    private var prevId : Int = -1 // 이전 아바타 아이디
-    private var nextId : Int = -1 // 다음 아바타 아이디
+    var avatarGoal : AvatarGoal = AvatarGoal() // 해당 아바타 목표
+    var appAvatar : AppAvatar = AppAvatar() // 아바타 정보
+    var contents: Any? = null // 아바타 컨텐츠
+    var prevId : Int = -1 // 이전 아바타 아이디
+    var nextId : Int = -1 // 다음 아바타 아이디
 
-    private var currentAvatarExist : Boolean = true ;
+    var currentAvatarExist : Boolean = true ;
 
     private val avatarRepository : AvatarRepository = AvatarRepository() // 아바타 관련 Repository
 
@@ -59,7 +59,12 @@ class AvatarViewModel : ViewModel(){
                     when {
                         data.status == "GRAUDATED" -> {
                             contents = AppAvatarGraduatedContent(
-                                data.contents["message"].toString()
+                                data.contents["exerciseTotal"] as Int,
+                                data.contents["exerciseSuccessCnt"] as Int,
+                                data.contents["foodTotal"] as Int,
+                                data.contents["foodSuccessCnt"] as Int,
+                                data.contents["sleepTotal"] as Int,
+                                data.contents["sleepSuccessCnt"] as Int
                             )
                         }
                         data.status == "DEAD" -> {
@@ -84,7 +89,7 @@ class AvatarViewModel : ViewModel(){
     }
 
     // 아바타 아이디를 통한 이전, 다음 아바타 보기
-    private fun getAvatar(avatarId: Int) {
+    fun getAvatar(avatarId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             avatarRepository.getAvatarInfo(avatarId)
                 .catch {
@@ -110,7 +115,12 @@ class AvatarViewModel : ViewModel(){
                     when {
                         data.status == "GRAUDATED" -> {
                             contents = AppAvatarGraduatedContent(
-                                data.contents["message"].toString()
+                                data.contents["exerciseTotal"] as Int,
+                                data.contents["exerciseSuccessCnt"] as Int,
+                                data.contents["foodTotal"] as Int,
+                                data.contents["foodSuccessCnt"] as Int,
+                                data.contents["sleepTotal"] as Int,
+                                data.contents["sleepSuccessCnt"] as Int
                             )
                         }
                         data.status == "DEAD" -> {

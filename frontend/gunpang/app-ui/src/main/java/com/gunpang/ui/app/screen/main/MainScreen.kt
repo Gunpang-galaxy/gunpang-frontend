@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.gunpang.common.R
+import com.gunpang.common.code.AvatarStatusCode
+import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.avatar.AvatarViewModel
 import com.gunpang.ui.app.common.BottomNavBar
@@ -50,14 +52,20 @@ fun MainScreen(
     avatarViewModel: AvatarViewModel
 ){
     LaunchedEffect(key1 = true){
+        // ui 접근 시 한번만 실행
         avatarViewModel.init()
+
+        // 현재 아바타가 살아있는 상태가 아닐 경우
+        if(avatarViewModel.appAvatar.status != AvatarStatusCode.ALIVE){
+            navController.navigate(AppNavItem.AvatarFinishScreen.routeName)
+        }
     }
+
     Scaffold(
         topBar={
             TopBar(
                 navController = navController,
-            )
-               },
+            ) },
         containerColor= Color.White,
         bottomBar = { BottomNavBar(navController = navController) },
         ) {
@@ -70,7 +78,7 @@ fun MainScreen(
                     .padding(paddingValues),
                 color = Color.White
             ){
-                MainContent()
+                MainContent(avatarViewModel = avatarViewModel)
             }
     }
 }

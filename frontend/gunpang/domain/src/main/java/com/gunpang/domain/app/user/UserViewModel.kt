@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gunpang.common.code.GenderCode
 import com.gunpang.data.repository.UserRepository
 import com.gunpang.domain.entity.UserInfo
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +27,7 @@ class UserViewModel : ViewModel()  {
                 .collect{data ->
                     userInfo = UserInfo(
                         data.email,
-                        data.gender, //genderCode 수정되면 변경
+                        GenderCode.fromString(data.gender), //genderCode 수정되면 변경
                         data.birth,
                         data.height
                     )

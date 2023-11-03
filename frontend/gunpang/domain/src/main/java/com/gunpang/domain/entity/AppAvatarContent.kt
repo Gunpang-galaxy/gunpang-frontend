@@ -30,9 +30,19 @@ data class AppAvatarDeadContent(
 }
 
 data class AppAvatarGraduatedContent(
-    val message: String
+    val exerciseTotal: Int,
+    val exerciseSuccessCnt: Int,
+    val foodTotal: Int,
+    val foodSuccessCnt: Int,
+    val sleepTotal: Int,
+    val sleepSuccessCnt: Int
 ){
     constructor() : this(
-        message = "축하해요"
+        exerciseTotal = 0,
+        exerciseSuccessCnt = 0,
+        foodTotal = 0,
+        foodSuccessCnt = 0,
+        sleepTotal = 0,
+        sleepSuccessCnt = 0
     )
 }

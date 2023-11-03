@@ -3,8 +3,8 @@ package com.gunpang.common.code
 import com.gunpang.common.R
 
 enum class StageCode(
-    level: Int,
-    imageId: Int,
+    val level: Int,
+    val imageId: Int,
 ) {
     SEA(level=1, imageId = R.drawable.background_sea),
     LAND(level=2, imageId = R.drawable.background_land),

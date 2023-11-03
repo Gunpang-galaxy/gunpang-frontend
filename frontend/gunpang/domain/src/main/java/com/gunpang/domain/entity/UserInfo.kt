@@ -6,14 +6,9 @@ import com.gunpang.common.code.GenderCode
 
 data class UserInfo(
     val email: String,
-    val gender : GenderCode?,
+    val gender : GenderCode,
     val birth : Int,
     val height : Int
 ){
-    constructor() : this(
-        "",
-        null,
-        0,
-        0
-    )
+    constructor() : this(email ="", gender = GenderCode.NOT_FOUND, birth = 0, height = 0)
 }

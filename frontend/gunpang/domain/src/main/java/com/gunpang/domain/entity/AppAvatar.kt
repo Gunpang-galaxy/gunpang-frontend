@@ -14,12 +14,12 @@ data class AppAvatar(
     val finishedDate: String?,
 ) {
     constructor() : this(
-        AvatarCode.AVATAR_CAT,
-        AvatarCode.AVATAR_CAT.avatarDefaultName,
-        AvatarStatusCode.ALIVE,
-        StageCode.NOT_FOUND,
-        0f,
-        "",
-        null,
+        avatarType=AvatarCode.AVATAR_CAT,
+        avatarName=AvatarCode.AVATAR_CAT.avatarDefaultName,
+        status = AvatarStatusCode.ALIVE,
+        stage = StageCode.NOT_FOUND,
+        healthPoint=0f,
+        startedDate="",
+        finishedDate=null,
     )
 }
