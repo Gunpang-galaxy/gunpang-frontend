@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gunpang.common.code.InitCode
 import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.domain.app.AppViewModel
+import com.gunpang.domain.app.avatar.AvatarViewModel
 import com.gunpang.domain.app.landing.LoginViewModel
 import com.gunpang.ui.app.screen.avatar.AvatarEgg
 import com.gunpang.ui.app.screen.avatar.NameAvatar
@@ -72,6 +73,7 @@ fun AppNavGraph(
     val navController = rememberNavController()
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
+    val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
 
     NavHost(
         navController = navController,
@@ -99,10 +101,10 @@ fun AppNavGraph(
             ExerciseGoal(navController)
         }
         composable(AppNavItem.MainScreen.routeName) {
-            MainScreen(navController, appViewModel)
+            MainScreen(navController, appViewModel, avatarViewModel)
         }
         composable(AppNavItem.MyPageScreen.routeName) {
-            MyPageScreen(navController, appViewModel)
+            MyPageScreen(navController, appViewModel, )
         }
         composable(AppNavItem.CalenderScreen.routeName) {
             CalenderScreen(navController, appViewModel)

@@ -8,3 +8,10 @@ data class LoginResDto(
 data class SignUpResDto(
     val googleId: String
 )
+
+data class UserInfoResDto(
+    val email : String,
+    val gender : String,
+    val birth : Int,
+    val height : Int
+)

@@ -19,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.gunpang.common.R
 import com.gunpang.domain.app.AppViewModel
+import com.gunpang.domain.app.avatar.AvatarViewModel
 import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.TopBar
 import com.gunpang.ui.theme.Gray900
@@ -45,7 +47,11 @@ import com.gunpang.ui.theme.gmarketsansBold
 fun MainScreen(
     navController: NavController,
     appViewModel: AppViewModel,
+    avatarViewModel: AvatarViewModel
 ){
+    LaunchedEffect(key1 = true){
+        avatarViewModel.init()
+    }
     Scaffold(
         topBar={
             TopBar(
