@@ -70,7 +70,7 @@ fun GenderInfo(onGenderChange: (GenderCode?) -> Unit) {
         Button(
             // 남성 선택 버튼
             onClick = {
-                selectedGender = GenderCode.Male
+                selectedGender = GenderCode.MALE
                 onGenderChange(selectedGender)
             },
             modifier = Modifier
@@ -78,12 +78,12 @@ fun GenderInfo(onGenderChange: (GenderCode?) -> Unit) {
                 .height(50.dp),
             shape = Shapes.medium,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedGender == GenderCode.Male) Navy200
+                containerColor = if (selectedGender == GenderCode.MALE) Navy200
                 else Gray200
             ),
         ) {
             Text(
-                text = GenderCode.Male.kor,
+                text = GenderCode.MALE.kor,
                 color = Gray800,
                 style = gmarketsansTypo.titleMedium
             )
@@ -91,7 +91,7 @@ fun GenderInfo(onGenderChange: (GenderCode?) -> Unit) {
         Button(
             // 여성 선택 버튼
             onClick = {
-                selectedGender = GenderCode.Female
+                selectedGender = GenderCode.FEMALE
                 onGenderChange(selectedGender)
             },
             modifier = Modifier
@@ -99,12 +99,12 @@ fun GenderInfo(onGenderChange: (GenderCode?) -> Unit) {
                 .height(50.dp),
             shape = Shapes.medium,
             colors = ButtonDefaults.buttonColors(
-                containerColor = if (selectedGender == GenderCode.Female) Navy200
+                containerColor = if (selectedGender == GenderCode.FEMALE) Navy200
                 else Gray200
             ),
         ) {
             Text(
-                text = GenderCode.Female.kor,
+                text = GenderCode.FEMALE.kor,
                 color = Gray800,
                 style = gmarketsansTypo.titleMedium
             )
