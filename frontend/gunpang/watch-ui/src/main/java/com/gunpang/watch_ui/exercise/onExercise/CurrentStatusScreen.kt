@@ -19,11 +19,10 @@ import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
 import com.gunpang.common.R
+import com.gunpang.domain.watch.ExerciseViewModel
 
-@Preview(name = "운동중 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
-fun CurrentStatusScreen(
-) {
+fun CurrentStatusScreen(exerciseViewModel: ExerciseViewModel) {
     GunpangScreenWrapper {
         Column(modifier = Modifier.fillMaxSize() ,horizontalAlignment = Alignment.CenterHorizontally) {
             Image(

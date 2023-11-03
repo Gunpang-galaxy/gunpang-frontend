@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.gunpang.domain.watch.ExerciseViewModel
 import com.gunpang.domain.watch.WatchAvatarViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.ui.app.watch.exercise.ExerciseScreen
@@ -38,7 +39,8 @@ fun MainScreen(
     mainPagerState: PagerState,
     coroutineScope: CoroutineScope,
     navController: NavHostController,
-    watchAvatarViewModel: WatchAvatarViewModel
+    watchAvatarViewModel: WatchAvatarViewModel,
+    exerciseViewModel: ExerciseViewModel
 ) {
 
     LaunchedEffect(true){
@@ -47,7 +49,7 @@ fun MainScreen(
     }
     GunpangScreenWrapper {
         if(isAvatarInfoConfigured())
-            MainSwipe( mainPagerState, coroutineScope , navController ,watchAvatarViewModel)
+            MainSwipe( mainPagerState, coroutineScope , navController ,watchAvatarViewModel, exerciseViewModel)
         else
             Loading()
     }
@@ -64,7 +66,8 @@ fun MainSwipe(
     mainPagerState: PagerState,
     coroutineScope: CoroutineScope,
     navController: NavHostController,
-    watchAvatarViewModel: WatchAvatarViewModel
+    watchAvatarViewModel: WatchAvatarViewModel,
+    exerciseViewModel: ExerciseViewModel
 ){
     val pageCount by remember { mutableIntStateOf(3) }
     val pagerState = rememberPagerState(initialPage = 1)
@@ -77,7 +80,7 @@ fun MainSwipe(
             pageCount = pageCount
         ) { page ->
             when (page) {
-                0 -> ExerciseScreen(mainPagerState, coroutineScope, navController)
+                0 -> ExerciseScreen(mainPagerState, coroutineScope, navController,exerciseViewModel)
                 1 -> AvatarScreen(mainPagerState, coroutineScope, navController,watchAvatarViewModel)
                 2 -> FoodScreen(mainPagerState, coroutineScope, navController)
             }
