@@ -33,6 +33,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=com.google.android.horologist.annotations.ExperimentalHorologistApi"
     }
 }
 
@@ -67,7 +69,11 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    //horologist
+    implementation("com.google.android.horologist:horologist-health-composables:0.5.9")
+    implementation("com.google.android.horologist:horologist-health-service:0.5.9")
 
+    //implementation("androidx.health:health-services-client:1.0.0-beta02")
 }
 kapt {
     correctErrorTypes = true

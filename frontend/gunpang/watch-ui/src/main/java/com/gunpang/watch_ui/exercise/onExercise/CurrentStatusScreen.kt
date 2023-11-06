@@ -1,5 +1,6 @@
 package com.gunpang.watch_ui.exercise.onExercise
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,17 +11,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
+import com.gunpang.watch_ui.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchDivider
 import androidx.wear.compose.material.Text
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
+import com.google.android.horologist.health.composables.ActiveDurationText
 import com.gunpang.common.R
-import com.gunpang.domain.watch.exercise.ExerciseViewModel
+import com.gunpang.data.service.ExerciseScreenState
 
+import com.gunpang.watch_ui.exercise.formatElapsedTime
 @Composable
-fun CurrentStatusScreen(exerciseViewModel: ExerciseViewModel) {
+fun CurrentStatusScreen(uiState: ExerciseScreenState) {
+    val lastActiveDurationCheckpoint = uiState.exerciseState?.activeDurationCheckpoint
+    val exerciseState = uiState.exerciseState?.exerciseState
+
     GunpangScreenWrapper {
         Column(modifier = Modifier.fillMaxSize() ,horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
@@ -30,9 +36,22 @@ fun CurrentStatusScreen(exerciseViewModel: ExerciseViewModel) {
                     .fillMaxWidth()
                     .weight(1f)
             )
-            TimeShow(minute="33",second="10")
+            //TimeShow(minute="33",second="10")
+            if (exerciseState != null && lastActiveDurationCheckpoint != null) {
+                Log.d("STATE","exerciseState"+exerciseState+"lastActiveDuration"+lastActiveDurationCheckpoint)
+
+                ActiveDurationText(
+                        checkpoint = lastActiveDurationCheckpoint,
+                        state = uiState.exerciseState!!.exerciseState!!,
+                    ) {
+                        Text(text = formatElapsedTime(it, includeSeconds = true),fontSize = 25.sp)
+                    }
+            } else {
+                Text(text = "--분--초")
+            }
+
             WatchDivider(fraction=0.9f)
-            BpmShow(bpm="180")
+            BpmShow(bpm=""+String.format("%3.0f", uiState.exerciseState?.exerciseMetrics?.heartRate))
             Image(
                 painter = painterResource(id = R.drawable.heart),
                 contentDescription = "하트이미지",

@@ -27,8 +27,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.exercisesamplecompose.service.ExerciseServiceMonitor
-import com.example.exercisesamplecompose.service.ExerciseServiceState
 import com.gunpang.data.manager.ExerciseClientManager
 import com.gunpang.data.manager.isExerciseInProgress
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +44,6 @@ class ExerciseService : LifecycleService() {
 
     @Inject
     lateinit var exerciseClientManager: ExerciseClientManager
-
 
     @Inject
     lateinit var exerciseServiceMonitor: ExerciseServiceMonitor
@@ -72,8 +69,6 @@ class ExerciseService : LifecycleService() {
      * Start exercise in this service's coroutine context.
      */
     suspend fun startExercise() {
-        postOngoingActivityNotification()
-        Log.d("EXERCISE_SERVICE","startExercise()")
         exerciseClientManager.startExercise()
     }
 
@@ -195,6 +190,9 @@ class ExerciseService : LifecycleService() {
     private fun postOngoingActivityNotification() {
         if (!serviceRunningInForeground) {
             Log.d(TAG, "Posting ongoing activity notification")
+
+            val serviceState = exerciseServiceMonitor.exerciseServiceState.value
+
         }
     }
 

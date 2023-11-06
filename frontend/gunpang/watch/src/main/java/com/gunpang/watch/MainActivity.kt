@@ -71,6 +71,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         //TODO("필요한 권한 확인후, list에 넣을 것")
         val needPermissions = listOf(
             Manifest.permission.BODY_SENSORS,
+            Manifest.permission.BODY_SENSORS_BACKGROUND,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACTIVITY_RECOGNITION).toTypedArray()

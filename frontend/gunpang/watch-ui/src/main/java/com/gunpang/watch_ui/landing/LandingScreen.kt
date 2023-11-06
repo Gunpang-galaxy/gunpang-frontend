@@ -26,7 +26,7 @@ import androidx.wear.compose.material.Text
 import com.gunpang.common.R
 import com.gunpang.common.code.InitCode
 import com.gunpang.domain.watch.WatchLandingViewModel
-import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
+import com.gunpang.watch_ui.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import com.gunpang.watch_ui.theme.Gray300
 import com.gunpang.watch_ui.theme.Green500
@@ -132,7 +132,7 @@ fun NotConnectedDevice(){
         ) {
 
             Text(
-                text = "휴대폰과 연결이 뚜.. 뚜..\n(연결된 기기 없음)",
+                text = "휴대폰과 연결이 뚜.. 뚜..",
                 color = Color.White,
                 fontSize = 20.sp,
                 fontFamily = galmuri

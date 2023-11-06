@@ -1,8 +1,6 @@
-package com.gunpang.domain.watch.exercise
+package com.gunpang.data.service
 
-import com.example.exercisesamplecompose.service.ExerciseServiceState
 import com.gunpang.data.repository.ServiceState
-import com.gunpang.data.service.SummaryScreenState
 import java.time.Duration
 
 data class ExerciseScreenState(

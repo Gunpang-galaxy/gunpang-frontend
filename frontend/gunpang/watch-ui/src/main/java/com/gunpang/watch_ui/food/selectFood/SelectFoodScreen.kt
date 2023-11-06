@@ -17,8 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
@@ -32,7 +30,7 @@ import com.gunpang.common.R
 import com.gunpang.common.code.MealRecordCode
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.WatchFeedViewModel
-import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
+import com.gunpang.watch_ui.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import com.gunpang.watch_ui.common.WatchDivider
 import com.gunpang.watch_ui.theme.Gray800

@@ -34,7 +34,8 @@ import javax.inject.Singleton
 @SuppressLint("RestrictedApi")
 @Singleton
 class ExerciseClientManager @Inject constructor(
-    val healthServicesClient: HealthServicesClient
+    val healthServicesClient: HealthServicesClient,
+    val logger: ExerciseLogger
 ) {
     val exerciseClient: ExerciseClient = healthServicesClient.exerciseClient
 
@@ -49,12 +50,12 @@ class ExerciseClientManager @Inject constructor(
     }
 
     suspend fun startExercise() {
-        Log.d("START_EXERCISE","in exerciseClientManager")
+        logger.log("Starting exercise")
         // Types for which we want to receive metrics. Only ask for ones that are supported.
         val capabilities = getExerciseCapabilities()
 
         if (capabilities == null) {
-            Log.d("START_EXERCISE","No capabilities")
+            logger.log("No capabilities")
             return
         }
 
@@ -101,7 +102,7 @@ class ExerciseClientManager @Inject constructor(
         )
 
         exerciseClient.startExercise(config)
-        Log.d("START_EXERCISE","Started exercise")
+        logger.log("Started exercise")
     }
 
     /***
@@ -109,7 +110,7 @@ class ExerciseClientManager @Inject constructor(
      * when acquiring calories or distance.
      */
     suspend fun prepareExercise() {
-        Log.d("PREPARE_EXERCISE","Preparing an exercise")
+        logger.log("Preparing an exercise")
         val warmUpConfig = WarmUpConfig(
             exerciseType = ExerciseType.RUNNING,
             dataTypes = setOf(DataType.HEART_RATE_BPM, DataType.LOCATION)
@@ -117,23 +118,22 @@ class ExerciseClientManager @Inject constructor(
         try {
             exerciseClient.prepareExercise(warmUpConfig)
         } catch (e: Exception) {
-            Log.d("PREPARE_EXERCISE","Prepare exercise failed - ${e.message}")
-
+            logger.log("Prepare exercise failed - ${e.message}")
         }
     }
 
     suspend fun endExercise() {
-        Log.d("END_EXERCISE","END an exercise")
+        logger.log("Ending exercise")
         exerciseClient.endExercise()
     }
 
     suspend fun pauseExercise() {
-        Log.d("PAUSE_EXERCISE","Pausing exercise")
+        logger.log("Pausing exercise")
         exerciseClient.pauseExercise()
     }
 
     suspend fun resumeExercise() {
-        Log.d("RESUME_EXERCISE","Resuming exercise")
+        logger.log("Resuming exercise")
         exerciseClient.resumeExercise()
     }
 
@@ -197,4 +197,7 @@ sealed class ExerciseMessage {
     class LocationAvailabilityMessage(val locationAvailability: LocationAvailability) :
         ExerciseMessage()
 }
+
+
+
 
