@@ -22,6 +22,7 @@ import com.gunpang.ui.app.screen.goal.ExerciseGoal
 import com.gunpang.ui.app.screen.goal.SleepGoal
 import com.gunpang.ui.app.screen.landing.Introduction
 import com.gunpang.ui.app.screen.landing.LinkSamsungHealth
+import com.gunpang.ui.app.screen.landing.Login
 import com.gunpang.ui.app.screen.landing.PersonalInfo
 import com.gunpang.ui.app.screen.main.MainScreen
 import com.gunpang.ui.app.screen.mypage.MyPageScreen
@@ -30,13 +31,14 @@ import com.gunpang.ui.theme.GunpangTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppMain(
-    loginViewModel: LoginViewModel
-){
+    loginViewModel: LoginViewModel,
+) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
+
     GunpangTheme {
-        Scaffold {
-            fullScreen -> Box(modifier = Modifier.padding(fullScreen)) {
+        Scaffold { fullScreen ->
+            Box(modifier = Modifier.padding(fullScreen)) {
                 /**
                  * 앱 로딩 시
                  * - 로그인 X: 로그인-> 설명 -> 메인
@@ -52,13 +54,25 @@ fun AppMain(
                  *   - 목표 입력 O: 메인
                  */
 
-                if(loginViewModel.initCode == InitCode.FINISH){
-                    AppNavGraph()
-                }
-                else {
-                    // TODO : 예외 페이지로 이동
-                    AppNavGraph()
-                }
+//                when (loginViewModel.initCode) {
+//                    InitCode.NOT_LOGIN -> { // 로그인 되지 않은 상태
+//                        Login(loginViewModel = loginViewModel)
+//                    }
+//                    InitCode.REGISTER -> { // 회원가입 필요
+//                        AppNavGraph(startDestination = AppNavItem.Introduction.routeName)
+//                    }
+//                    InitCode.NOT_CONFIG -> { // 신체 정보 입력 X
+//                        AppNavGraph(startDestination = AppNavItem.PersonalInfo.routeName)
+//                    }
+//                    InitCode.FINISH -> {
+//                        AppNavGraph()
+//                    }
+//                    else -> {
+//                        // TODO : 예외 페이지로 이동
+//                        Login(loginViewModel = loginViewModel)
+//                    }
+//                }
+                AppNavGraph()
             }
         }
     }

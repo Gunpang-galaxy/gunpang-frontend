@@ -23,9 +23,9 @@ import java.util.concurrent.TimeUnit
 
 interface Api {
     companion object {
-        private const val BASE_URL = "http://k9a207.p.ssafy.io.p:8080"
-        private const val LOGIN_URL = "http://k9a207.p.ssafy.io.p:8080/users"
-        private const val TOKEN_RECREATE_URL = "http://k9a207.p.ssafy.io.p:8080/users/jwt/recreate"
+        private const val BASE_URL = "http://k9a207.p.ssafy.io:8080"
+        private const val LOGIN_URL = "http://k9a207.p.ssafy.io:8080/users"
+        private const val TOKEN_RECREATE_URL = "http://k9a207.p.ssafy.io:8080/users/jwt/recreate"
         private const val TIMEOUT_LIMIT = 60L // api 연결 시간 제한
 
         class GsonDateFormatAdapter : JsonSerializer<LocalDateTime?>,
@@ -61,7 +61,7 @@ interface Api {
         }
         // accessToken 탑재
         private class AccessTokenInterceptor : Interceptor {
-            @Throws(IOException::class)
+//            @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
                 val url = chain.request().url().toString()
                 Log.d("api", "url : $url, request : ${chain.request()}")
