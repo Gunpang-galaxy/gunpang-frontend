@@ -14,7 +14,9 @@ import androidx.navigation.compose.rememberNavController
 import com.gunpang.common.code.InitCode
 import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.domain.app.AppViewModel
+import com.gunpang.domain.app.avatar.AvatarViewModel
 import com.gunpang.domain.app.landing.LoginViewModel
+import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.screen.avatar.AvatarEgg
 import com.gunpang.ui.app.screen.avatar.NameAvatar
 import com.gunpang.ui.app.screen.calender.CalenderScreen
@@ -24,6 +26,7 @@ import com.gunpang.ui.app.screen.landing.Introduction
 import com.gunpang.ui.app.screen.landing.LinkSamsungHealth
 import com.gunpang.ui.app.screen.landing.Login
 import com.gunpang.ui.app.screen.landing.PersonalInfo
+import com.gunpang.ui.app.screen.main.AvatarFinishedScreen
 import com.gunpang.ui.app.screen.main.MainScreen
 import com.gunpang.ui.app.screen.mypage.MyPageScreen
 import com.gunpang.ui.theme.GunpangTheme
@@ -86,7 +89,8 @@ fun AppNavGraph(
     val navController = rememberNavController()
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
-
+    val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
+    val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner)
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -113,16 +117,19 @@ fun AppNavGraph(
             ExerciseGoal(navController)
         }
         composable(AppNavItem.MainScreen.routeName) {
-            MainScreen(navController, appViewModel)
+            MainScreen(navController, appViewModel, avatarViewModel)
         }
         composable(AppNavItem.MyPageScreen.routeName) {
-            MyPageScreen(navController, appViewModel)
+            MyPageScreen(navController, appViewModel, userViewModel )
         }
         composable(AppNavItem.CalenderScreen.routeName) {
             CalenderScreen(navController, appViewModel)
         }
         composable(AppNavItem.BodyCompositionScreen.routeName) {
             CalenderScreen(navController, appViewModel)
+        }
+        composable(AppNavItem.AvatarFinishScreen.routeName) {
+            AvatarFinishedScreen(navController, avatarViewModel)
         }
     }
 }

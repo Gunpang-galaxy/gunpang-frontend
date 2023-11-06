@@ -17,31 +17,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.gunpang.common.R
 import com.gunpang.common.code.AvatarStatusCode
+import com.gunpang.common.code.DayCode
+import com.gunpang.domain.entity.AvatarGoal
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansBold
 
 @Composable
-@Preview(
-    heightDp = 200, showBackground = true)
 fun AvatarGoal(
     modifier : Modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(),
     avatarStatus: AvatarStatusCode = AvatarStatusCode.ALIVE,
-    goalList: List<String> =
-        listOf<String>(
-            "월, 수 운동하기",
-            "23:30 - 06:00",
-            "식사 기록하기"
-            )
+    goal: AvatarGoal
     ){
-    // 목표 배경 이미지 설정
-    var goalBackground:Int = when{
-        avatarStatus == AvatarStatusCode.ALIVE -> R.drawable.goal_ing
-        avatarStatus == AvatarStatusCode.DEAD -> R.drawable.goal_fail
-        avatarStatus == AvatarStatusCode.GRADUATED -> R.drawable.goal_success
-        else -> R.drawable.goal_ing
-    }
 
     Box(
         modifier = modifier,
@@ -50,7 +38,12 @@ fun AvatarGoal(
         // 목표 배경 이미지
         Image(
             modifier= Modifier.fillMaxWidth(),
-            painter = painterResource(id = goalBackground),
+            painter = painterResource(id = when{
+                avatarStatus == AvatarStatusCode.ALIVE -> R.drawable.goal_ing
+                avatarStatus == AvatarStatusCode.DEAD -> R.drawable.goal_fail
+                avatarStatus == AvatarStatusCode.GRADUATED -> R.drawable.goal_success
+                else -> R.drawable.goal_ing
+            }),
             contentDescription = "목표 배경 이미지",
             contentScale = ContentScale.Fit
         )
@@ -60,17 +53,42 @@ fun AvatarGoal(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround,
         ){
-            goalList.forEachIndexed { index, goalText ->
-                Text(
-                    text= goalText,
-                    textAlign = TextAlign.Center,
-                    fontFamily = gmarketsansBold,
-                    fontSize = 20.sp,
-                    color = Gray900,
-                )
-
-            }
+            Text(
+                text= exerciseGoal(goal.exerciseDay, goal.exerciseTime),
+                textAlign = TextAlign.Center,
+                fontFamily = gmarketsansBold,
+                fontSize = 20.sp,
+                color = Gray900,
+            )
+            Text(
+                text= "${goal.sleepStart} - ${goal.sleepEnd}",
+                textAlign = TextAlign.Center,
+                fontFamily = gmarketsansBold,
+                fontSize = 20.sp,
+                color = Gray900,
+            )
+            Text(
+                text= goal.foodGoal,
+                textAlign = TextAlign.Center,
+                fontFamily = gmarketsansBold,
+                fontSize = 20.sp,
+                color = Gray900,
+            )
         }
     }
-
 }
+
+fun exerciseGoal(
+    exerciseDay : List<DayCode>,
+    exerciseTime : String
+) : String {
+    var goalText = ""
+    exerciseDay.forEachIndexed {index, day ->
+        if(index == exerciseDay.size - 1)
+            goalText += "${day.kor}요일 ${exerciseTime}분 운동하기"
+        else
+            goalText += "${day.kor}, "
+    }
+    return goalText
+}
+

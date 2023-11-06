@@ -5,5 +5,16 @@ enum class AvatarStatusCode(
 ) {
     ALIVE("생존"),
     DEAD("사망"),
-    GRADUATED("졸업")
+    GRADUATED("졸업"),
+    NONE("상태 정보 없음");
+
+    companion object {
+        fun fromString(status: String): AvatarStatusCode {
+            var findResult : AvatarStatusCode? = values().find { it.status == status }
+            return when {
+                findResult != null -> findResult
+                else -> NONE
+            }
+        }
+    }
 }

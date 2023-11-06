@@ -1,10 +1,10 @@
 package com.gunpang.data.model.response
 
 data class AvatarGoalResDto(
-    val sleepString: String, // 목표 취침 시간
+    val sleepStart: String, // 목표 취침 시간
     val sleepEnd: String, // 목표 기상 시간
     val exerciseDay: Int, // 목표 운동 요일
-    val exerciseTime: Int, // 목표 운동 시간[분]
+    val exerciseTime: String, // 목표 운동 시간 (??시간??분)
     val food: String // 음식 목표
 )
 

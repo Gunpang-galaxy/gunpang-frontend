@@ -10,5 +10,17 @@ enum class DayCode(
     WED("수", 0b00001000),
     THU("목", 0b00000100),
     FRI("금", 0b00000010),
-    SAT("토", 0b00000001),
+    SAT("토", 0b00000001);
+
+    companion object {
+        fun fromBitCount(week: Int): List<DayCode> {
+            val result = mutableListOf<DayCode>()
+            values().forEach {
+                if (it.bitCount and week != 0) {
+                    result.add(it)
+                }
+            }
+            return result
+        }
+    }
 }
