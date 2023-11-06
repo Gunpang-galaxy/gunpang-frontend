@@ -58,7 +58,7 @@ dependencies {
     // implementation(project(path=":common"))
 
     implementation(project(path=":common"))
-    implementation(project(":app-ui"))
+    implementation(project(path=":app-ui"))
     implementation(project(path=":domain"))
     implementation(project(path=":data"))
     // android
@@ -97,6 +97,9 @@ dependencies {
 
     // google login
     implementation ("com.google.android.gms:play-services-auth:20.7.0")
+
+    // The compose calendar library
+    implementation ("com.kizitonwose.calendar:compose:2.4.0")
 }
 
 // firebase

@@ -72,4 +72,8 @@ dependencies {
     // page indicator(https://github.com/tommybuonomo/dotsindicator)
     implementation("com.tbuonomo:dotsindicator:5.0")
     implementation("androidx.compose.foundation:foundation")
+
+    // The compose calendar library
+    implementation ("com.kizitonwose.calendar:compose:2.4.0")
+
 }
