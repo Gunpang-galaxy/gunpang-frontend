@@ -32,6 +32,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
 import com.gunpang.data.GunpangPreferenceUtil
+import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.AppViewModelFactory
 import com.gunpang.domain.app.landing.LoginViewModel
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         private const val PLAY_STORE_APP_URI = "market://details?id=com.gunpang"
 
         // 컨텍스트에 데이터 저장
-        private lateinit var gunpangPreferenceUtil: GunpangPreferenceUtil
+//         private lateinit var gunpangPreferenceUtil: GunpangPreferenceUtil
     }
 
     // 모바일-워치 간 연결
@@ -70,7 +71,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // 컨텍스트에 데이터 저장
-        gunpangPreferenceUtil = GunpangPreferenceUtil(applicationContext)
+//        gunpangPreferenceUtil = GunpangPreferenceUtil(applicationContext)
 
         super.onCreate(savedInstanceState)
         Log.v("Android", "SDK_INT : " + Build.VERSION.SDK_INT)
@@ -93,14 +94,6 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
             .build()
         mGoogleSignInClient = applicationContext?.let { GoogleSignIn.getClient(it, gso) }!!
         signInIntent = mGoogleSignInClient.signInIntent
-        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            Log.d("login", "result: ${result.resultCode}")
-            if (result.resultCode == -1) { // 로그인 성공
-                val data: Intent? = result.data
-                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-                handleSignInResult(task)
-            }
-        }
 
         // 로그인 view model
         loginViewModelFactory = LoginViewModel.LoginViewModelFactory(signInIntent, resultLauncher, this.application)
@@ -176,6 +169,16 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     // [알림 관련 코드 END]
 
     // [로그인 관련 코드 START]
+    // 구글 로그인 실행
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        Log.d("login", "result: ${result.resultCode}")
+        if (result.resultCode == -1) { // 로그인 성공
+            val data: Intent? = result.data
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
     // 로그인 시 사용하는 google data 수집
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         Log.d("login", "handleSignInResult 진입")
@@ -184,7 +187,8 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
             val id = account?.id.toString()
             val email = account?.email.toString()
             Log.d("login", "id: $id / email: $email")
-            gunpangPreferenceUtil.setString("playerId", id)
+            DataApplicationRepository().setValue("playerId", id)
+            DataApplicationRepository().setValue("email", email)
         } catch (e: ApiException) {
             Log.w("failed", "signInResult:failed code=" + e.statusCode)
         }
@@ -217,7 +221,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     }
 
     // 웨어러블 등록 여부 (근처에 있는지)
-    fun findWearDevicesWithApp() {
+    private fun findWearDevicesWithApp() {
         val pendingResult = Wearable.getCapabilityClient(this)
             .getCapability(CAPABILITY_WEAR_APP, CapabilityClient.FILTER_REACHABLE)
 
@@ -232,15 +236,15 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     }
 
     // 웨어러블 기기 찾기
-    fun findAllWearDevices() {
+    private fun findAllWearDevices() {
         val pendingResult = Wearable.getNodeClient(this).connectedNodes
 
         pendingResult.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 allConnectedNodes = task.result
-                Log.d("wearOS", "allConnectedNodes: ${allConnectedNodes.get(0).displayName}")
-                Log.d("wearOS", "allConnectedNodes: ${allConnectedNodes.get(0).id}")
-                wearableAppInstallRequest()
+//                Log.d("wearOS", "allConnectedNodes: ${allConnectedNodes.get(0).displayName}")
+//                Log.d("wearOS", "allConnectedNodes: ${allConnectedNodes.get(0).id}")
+//                wearableAppInstallRequest()
             } else {
                 // Task failed with an exception
                 Log.e("wearOS", "Failed CapabilityApi: " + task.exception)
