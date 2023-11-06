@@ -131,7 +131,7 @@ fun AvatarFinishedScreen(
                 // TODO : 아바타 다시 만드려면 어떻게 해야함?
                 navController.navigate(AppNavItem.MainScreen.routeName)
             }
-        );
+        )
 
     }
 }
