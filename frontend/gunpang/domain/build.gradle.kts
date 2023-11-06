@@ -32,6 +32,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=com.google.android.horologist.annotations.ExperimentalHorologistApi"
+
     }
 }
 
@@ -70,8 +73,12 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
-
     implementation("androidx.health:health-services-client:1.0.0-beta02")
+
+    //horologist
+    implementation("com.google.android.horologist:horologist-health-composables:0.5.9")
+
+
 }
 kapt {
     correctErrorTypes = true

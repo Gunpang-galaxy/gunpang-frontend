@@ -11,10 +11,12 @@ import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Text
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.exercise.ExerciseViewModel
-import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
+import com.gunpang.watch_ui.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
+import com.gunpang.watch_ui.exercise.formatElapsedTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import java.time.Duration
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -25,9 +27,8 @@ fun AfterExercise(
     exerciseViewModel: ExerciseViewModel
 ) {
     val secondsLeft = remember { mutableStateOf(5) }
-
     GunpangScreenWrapper {
-        Text("99분 30초", fontSize = 25.sp)
+        Text(""+formatElapsedTime(exerciseViewModel.elapsedTime, includeSeconds = true), fontSize = 25.sp)
         Text("${secondsLeft.value}초 후 화면 이동", fontSize = 12.sp)
         WatchButton(text = "운동 완료", onClick = { navController.navigate(WatchNavItem.Main.route) })
 

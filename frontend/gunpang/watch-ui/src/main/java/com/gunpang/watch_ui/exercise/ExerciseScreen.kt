@@ -1,16 +1,27 @@
-package com.gunpang.ui.app.watch.exercise
+package com.gunpang.watch_ui.exercise
 
+import android.content.ContentValues
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.gunpang.common.navigation.WatchNavItem
-import com.gunpang.domain.watch.exercise.ExerciseViewModel
+import com.gunpang.domain.watch.exercise.PreparingScreenState
+import com.gunpang.domain.watch.exercise.PreparingViewModel
 import com.gunpang.watch_ui.common.WatchButton
 import kotlinx.coroutines.CoroutineScope
 
@@ -19,16 +30,25 @@ import kotlinx.coroutines.CoroutineScope
 fun ExerciseScreen(
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
-    navController: NavHostController,
-    exerciseViewModel: ExerciseViewModel
+    navController: NavHostController
 ) {
+    val viewModel = hiltViewModel<PreparingViewModel>()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { result ->
+        if (result.all { it.value }) {
+            Log.d(ContentValues.TAG, "All required permissions granted")
+        }
+    }
+
     Column(
-        modifier = Modifier.fillMaxHeight(),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         WatchButton(text = "시작하기", onClick = {
-            exerciseViewModel.startExercise()
+            viewModel.startExercise()
             navController.navigate(WatchNavItem.OnExercise.route)
         })
     }

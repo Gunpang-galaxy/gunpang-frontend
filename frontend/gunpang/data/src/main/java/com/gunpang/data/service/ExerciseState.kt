@@ -1,4 +1,4 @@
-package com.example.exercisesamplecompose.service
+package com.gunpang.data.service
 
 import androidx.health.services.client.data.DataPointContainer
 import androidx.health.services.client.data.DataType

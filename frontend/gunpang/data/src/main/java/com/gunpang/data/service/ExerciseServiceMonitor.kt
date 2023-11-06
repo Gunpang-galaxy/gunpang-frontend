@@ -1,21 +1,20 @@
-package com.example.exercisesamplecompose.service
+package com.gunpang.data.service
 
 import android.annotation.SuppressLint
 import android.app.Service
 import androidx.health.services.client.data.ExerciseUpdate
 import com.gunpang.data.manager.ExerciseClientManager
 import com.gunpang.data.manager.ExerciseMessage
-import com.gunpang.data.service.ExerciseService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class ExerciseServiceMonitor @Inject constructor(
-    val exerciseClientManager: ExerciseClientManager,
+    private val exerciseClientManager: ExerciseClientManager,
     val service: Service
 ) {
     // TODO behind an interface
-    val exerciseService = service as ExerciseService
+    private val exerciseService = service as ExerciseService
 
     val exerciseServiceState = MutableStateFlow(
         ExerciseServiceState(

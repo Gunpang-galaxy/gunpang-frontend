@@ -1,4 +1,4 @@
-package com.gunpang.ui.app.watch.history
+package com.gunpang.watch_ui.record
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -28,7 +28,7 @@ import androidx.wear.compose.material.rememberScalingLazyListState
 import com.gunpang.common.R
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.WatchRecordViewModel
-import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
+import com.gunpang.watch_ui.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import com.gunpang.watch_ui.common.WatchChip
 import com.gunpang.watch_ui.common.WatchDivider

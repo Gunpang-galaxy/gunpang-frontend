@@ -1,10 +1,14 @@
-package com.gunpang.ui.app.watch
+package com.gunpang.watch_ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -18,11 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.domain.watch.WatchAvatarViewModel
-import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
-import com.gunpang.ui.app.watch.exercise.ExerciseScreen
-import com.gunpang.ui.app.watch.food.FoodScreen
+import com.gunpang.domain.watch.exercise.ExerciseViewModel
+import com.gunpang.watch_ui.common.GunpangScreenWrapper
+import com.gunpang.watch_ui.exercise.ExerciseScreen
+import com.gunpang.watch_ui.food.FoodScreen
 import com.gunpang.watch_ui.avatar.AvatarScreen
 import com.gunpang.watch_ui.landing.Loading
 import com.gunpang.watch_ui.theme.Gray600
@@ -70,24 +74,29 @@ fun MainSwipe(
     exerciseViewModel: ExerciseViewModel
 ){
     val pageCount by remember { mutableIntStateOf(3) }
-    val pagerState = rememberPagerState(initialPage = 1)
+    val pagerState = rememberPagerState(initialPage = 1,pageCount={pageCount})
     Column(
-        modifier = Modifier.fillMaxSize(),
+        //modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HorizontalPager(
-            modifier = Modifier.weight(0.9f),
-            state = pagerState,
-            pageCount = pageCount
-        ) { page ->
-            when (page) {
-                0 -> ExerciseScreen(mainPagerState, coroutineScope, navController,exerciseViewModel)
-                1 -> AvatarScreen(mainPagerState, coroutineScope, navController,watchAvatarViewModel)
-                2 -> FoodScreen(mainPagerState, coroutineScope, navController)
+
+
+            HorizontalPager(
+                modifier = Modifier
+                .weight(0.9f),
+                state = pagerState,
+            ) { page ->
+                when (page) {
+                    0 -> ExerciseScreen(mainPagerState, coroutineScope, navController)
+                    1 -> AvatarScreen(mainPagerState, coroutineScope, navController,watchAvatarViewModel)
+                    2 -> FoodScreen(mainPagerState, coroutineScope, navController)
+                }
             }
-        }
+
 
         DotsIndicator(
             modifier = Modifier
+                .weight(0.1f)
                 .align(Alignment.CenterHorizontally) // 중앙 정렬
                 .padding(6.dp), // 상하좌우에 패딩 적용
             dotCount = pageCount,
@@ -105,5 +114,9 @@ fun MainSwipe(
             ),
             pagerState = pagerState
         )
+        /*
+
+
+        */
     }
 }

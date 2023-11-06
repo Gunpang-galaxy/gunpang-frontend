@@ -1,4 +1,4 @@
-package com.gunpang.ui.app.watch.common
+package com.gunpang.watch_ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

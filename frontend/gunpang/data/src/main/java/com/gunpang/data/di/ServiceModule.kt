@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.exercisesamplecompose.di
+package com.gunpang.data.di
 
 import android.app.NotificationManager
 import android.app.Service
