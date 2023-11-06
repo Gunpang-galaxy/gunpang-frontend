@@ -1,5 +1,9 @@
 package com.gunpang.domain.app.avatar
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gunpang.common.code.AvatarCode
@@ -21,11 +25,14 @@ import kotlinx.coroutines.launch
 
 class AvatarViewModel : ViewModel(){
 
-    var avatarGoal : AvatarGoal = AvatarGoal() // 해당 아바타 목표
-    var appAvatar : AppAvatar = AppAvatar() // 아바타 정보
-    var contents: Any? = null // 아바타 컨텐츠
-    var prevId : Int = -1 // 이전 아바타 아이디
-    var nextId : Int = -1 // 다음 아바타 아이디
+    var avatarGoal by mutableStateOf<AvatarGoal>(AvatarGoal()) // 해당 아바타 목표
+    var appAvatar by mutableStateOf<AppAvatar>(AppAvatar()) // 아바타 정보
+    var avatarAliveContents by mutableStateOf(AppAvatarAliveContent()) // 현재 아바타 컨텐츠
+    var avatarDeadContents by mutableStateOf(AppAvatarDeadContent()) // 현재 아바타 컨텐츠
+    var avatarGraduatedContents by mutableStateOf(AppAvatarGraduatedContent()) // 현재 아바타 컨텐츠
+
+    var prevId by mutableIntStateOf(-1) // 이전 아바타 아이디
+    var nextId by mutableIntStateOf(-1)  // 다음 아바타 아이디
 
     var currentAvatarExist : Boolean = true ;
 
@@ -58,7 +65,7 @@ class AvatarViewModel : ViewModel(){
                     )
                     when {
                         data.status == "GRAUDATED" -> {
-                            contents = AppAvatarGraduatedContent(
+                            avatarGraduatedContents = AppAvatarGraduatedContent(
                                 data.contents["exerciseTotal"] as Int,
                                 data.contents["exerciseSuccessCnt"] as Int,
                                 data.contents["foodTotal"] as Int,
@@ -68,12 +75,12 @@ class AvatarViewModel : ViewModel(){
                             )
                         }
                         data.status == "DEAD" -> {
-                            contents = AppAvatarDeadContent(
+                            avatarDeadContents = AppAvatarDeadContent(
                                 DeathCauseCode.fromString(data.contents["deathCause"].toString())
                             )
                         }
                         else ->
-                            contents = AppAvatarAliveContent(
+                            avatarAliveContents = AppAvatarAliveContent(
                                 MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
                                 MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
                                 MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
@@ -114,7 +121,7 @@ class AvatarViewModel : ViewModel(){
                     )
                     when {
                         data.status == "GRAUDATED" -> {
-                            contents = AppAvatarGraduatedContent(
+                            avatarGraduatedContents = AppAvatarGraduatedContent(
                                 data.contents["exerciseTotal"] as Int,
                                 data.contents["exerciseSuccessCnt"] as Int,
                                 data.contents["foodTotal"] as Int,
@@ -124,15 +131,15 @@ class AvatarViewModel : ViewModel(){
                             )
                         }
                         data.status == "DEAD" -> {
-                            contents = AppAvatarDeadContent(
+                            avatarDeadContents = AppAvatarDeadContent(
                                 DeathCauseCode.fromString(data.contents["deathCause"].toString())
                             )
                         }
                         else ->
-                            contents = AppAvatarAliveContent(
+                            avatarAliveContents = AppAvatarAliveContent(
                                 MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
-                                MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
-                                MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
+                                MealRecordCode.fromString(data.contents["lunchFoodType"].toString()),
+                                MealRecordCode.fromString(data.contents["dinnerFoodType"].toString()),
                                 data.contents["exerciseTime"].toString(),
                                 data.contents["sleepAt"].toString(),
                                 data.contents["awakeAt"].toString()
