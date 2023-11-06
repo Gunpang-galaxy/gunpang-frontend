@@ -19,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.gunpang.common.R
+import com.gunpang.common.code.AvatarStatusCode
+import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.domain.app.AppViewModel
+import com.gunpang.domain.app.avatar.AvatarViewModel
 import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.TopBar
 import com.gunpang.ui.theme.Gray900
@@ -45,13 +49,23 @@ import com.gunpang.ui.theme.gmarketsansBold
 fun MainScreen(
     navController: NavController,
     appViewModel: AppViewModel,
+    avatarViewModel: AvatarViewModel
 ){
+    LaunchedEffect(key1 = true){
+        // ui 접근 시 한번만 실행
+        avatarViewModel.init()
+
+        // 현재 아바타가 살아있는 상태가 아닐 경우
+        if(avatarViewModel.appAvatar.status != AvatarStatusCode.ALIVE){
+            navController.navigate(AppNavItem.AvatarFinishScreen.routeName)
+        }
+    }
+
     Scaffold(
         topBar={
             TopBar(
                 navController = navController,
-            )
-               },
+            ) },
         containerColor= Color.White,
         bottomBar = { BottomNavBar(navController = navController) },
         ) {
@@ -64,7 +78,7 @@ fun MainScreen(
                     .padding(paddingValues),
                 color = Color.White
             ){
-                MainContent()
+                MainContent(avatarViewModel = avatarViewModel)
             }
     }
 }

@@ -18,30 +18,15 @@ class AppViewModel(
     //mutableStateOf 지정해서 변경되는 값들을 관리
     var findAvatarLoadingState by mutableStateOf(false) // 아바타 찾는데 로딩중인지
 
-    // 아바타 생성
+//    fun init() {
+//        viewModelScope.launch(Dispatchers.Main) {
+//            // TODO : 현재 아바타 정보 가져오기
+//        }
+//    }
 
-    // 메인화면
-
-    // 아바타 정보
-//    var avatarView by mutableStateOf() // 아바타 이미지
-
-    // main screen 진입시 현재 아바타 정보 가져오기
-    fun init() {
-        viewModelScope.launch(Dispatchers.Main) {
-            // TODO : 현재 아바타 정보 가져오기
-        }
-    }
-
-    // TODO : 아바타 생성
-
-    // TODO : 아바타 정보 가져오기
-
-    // TODO :
 }
 
-
 class AppViewModelFactory(private val application : Application) : ViewModelProvider.Factory {
-
     // ViewModelProvider.Factory를 확장함.
     // 오버라이드 하면 아래와 같은 create 함수를 받을 수 있음.
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -24,29 +24,19 @@ import androidx.compose.ui.unit.sp
 import com.gunpang.common.code.AvatarStatusCode
 import com.gunpang.common.R
 import com.gunpang.common.code.MealRecordCode
+import com.gunpang.domain.entity.AppAvatarAliveContent
+import com.gunpang.domain.entity.AppAvatarDeadContent
+import com.gunpang.domain.entity.AppAvatarGraduatedContent
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansBold
-import com.gunpang.ui.theme.gmarketsansLight
 import java.time.LocalDate
 
 @Composable
-@Preview(
-    backgroundColor = 0xFFFFFFFF,
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 270
-)
 fun AvatarTodayInfo(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(),
-    exerciseTime : Int = 0,
-    sleepTime : String = "00:00 - 06:00",
-    mealRecord : List<MealRecordCode> = listOf(
-        MealRecordCode.NORMAL,
-        MealRecordCode.NOT_RECORD,
-        MealRecordCode.BAD
-    ),
+    contents : AppAvatarAliveContent
 ){
     Box(
         modifier  = modifier.padding(top = 60.dp),
@@ -63,39 +53,44 @@ fun AvatarTodayInfo(
                     .fillMaxWidth()
                     .height(36.dp),
                 title = "운동",
-                content = "아직 안함")
+                content = when{
+                    contents.exerciseTime == "00시간00분" -> "아직 운동 안했어.."
+                    else -> contents.exerciseTime
+                }
+            )
             Spacer(modifier = Modifier.height(8.dp))
-            TodayInfoDetail(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(36.dp),
-                title = "수면",
-                content = "23:30 - 06:00")
-            Spacer(modifier = Modifier.height(8.dp))
-            TodayInfoDetail(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(36.dp),
-                title = "식사",
-                content = mealRecord)
         }
+        TodayInfoDetail(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(36.dp),
+            title = "수면",
+            content = when{
+                contents.sleepAt == "-1" || contents.awakeAt == "-1" -> "기록이 안됬네.."
+                else -> "${contents.sleepAt} - ${contents.awakeAt}"
+            }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        TodayInfoDetail(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(36.dp),
+            title = "식사",
+            content = listOf<MealRecordCode>(
+                contents.breakfastFoodType,
+                contents.lunchFoodType,
+                contents.dinnerFoodType
+            )
+        )
     }
 }
 
 @Composable
-@Preview(
-    backgroundColor = 0xFFFFFFFF,
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 270
-    )
 fun AvatarDeathInfo(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(),
-    deathSign: String = "수면 부족",
-    startedDate: LocalDate = LocalDate.now(),
-    finishedDate: LocalDate = LocalDate.now(),
+    deathSign: String,
 ){
     // 이전 아바타가 죽었고, 왜 죽었는지
     Text(
@@ -109,19 +104,14 @@ fun AvatarDeathInfo(
 
 }
 @Composable
-@Preview(
-    backgroundColor = 0xFFFFFFFF,
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 270
-)
 fun FinishedAvatarInfo(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(),
     statusCode : Enum<AvatarStatusCode> = AvatarStatusCode.GRADUATED,
-    startedDate: LocalDate = LocalDate.now(),
-    finishedDate: LocalDate = LocalDate.now(),
+    startedDate: String,
+    finishedDate: String,
+    contents: Any
 ){
     // 이전 아바타가 졸업했고, 얼마나 목표를 달성했는지
     Box(modifier = modifier,
@@ -132,9 +122,9 @@ fun FinishedAvatarInfo(
                 .fillMaxHeight()){
 
             LivingDate(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(28.dp))
+                startedDate=startedDate,
+                finishedDate=finishedDate
+            )
             var finishedInfoModifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
@@ -143,13 +133,17 @@ fun FinishedAvatarInfo(
                 statusCode == AvatarStatusCode.DEAD ->
                     AvatarDeathInfo(
                         modifier = finishedInfoModifier,
-                        startedDate = startedDate,
-                        finishedDate = finishedDate,
+                        deathSign = (contents as AppAvatarDeadContent).deathCause.status
                     )
 
                 else ->
                     AvatarGraduatedInfo(
                         modifier = finishedInfoModifier,
+                        dateDuration = 28,
+                        exerciseDate = 28,
+                        exerciseTimes = (contents as AppAvatarGraduatedContent).exerciseSuccessCnt,
+                        wellSleepTimes = (contents as AppAvatarGraduatedContent).sleepSuccessCnt,
+                        mealRecordTimes = (contents as AppAvatarGraduatedContent).foodSuccessCnt
                     )
                 // dateDuration = (finishedDate.time - startedDate.time) / (24 * 60 * 60 * 1000)
             }
@@ -158,22 +152,16 @@ fun FinishedAvatarInfo(
     }
 }
 
-@Preview(
-    backgroundColor = 0xFFFFFFFF,
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 270
-)
 @Composable
 fun AvatarGraduatedInfo(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(),
-    dateDuration: Int = 28,
-    exerciseDate : Int = 10,
-    exerciseTimes : Int = 8,
-    wellSleepTimes : Int = 20,
-    mealRecordTimes : Int = 24
+    dateDuration: Int,
+    exerciseDate : Int,
+    exerciseTimes : Int,
+    wellSleepTimes : Int,
+    mealRecordTimes : Int
     ){
 
     Box(
@@ -320,25 +308,3 @@ fun ShowMealRecord(
 }
 
 
-@Composable
-@Preview(
-    backgroundColor = 0xFFFFFFFF,
-    showBackground = true,
-    widthDp = 390,
-    heightDp = 28
-)
-fun LivingDate(
-    modifier: Modifier = Modifier
-        .fillMaxWidth()
-        .height(28.dp),
-    startedDate: LocalDate = LocalDate.now(),
-    finishedDate: LocalDate = LocalDate.now(),
-){
-        Text(
-            modifier = modifier.padding(top = 4.dp,),
-            text = "$finishedDate - $startedDate",
-            fontFamily = gmarketsansLight,
-            fontSize = 20.sp,
-            textAlign = TextAlign.Center,
-            color = Gray900)
-}

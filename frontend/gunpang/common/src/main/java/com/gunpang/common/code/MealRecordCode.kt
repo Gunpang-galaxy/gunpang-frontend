@@ -9,5 +9,15 @@ enum class MealRecordCode (
     HEALTHY(foodType="건강한 음식", imageId = R.drawable.food_healthy_salad),
     NORMAL(foodType="적당한 음식", imageId = R.drawable.food_normal_rice),
     BAD(foodType="나쁜 음식", imageId = R.drawable.food_bad_fried),
-    NOT_RECORD(foodType="음식 기록 안함", imageId = R.drawable.nothing)
+    NOT_RECORD(foodType="음식 기록 안함", imageId = R.drawable.nothing);
+
+    companion object {
+        fun fromString(foodType: String): MealRecordCode {
+            var findResult : MealRecordCode? = values().find { it.foodType == foodType }
+            return when {
+                findResult != null -> findResult
+                else -> NOT_RECORD
+            }
+        }
+    }
 }

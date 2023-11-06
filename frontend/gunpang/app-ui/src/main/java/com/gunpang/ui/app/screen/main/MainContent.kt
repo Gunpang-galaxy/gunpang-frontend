@@ -13,25 +13,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gunpang.common.code.AvatarStatusCode
+import com.gunpang.domain.app.avatar.AvatarViewModel
+import com.gunpang.domain.entity.AppAvatarAliveContent
 import com.gunpang.ui.app.screen.main.composable.AvatarGoal
 import com.gunpang.ui.app.screen.main.composable.AvatarInfo
 import com.gunpang.ui.app.screen.main.composable.AvatarTodayInfo
 import com.gunpang.ui.app.screen.main.composable.FinishedAvatarInfo
 
 @Composable
-@Preview(
-    showBackground = true,
-    backgroundColor = 0xFFFFFFFF,
-    showSystemUi = true)
-fun MainContent(modifier: Modifier = Modifier
-    .fillMaxWidth()
-    .fillMaxHeight()){
+fun MainContent(
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(),
+    avatarViewModel: AvatarViewModel
+    ){
     BoxWithConstraints(
         modifier = Modifier
         .fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        var status : AvatarStatusCode = AvatarStatusCode.ALIVE
+        var status : AvatarStatusCode = avatarViewModel.appAvatar.status
         Column(horizontalAlignment = Alignment.CenterHorizontally){
             Box(modifier = Modifier
                 .fillMaxWidth()
@@ -39,15 +40,13 @@ fun MainContent(modifier: Modifier = Modifier
                 .padding(top = 12.dp, bottom = 20.dp),
                 contentAlignment = Alignment.Center
             ){
-                AvatarGoal(modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
+                AvatarGoal(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
                     avatarStatus= status,
-                    goalList = listOf<String>(
-                        "월, 수 운동하기",
-                        "23:30 - 06:00",
-                        "식사 기록하기"
-                    ))
+                    goal = avatarViewModel.avatarGoal
+                )
             }
             Box(
                 modifier = Modifier
@@ -55,7 +54,7 @@ fun MainContent(modifier: Modifier = Modifier
                     .weight(weight = 4f, fill = true),
                 contentAlignment = Alignment.Center
             ){
-                AvatarInfo(avatarStatus = status)
+                AvatarInfo(avatarViewModel = avatarViewModel)
             }
             Box(
                 modifier = Modifier
@@ -63,17 +62,16 @@ fun MainContent(modifier: Modifier = Modifier
                     .weight(weight = 4f, fill = true),
                 contentAlignment = Alignment.Center
             ){
-
-
                 when{
                     status == AvatarStatusCode.ALIVE ->
-                        AvatarTodayInfo()
-                    status == AvatarStatusCode.DEAD ->
-                        FinishedAvatarInfo(statusCode = status)
+                        AvatarTodayInfo(contents = avatarViewModel.contents as AppAvatarAliveContent)
 
                     else -> // status == AvatarStatusCode.GRADUDATE
-                        FinishedAvatarInfo(statusCode = status)
-
+                        FinishedAvatarInfo(
+                            statusCode = status,
+                            startedDate = avatarViewModel.appAvatar.startedDate,
+                            finishedDate = avatarViewModel.appAvatar.finishedDate!!,
+                            contents = avatarViewModel.contents!!)
                 }
             }
         }

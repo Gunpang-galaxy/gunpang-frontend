@@ -7,6 +7,16 @@ data class LoginResDto(
     val refreshToken: String
 )
 
+data class SignUpResDto(
+    val googleId: String
+)
+
+data class UserInfoResDto(
+    val email : String,
+    val gender : String,
+    val birth : Int,
+    val height : Int
+)
 data class PersonalInfoResDto(
     val email: String,
     val gender: GenderCode,
