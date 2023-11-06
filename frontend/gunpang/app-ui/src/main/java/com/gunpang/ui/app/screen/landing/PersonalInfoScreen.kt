@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.screen.landing
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -29,35 +38,88 @@ import com.gunpang.domain.app.landing.PersonalInfoViewModel
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
 import com.gunpang.ui.theme.Gray200
+import com.gunpang.ui.theme.Gray500
 import com.gunpang.ui.theme.Gray800
 import com.gunpang.ui.theme.Navy200
 import com.gunpang.ui.theme.Shapes
 import com.gunpang.ui.theme.gmarketsansTypo
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgeInfo(onAgeChange: (String) -> Unit) {
-    var age by remember { mutableStateOf("") }
+    val years = (1950..2023).map { it.toString() }
+    var birthYear by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "나이",
+            text = "출생년도",
             style = gmarketsansTypo.titleLarge
         )
-        CommonTextField(
-            onValueChange = {
-                age = it
-                onAgeChange(it)
-            },
-            leftPadding = 30,
-            rightPadding = 10
-        )
-        Text(
-            text = "세",
-            style = gmarketsansTypo.titleLarge
-        )
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded },
+        ) {
+            TextField(
+                value = birthYear,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                modifier = Modifier
+                    .menuAnchor()
+                    .width(130.dp)
+                    .padding(start = 20.dp)
+                    .border(color = Gray500, width = 1.dp, shape = Shapes.medium),
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.Transparent,
+                    cursorColor = Gray800,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                singleLine = true, // enter 입력 불가
+                textStyle = LocalTextStyle.current.copy(
+                    textAlign = TextAlign.Center,
+                    fontFamily = gmarketsansTypo.titleMedium.fontFamily
+                )
+            )
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                years.forEach { year ->
+                    DropdownMenuItem(
+                        text = { Text(year) },
+                        onClick = {
+                            birthYear = year
+                            onAgeChange(year)
+                            expanded = false
+                        },
+                        modifier = Modifier
+                            .width(130.dp)
+                    )
+                }
+            }
+        }
     }
+}
+
+// 키 정보가 int 형태로 유지되도록 하기
+fun parseHeight(height: String): String {
+    // 소숫점 제거
+    if (height.contains(".")) {
+        return height.substring(0, height.indexOf("."))
+    }
+
+    // int로 parseing할 수 없는 경우 빈 문자열로
+    try {
+        Integer.parseInt(height)
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    return height
 }
 
 @Composable
@@ -73,8 +135,8 @@ fun HeightInfo(onHeightChange: (String) -> Unit) {
         )
         CommonTextField(
             onValueChange = {
-                height = it
-                onHeightChange(it)
+                height = parseHeight(it!!)
+                onHeightChange(parseHeight(it))
             },
             leftPadding = 30,
             rightPadding = 10
@@ -147,10 +209,10 @@ fun PersonalInfo(
     navController: NavController,
     personalInfoViewModel: PersonalInfoViewModel = viewModel()
 ) {
-    var age by remember { mutableStateOf("") }
+    var birthYear by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
-    var isAgeInfoFilled by remember { mutableStateOf(false) }
+    var isBirthYearInfoFilled by remember { mutableStateOf(false) }
     var isHeightInfoFilled by remember { mutableStateOf(false) }
     var isGenderInfoFilled by remember { mutableStateOf(false) }
 
@@ -169,18 +231,18 @@ fun PersonalInfo(
                 modifier = Modifier.padding(bottom = 50.dp),
                 textAlign = TextAlign.Center
             )
-            AgeInfo() {
-                age = it
-                isAgeInfoFilled = it.isNotEmpty()
+            AgeInfo {
+                birthYear = it
+                isBirthYearInfoFilled = it.isNotEmpty()
             }
             Spacer( // 나이, 키 입력 사이 구간
-                modifier = Modifier.height(100.dp)
+                modifier = Modifier.height(30.dp)
             )
-            HeightInfo() {
+            HeightInfo {
                 height = it
                 isHeightInfoFilled = it.isNotEmpty()
             }
-            GenderInfo() {
+            GenderInfo {
                 gender = it!!.engUppercase
                 isGenderInfoFilled = it != null
             }
@@ -191,7 +253,7 @@ fun PersonalInfo(
                 text = "입력 완료",
                 enabled = isHeightInfoFilled && isGenderInfoFilled,
                 onClick = {
-                    personalInfoViewModel.registerPersonalInfo(age, height, gender)
+                    personalInfoViewModel.registerPersonalInfo(birthYear, height, gender)
                     navController.navigate(AppNavItem.MainScreen.routeName)
                 }
             )

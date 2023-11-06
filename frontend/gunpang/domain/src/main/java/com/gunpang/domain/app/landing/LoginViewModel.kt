@@ -2,7 +2,6 @@ package com.gunpang.domain.app.landing
 
 import android.app.Application
 import android.content.Intent
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,9 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.gunpang.common.code.InitCode
 import com.gunpang.data.model.request.LoginReqDto
-import com.gunpang.data.repository.AuthRepository
 import com.gunpang.data.repository.DataApplicationRepository
-import kotlinx.coroutines.Dispatchers
+import com.gunpang.data.repository.UserRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
@@ -27,20 +25,18 @@ class LoginViewModel(
 
     var initCode by mutableStateOf(InitCode.NOT_FOUND)
 
-    private val authRepository: AuthRepository = AuthRepository()
+    private val userRepository: UserRepository = UserRepository()
 
     // 건팡 로그인
     fun login() {
-        // TODO: 해당 로직들이 순서대로 실행되도록 변경
         resultLauncher.launch(signInIntent)
-        doLoginRequest()
-        Log.d("login", "initCode: $initCode")
     }
 
-    private fun doLoginRequest() {
-        viewModelScope.launch (Dispatchers.IO) {
+    // 로그인 요청
+    fun doLoginRequest() {
+        viewModelScope.launch {
             val loginReq = LoginReqDto(googleId = DataApplicationRepository().getValue("playerId"))
-            authRepository.appLogin(loginReq)
+            userRepository.appLogin(loginReq)
                 .catch {
                     initCode = InitCode.NOT_LOGIN // 로그인 실패 시 로그인 페이지로 재이동
                 }
