@@ -1,7 +1,9 @@
 package com.gunpang.domain.app.user
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gunpang.common.code.GenderCode
@@ -15,7 +17,7 @@ import kotlinx.coroutines.launch
  * MyPage User 정보를 위한 ViewModel
  */
 class UserViewModel : ViewModel()  {
-    private var userInfo = UserInfo()
+    var userInfo by mutableStateOf<UserInfo>(UserInfo())
     private var userRepository: UserRepository = UserRepository()
 
     private fun getUserInfo(){
@@ -36,6 +38,6 @@ class UserViewModel : ViewModel()  {
 
     }
     fun init(){
-
+        getUserInfo()
     }
 }

@@ -10,7 +10,7 @@ class UserRepository(
     private val api: UserApi = Api.getInstance().create(UserApi::class.java)
 ) {
     fun getUserInfo() : Flow<UserInfoResDto> = flow {
-        val response = api.getUserInfo()
+        val response = api.userInfo()
         if(response.code() == 200){
             response.body()?.let{
                 emit(response.body()!!)
