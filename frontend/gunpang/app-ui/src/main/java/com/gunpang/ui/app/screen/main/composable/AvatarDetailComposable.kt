@@ -59,29 +59,30 @@ fun AvatarTodayInfo(
                 }
             )
             Spacer(modifier = Modifier.height(8.dp))
-        }
-        TodayInfoDetail(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(36.dp),
+            TodayInfoDetail(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(36.dp),
             title = "수면",
             content = when{
                 contents.sleepAt == "-1" || contents.awakeAt == "-1" -> "기록이 안됬네.."
                 else -> "${contents.sleepAt} - ${contents.awakeAt}"
             }
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        TodayInfoDetail(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(36.dp),
-            title = "식사",
-            content = listOf<MealRecordCode>(
-                contents.breakfastFoodType,
-                contents.lunchFoodType,
-                contents.dinnerFoodType
             )
-        )
+            Spacer(modifier = Modifier.height(8.dp))
+            TodayInfoDetail(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(36.dp),
+                title = "식사",
+                content = listOf(
+                    contents.breakfastFoodType,
+                    contents.lunchFoodType,
+                    contents.dinnerFoodType
+                )
+            )
+        }
+
     }
 }
 
@@ -142,8 +143,8 @@ fun FinishedAvatarInfo(
                         dateDuration = 28,
                         exerciseDate = 28,
                         exerciseTimes = (contents as AppAvatarGraduatedContent).exerciseSuccessCnt,
-                        wellSleepTimes = (contents as AppAvatarGraduatedContent).sleepSuccessCnt,
-                        mealRecordTimes = (contents as AppAvatarGraduatedContent).foodSuccessCnt
+                        wellSleepTimes = contents.sleepSuccessCnt,
+                        mealRecordTimes = contents.foodSuccessCnt
                     )
                 // dateDuration = (finishedDate.time - startedDate.time) / (24 * 60 * 60 * 1000)
             }

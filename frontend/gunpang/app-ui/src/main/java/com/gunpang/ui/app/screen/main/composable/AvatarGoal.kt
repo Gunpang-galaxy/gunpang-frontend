@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.screen.main.composable
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,7 +31,7 @@ fun AvatarGoal(
     avatarStatus: AvatarStatusCode = AvatarStatusCode.ALIVE,
     goal: AvatarGoal
     ){
-
+    Log.d("아바타 목표", goal.toString())
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
@@ -61,7 +62,12 @@ fun AvatarGoal(
                 color = Gray900,
             )
             Text(
-                text= "${goal.sleepStart} - ${goal.sleepEnd}",
+                text= when {
+                    goal.sleepStart != "" && goal.sleepEnd != "" ->
+                        "${goal.sleepStart} - ${goal.sleepEnd}"
+                    else ->
+                        "아직 수면 시간 설정 안했어"
+                },
                 textAlign = TextAlign.Center,
                 fontFamily = gmarketsansBold,
                 fontSize = 20.sp,
@@ -82,6 +88,8 @@ fun exerciseGoal(
     exerciseDay : List<DayCode>,
     exerciseTime : String
 ) : String {
+    if(exerciseDay.isEmpty())
+        return "운동 날짜, 시간 설정 안했어"
     var goalText = ""
     exerciseDay.forEachIndexed {index, day ->
         if(index == exerciseDay.size - 1)
