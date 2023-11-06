@@ -31,7 +31,6 @@ import com.google.android.gms.wearable.Wearable
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
-import com.gunpang.data.GunpangPreferenceUtil
 import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.AppViewModelFactory
@@ -175,7 +174,11 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         if (result.resultCode == -1) { // 로그인 성공
             val data: Intent? = result.data
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
+            task.addOnSuccessListener {
+                handleSignInResult(task)
+                loginViewModel.doLoginRequest()
+                Log.d("login", "initCode: ${loginViewModel.initCode}")
+            }
         }
     }
 

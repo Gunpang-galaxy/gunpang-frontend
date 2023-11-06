@@ -8,5 +8,6 @@ data class SignUpReqDto(
     val gender: String,
     val birthYear: Int, // 출생 연도
     val height: Int, // 키[cm]
-    val googleId: String
+    val googleId: String,
+    val email: String
 )

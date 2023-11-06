@@ -39,6 +39,7 @@ fun AppMain(
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
 
+    loginViewModel.login() // 초기 상태 확인
     GunpangTheme {
         Scaffold { fullScreen ->
             Box(modifier = Modifier.padding(fullScreen)) {
@@ -56,26 +57,24 @@ fun AppMain(
                  *   - 목표 입력 X: 목표 입력 -> 메인
                  *   - 목표 입력 O: 메인
                  */
-
-//                when (loginViewModel.initCode) {
-//                    InitCode.NOT_LOGIN -> { // 로그인 되지 않은 상태
-//                        Login(loginViewModel = loginViewModel)
-//                    }
-//                    InitCode.REGISTER -> { // 회원가입 필요
-//                        AppNavGraph(startDestination = AppNavItem.Introduction.routeName)
-//                    }
-//                    InitCode.NOT_CONFIG -> { // 신체 정보 입력 X
-//                        AppNavGraph(startDestination = AppNavItem.PersonalInfo.routeName)
-//                    }
-//                    InitCode.FINISH -> {
-//                        AppNavGraph()
-//                    }
-//                    else -> {
-//                        // TODO : 예외 페이지로 이동
-//                        Login(loginViewModel = loginViewModel)
-//                    }
-//                }
-                AppNavGraph()
+                when (loginViewModel.initCode) {
+                    InitCode.NOT_LOGIN -> { // 로그인 되지 않은 상태
+                        Login(loginViewModel = loginViewModel)
+                    }
+                    InitCode.REGISTER -> { // 회원가입 필요
+                        AppNavGraph(startDestination = AppNavItem.Introduction.routeName)
+                    }
+                    InitCode.NOT_CONFIG -> { // 신체 정보 입력 X
+                        AppNavGraph(startDestination = AppNavItem.PersonalInfo.routeName)
+                    }
+                    InitCode.FINISH -> {
+                        AppNavGraph()
+                    }
+                    else -> {
+                        // TODO : 예외 페이지로 이동
+                        Login(loginViewModel = loginViewModel)
+                    }
+                }
             }
         }
     }
