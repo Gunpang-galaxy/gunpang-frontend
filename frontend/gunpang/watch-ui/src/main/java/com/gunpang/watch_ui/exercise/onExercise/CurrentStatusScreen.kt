@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchDivider
@@ -19,11 +17,10 @@ import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
 import com.gunpang.common.R
+import com.gunpang.domain.watch.exercise.ExerciseViewModel
 
-@Preview(name = "운동중 화면", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
 @Composable
-fun CurrentStatusScreen(
-) {
+fun CurrentStatusScreen(exerciseViewModel: ExerciseViewModel) {
     GunpangScreenWrapper {
         Column(modifier = Modifier.fillMaxSize() ,horizontalAlignment = Alignment.CenterHorizontally) {
             Image(

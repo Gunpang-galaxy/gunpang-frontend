@@ -4,12 +4,14 @@
  * changes to the libraries and their usages.
  */
 
-package com.gunpang.watch.presentation
+package com.gunpang.watch
 
+import android.Manifest
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.wear.remote.interactions.RemoteActivityHelper
 
@@ -22,7 +24,9 @@ import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.domain.watch.WatchLandingViewModel
 import com.gunpang.domain.watch.WatchLandingViewModelFactory
 import com.gunpang.watch_ui.WatchMain
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedListener  {
     companion object {
         private const val PERMISSION_CHECK = 100
@@ -65,8 +69,12 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
 
     private fun grantPermissions() {
         //TODO("필요한 권한 확인후, list에 넣을 것")
-        //val needPermissions = listOf(Manifest.permission.HEART_BEAT)
-        //ActivityCompat.requestPermissions(this,needPermissions,PERMISSION_CHECK);
+        val needPermissions = listOf(
+            Manifest.permission.BODY_SENSORS,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACTIVITY_RECOGNITION).toTypedArray()
+        ActivityCompat.requestPermissions(this, needPermissions,PERMISSION_CHECK);
     }
 
     /** 연결된 기기의 정보가 변경되었을 때 **/

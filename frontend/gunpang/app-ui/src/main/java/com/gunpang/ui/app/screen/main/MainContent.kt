@@ -64,14 +64,19 @@ fun MainContent(
             ){
                 when{
                     status == AvatarStatusCode.ALIVE ->
-                        AvatarTodayInfo(contents = avatarViewModel.contents as AppAvatarAliveContent)
-
+                        AvatarTodayInfo(contents = avatarViewModel.avatarAliveContents)
+                    status == AvatarStatusCode.DEAD ->
+                        FinishedAvatarInfo(
+                            statusCode = status,
+                            startedDate = avatarViewModel.appAvatar.startedDate,
+                            finishedDate = avatarViewModel.appAvatar.finishedDate!!,
+                            contents = avatarViewModel.avatarDeadContents)
                     else -> // status == AvatarStatusCode.GRADUDATE
                         FinishedAvatarInfo(
                             statusCode = status,
                             startedDate = avatarViewModel.appAvatar.startedDate,
                             finishedDate = avatarViewModel.appAvatar.finishedDate!!,
-                            contents = avatarViewModel.contents!!)
+                            contents = avatarViewModel.avatarGraduatedContents)
                 }
             }
         }

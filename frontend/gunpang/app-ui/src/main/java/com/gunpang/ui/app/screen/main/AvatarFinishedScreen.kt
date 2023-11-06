@@ -110,7 +110,7 @@ fun AvatarFinishedScreen(
                     .fillMaxWidth(),
                 text = when {
                     avatarViewModel.appAvatar.status == AvatarStatusCode.GRADUATED -> "아바타 성장 성공"
-                    else -> (avatarViewModel.contents as AppAvatarDeadContent).deathCause.status
+                    else -> avatarViewModel.avatarDeadContents.deathCause.status
 
                 },
                 fontFamily = gmarketsansBold,

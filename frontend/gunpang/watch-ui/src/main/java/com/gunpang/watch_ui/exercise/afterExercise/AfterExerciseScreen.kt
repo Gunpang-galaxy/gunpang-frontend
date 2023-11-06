@@ -1,30 +1,28 @@
 package com.gunpang.watch_ui.exercise.afterExercise
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.wear.compose.material.Button
 import androidx.wear.compose.material.Text
 import com.gunpang.common.navigation.WatchNavItem
+import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.ui.app.watch.common.GunpangScreenWrapper
 import com.gunpang.watch_ui.common.WatchButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AfterExercise(
     mainPagerState: PagerState,
     coroutineScope: CoroutineScope,
-    navController: NavHostController
+    navController: NavHostController,
+    exerciseViewModel: ExerciseViewModel
 ) {
     val secondsLeft = remember { mutableStateOf(5) }
 
