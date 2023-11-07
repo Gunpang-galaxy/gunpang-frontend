@@ -1,7 +1,7 @@
 package com.gunpang.data.model.request
 
 data class NameAvatarReqDto(
-    val avatarId: Int,
+    val avatarType: String,
     val name: String
 )
 

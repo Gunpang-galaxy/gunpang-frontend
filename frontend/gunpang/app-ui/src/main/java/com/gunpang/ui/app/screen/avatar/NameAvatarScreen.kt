@@ -20,9 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.gunpang.common.R
 import com.gunpang.common.code.AvatarCode
+import com.gunpang.domain.app.avatar.NewAvatarViewModel
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
 import com.gunpang.ui.theme.Gray900
@@ -31,11 +33,13 @@ import kotlin.random.Random
 
 @Composable
 fun NewAvatar(
+    onAvatarChange: (AvatarCode) -> Unit,
     onNameChange: (String) -> Unit
 ) {
     // 아바타 랜덤 선택
-    val randomIndex by remember { mutableIntStateOf(Random.nextInt(0, AvatarCode.values().size)) }
+    val randomIndex by remember { mutableIntStateOf(Random.nextInt(0, AvatarCode.values().size - 1)) }
     val randomAvatar = AvatarCode.values()[randomIndex]
+    onAvatarChange(randomAvatar)
 
     // 아바타 이름
     var name = randomAvatar.avatarDefaultName
@@ -78,8 +82,10 @@ fun NewAvatar(
 
 @Composable
 fun NameAvatar(
-    navController: NavController
+    navController: NavController,
+    newAvatarViewModel: NewAvatarViewModel = viewModel()
 ) {
+    var avatarType by remember { mutableStateOf<AvatarCode?>(null) }
     var name by remember { mutableStateOf("") }
 
     Column(
@@ -90,20 +96,27 @@ fun NameAvatar(
         Text(
             text = "아바타 이름을 입력해 주세요",
             style = gmarketsansTypo.headlineLarge,
-            color = Gray900
+            color = Gray900,
+            modifier = Modifier.padding(bottom = 10.dp)
         )
         Text(
             text = "*4자 이내로 입력해 주세요",
             style = gmarketsansTypo.titleSmall,
             color = Gray900
         )
-        NewAvatar() {
-            name = it
-        }
+        NewAvatar(
+            onAvatarChange = {
+                avatarType = it
+            },
+            onNameChange = {
+                name = it
+            }
+        )
         CommonButton(
             text = "입력 완료",
             enabled = (name.length < 5) && (name.isNotEmpty()),
             onClick = {
+                newAvatarViewModel.registerRandomAvatar(avatarType, name)
                 navController.navigate("sleepGoal")
             },
         )

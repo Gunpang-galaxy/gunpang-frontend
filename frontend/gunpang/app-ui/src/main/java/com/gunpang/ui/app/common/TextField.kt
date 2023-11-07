@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.gunpang.ui.theme.Gray500
-import com.gunpang.ui.theme.Gray800
+import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.Shapes
 import com.gunpang.ui.theme.gmarketsansTypo
 
@@ -50,8 +50,9 @@ fun CommonTextField(
             .padding(start = leftPadding.dp, end = rightPadding.dp, top = topPadding.dp)
             .border(color = Gray500, width = 1.dp, shape = Shapes.medium),
         colors = TextFieldDefaults.textFieldColors(
+            textColor = Gray900,
             containerColor = Color.Transparent,
-            cursorColor = Gray800,
+            cursorColor = Gray900,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),

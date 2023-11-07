@@ -1,5 +1,6 @@
 package com.gunpang.domain.app.avatar
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +35,9 @@ class AvatarViewModel : ViewModel(){
     var prevId by mutableIntStateOf(-1) // 이전 아바타 아이디
     var nextId by mutableIntStateOf(-1)  // 다음 아바타 아이디
 
-    var currentAvatarExist : Boolean = true ;
+//    var currentAvatarExist : Boolean = true ;
+    var currentAvatarExist by mutableStateOf(true) // 현재 아바타 존재 여부
+
 
     private val avatarRepository : AvatarRepository = AvatarRepository() // 아바타 관련 Repository
 
@@ -44,9 +47,15 @@ class AvatarViewModel : ViewModel(){
             avatarRepository.getAvatarCurrentInfo()
                 .catch {
                     currentAvatarExist = false
+                    Log.d("AVATAR_VIEW_MODEL", "current avatar not exist")
                     it.printStackTrace()
                 }
                 .collect {data ->
+                    if (data == null) { // 현재 아바타가 없는 경우
+                        currentAvatarExist = false
+                        Log.d("AVATAR_VIEW_MODEL", "current avatar not exist")
+                        return@collect
+                    }
                     avatarGoal = AvatarGoal(
                         data.goal.sleepStart,
                         data.goal.sleepEnd,
