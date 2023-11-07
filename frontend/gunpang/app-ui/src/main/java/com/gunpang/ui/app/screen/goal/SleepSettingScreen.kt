@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
+import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansTypo
 
 
@@ -43,6 +44,7 @@ fun SleepTime(defaultHour: String, defaultMinute: String, onHourChange: (String)
         Text(
             text = ":",
             style = gmarketsansTypo.headlineLarge,
+            color = Gray900
         )
         CommonTextField(
             defaultValue = minute,
@@ -82,6 +84,7 @@ fun SleepGoal(
         Text(
             text = "목표 수면시간을\n입력해 주세요",
             style = gmarketsansTypo.headlineLarge,
+            color = Gray900,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 70.dp)
         )
@@ -94,6 +97,7 @@ fun SleepGoal(
         Text(
             text = "~",
             style = gmarketsansTypo.headlineLarge,
+            color = Gray900,
         )
         SleepTime( // 기상 시간 입력
             defaultHour = endHour,

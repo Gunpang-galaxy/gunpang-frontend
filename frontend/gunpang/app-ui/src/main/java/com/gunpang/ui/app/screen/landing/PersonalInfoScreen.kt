@@ -40,6 +40,7 @@ import com.gunpang.ui.app.common.CommonTextField
 import com.gunpang.ui.theme.Gray200
 import com.gunpang.ui.theme.Gray500
 import com.gunpang.ui.theme.Gray800
+import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.Navy200
 import com.gunpang.ui.theme.Shapes
 import com.gunpang.ui.theme.gmarketsansTypo
@@ -56,7 +57,8 @@ fun AgeInfo(onAgeChange: (String) -> Unit) {
     ) {
         Text(
             text = "출생년도",
-            style = gmarketsansTypo.titleLarge
+            style = gmarketsansTypo.titleLarge,
+            color = Gray900
         )
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -131,7 +133,8 @@ fun HeightInfo(onHeightChange: (String) -> Unit) {
     ) {
         Text(
             text = "키",
-            style = gmarketsansTypo.titleLarge
+            style = gmarketsansTypo.titleLarge,
+            color = Gray900
         )
         CommonTextField(
             onValueChange = {
@@ -143,7 +146,8 @@ fun HeightInfo(onHeightChange: (String) -> Unit) {
         )
         Text(
             text = "cm",
-            style = gmarketsansTypo.titleLarge
+            style = gmarketsansTypo.titleLarge,
+            color = Gray900
         )
     }
 }
@@ -228,6 +232,7 @@ fun PersonalInfo(
             Text(
                 text = "신체 정보",
                 style = gmarketsansTypo.headlineLarge,
+                color = Gray900,
                 modifier = Modifier.padding(bottom = 50.dp),
                 textAlign = TextAlign.Center
             )

@@ -18,7 +18,7 @@ import com.gunpang.common.code.InitCode
 import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.avatar.AvatarViewModel
-import com.gunpang.domain.app.landing.LoginViewModel
+import com.gunpang.domain.app.landing.LandingViewModel
 import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.screen.avatar.AvatarEgg
 import com.gunpang.ui.app.screen.avatar.NameAvatar
@@ -26,10 +26,15 @@ import com.gunpang.ui.app.screen.bodyComposition.BodyCompositionScreen
 import com.gunpang.ui.app.screen.calender.CalenderScreen
 import com.gunpang.ui.app.screen.goal.ExerciseGoal
 import com.gunpang.ui.app.screen.goal.SleepGoal
+import com.gunpang.ui.app.screen.landing.AvatarNotCreatedException
+import com.gunpang.ui.app.screen.landing.GoalNotCreatedException
 import com.gunpang.ui.app.screen.landing.Introduction
 import com.gunpang.ui.app.screen.landing.LinkSamsungHealth
 import com.gunpang.ui.app.screen.landing.Login
+import com.gunpang.ui.app.screen.landing.LoginFailException
 import com.gunpang.ui.app.screen.landing.PersonalInfo
+import com.gunpang.ui.app.screen.landing.WatchAppNotInstalledException
+import com.gunpang.ui.app.screen.landing.WatchNotConnectedException
 import com.gunpang.ui.app.screen.main.AvatarFinishedScreen
 import com.gunpang.ui.app.screen.main.MainScreen
 import com.gunpang.ui.app.screen.mypage.MyPageScreen
@@ -38,12 +43,12 @@ import com.gunpang.ui.theme.GunpangTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppMain(
-    loginViewModel: LoginViewModel,
+    landingViewModel: LandingViewModel,
 ) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
 
-    loginViewModel.login() // 초기 상태 확인
+    landingViewModel.login() // 초기 상태 확인
     GunpangTheme {
         Scaffold { fullScreen ->
             Box(modifier = Modifier
@@ -64,9 +69,9 @@ fun AppMain(
                  *   - 목표 입력 X: 목표 입력 -> 메인
                  *   - 목표 입력 O: 메인
                  */
-                when (loginViewModel.initCode) {
+                when (landingViewModel.initCode) {
                     InitCode.NOT_LOGIN -> { // 로그인 되지 않은 상태
-                        Login(loginViewModel = loginViewModel)
+                        Login(landingViewModel = landingViewModel)
                     }
                     InitCode.REGISTER -> { // 회원가입 필요
                         AppNavGraph(startDestination = AppNavItem.Introduction.routeName)
@@ -79,7 +84,7 @@ fun AppMain(
                     }
                     else -> {
                         // TODO : 예외 페이지로 이동
-                        Login(loginViewModel = loginViewModel)
+                        Login(landingViewModel = landingViewModel)
                     }
                 }
             }
@@ -95,6 +100,7 @@ fun AppNavGraph(
     val navController = rememberNavController()
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
+    val landingViewModel = viewModel<LandingViewModel>(viewModelStoreOwner)
     val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
     val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner)
 
@@ -137,6 +143,21 @@ fun AppNavGraph(
         }
         composable(AppNavItem.AvatarFinishScreen.routeName) {
             AvatarFinishedScreen(navController, avatarViewModel)
+        }
+        composable(AppNavItem.LoginFailException.routeName) {
+            LoginFailException(navController)
+        }
+        composable(AppNavItem.WatchNotConnectedException.routeName) {
+            WatchNotConnectedException(navController)
+        }
+        composable(AppNavItem.WatchAppNotInstalledException.routeName) {
+            WatchAppNotInstalledException(navController, landingViewModel)
+        }
+        composable(AppNavItem.AvatarNotCreatedException.routeName) {
+            AvatarNotCreatedException(navController)
+        }
+        composable(AppNavItem.GoalNotCreatedException.routeName) {
+            GoalNotCreatedException(navController)
         }
     }
 }

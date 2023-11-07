@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gunpang.common.code.AvatarEggCode
+import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansTypo
 import kotlin.random.Random
 
@@ -59,6 +60,7 @@ fun AvatarEgg(
         Text( // 설명
             text = "알을 부화시켜 보세요",
             style = gmarketsansTypo.headlineLarge,
+            color = Gray900
         )
     }
 }

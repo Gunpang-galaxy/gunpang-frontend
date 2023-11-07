@@ -25,6 +25,7 @@ import com.gunpang.common.R
 import com.gunpang.common.code.AvatarCode
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
+import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansTypo
 import kotlin.random.Random
 
@@ -89,10 +90,12 @@ fun NameAvatar(
         Text(
             text = "아바타 이름을 입력해 주세요",
             style = gmarketsansTypo.headlineLarge,
+            color = Gray900
         )
         Text(
             text = "*4자 이내로 입력해 주세요",
             style = gmarketsansTypo.titleSmall,
+            color = Gray900
         )
         NewAvatar() {
             name = it

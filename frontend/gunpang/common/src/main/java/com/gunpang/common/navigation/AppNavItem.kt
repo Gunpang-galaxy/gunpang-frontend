@@ -17,5 +17,10 @@ sealed class AppNavItem(
     object CalenderScreen: AppNavItem("calenderScreen", "달력 내 기록 화면")
     object BodyCompositionScreen: AppNavItem("bodyCompositionScreen", "채성분 분석 화면")
     object AvatarFinishScreen: AppNavItem("AvatarFinishScreen", "아바타 성장 종료 화면")
+    object LoginFailException: AppNavItem("loginFailException", "로그인 실패 예외 화면")
+    object WatchNotConnectedException: AppNavItem("watchNotConnectedException", "워치 연결 실패 예외 화면")
+    object WatchAppNotInstalledException: AppNavItem("watchAppNotInstalledException", "워치 앱 미설치 예외 화면")
+    object AvatarNotCreatedException: AppNavItem("avatarNotCreatedException", "아바타 생성 실패 예외 화면")
+    object GoalNotCreatedException: AppNavItem("goalNotCreatedException", "목표 생성 실패 예외 화면")
 
 }

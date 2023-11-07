@@ -17,7 +17,7 @@ import com.gunpang.data.repository.UserRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
-class LoginViewModel(
+class LandingViewModel(
     private val signInIntent: Intent,
     private val resultLauncher: ActivityResultLauncher<Intent>,
     application: Application
@@ -54,16 +54,17 @@ class LoginViewModel(
         }
     }
 
-    class LoginViewModelFactory(
-        private val signInIntent: Intent,
-        private val resultLauncher: ActivityResultLauncher<Intent>,
-        private val application: Application
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-                return LoginViewModel(signInIntent, resultLauncher, application) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel Class")
+}
+
+class LandingViewModelFactory(
+    private val signInIntent: Intent,
+    private val resultLauncher: ActivityResultLauncher<Intent>,
+    private val application: Application
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(LandingViewModel::class.java)) {
+            return LandingViewModel(signInIntent, resultLauncher, application) as T
         }
+        throw IllegalArgumentException("Unknown ViewModel Class")
     }
 }
