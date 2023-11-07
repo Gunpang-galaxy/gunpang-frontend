@@ -50,7 +50,6 @@ import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.YearMonth
 import com.gunpang.domain.app.AppViewModel
-import com.gunpang.ui.R
 import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.TopBar
 import com.kizitonwose.calendar.compose.CalendarLayoutInfo
@@ -83,7 +82,7 @@ fun CalenderScreen(
         containerColor = Color.White
     ) { it ->
         Surface(
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(it).fillMaxSize().background(Color.White)
 
         ) {
             val currentMonth = remember { YearMonth.now() }
@@ -214,7 +213,7 @@ fun SimpleCalendarTitle(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CalendarNavigationIcon(
-            icon = painterResource(id = R.drawable.ic_chevron_left),
+            icon = painterResource(id =  com.gunpang.common.R.drawable.ic_chevron_left),
             contentDescription = "Previous",
             onClick = goToPrevious,
         )
@@ -228,7 +227,8 @@ fun SimpleCalendarTitle(
             fontWeight = FontWeight.Medium,
         )
         CalendarNavigationIcon(
-            icon = painterResource(id = R.drawable.ic_chevron_right),
+
+            icon = painterResource(id =  com.gunpang.common.R.drawable.ic_chevron_right),
             contentDescription = "Next",
             onClick = goToNext,
         )
