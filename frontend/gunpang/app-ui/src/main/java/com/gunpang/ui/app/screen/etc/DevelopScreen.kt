@@ -19,6 +19,7 @@ fun DevelopScreen(
         topBar={
             TopBar(
                 navController = navController,
+                title="",
                 hasUndo = true
             ) },
     ) {
