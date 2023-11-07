@@ -22,6 +22,7 @@ import com.gunpang.domain.app.landing.LoginViewModel
 import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.screen.avatar.AvatarEgg
 import com.gunpang.ui.app.screen.avatar.NameAvatar
+import com.gunpang.ui.app.screen.bodyComposition.BodyCompositionScreen
 import com.gunpang.ui.app.screen.calender.CalenderScreen
 import com.gunpang.ui.app.screen.goal.ExerciseGoal
 import com.gunpang.ui.app.screen.goal.SleepGoal
@@ -132,7 +133,7 @@ fun AppNavGraph(
             CalenderScreen(navController, appViewModel)
         }
         composable(AppNavItem.BodyCompositionScreen.routeName) {
-            CalenderScreen(navController, appViewModel)
+            BodyCompositionScreen(navController)
         }
         composable(AppNavItem.AvatarFinishScreen.routeName) {
             AvatarFinishedScreen(navController, avatarViewModel)

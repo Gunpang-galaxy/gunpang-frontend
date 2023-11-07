@@ -1,6 +1,8 @@
 package com.gunpang.ui.app.common
 
 import android.util.Log
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -10,9 +12,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import com.gunpang.common.R
@@ -32,7 +37,8 @@ fun TopBar(
     iconTint: Color = Gray600,
 ){
     Log.d("[현재 스크린 이름]", navController.currentDestination?.route!!)
-    Log.d("[현재 메뉴 title]", title)
+    Log.d("[현재 메뉴 title]", if(title == "") "없음" else title)
+    Spacer(modifier = Modifier.height(10.dp))
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = contentColor,
@@ -42,6 +48,7 @@ fun TopBar(
             Text(
                 text = title,
                 fontFamily = gmarketsans,
+                fontSize = 25.sp,
                 maxLines = 1,
             )
         },
@@ -57,10 +64,6 @@ fun TopBar(
             }
         },
         actions = {
-            /**
-             * TODO : 사용자 화면으로 이동
-             * TODO : 이미 설정 화면이라면 아이콘 버튼 없어야함
-             * */
             if(navController.currentDestination?.route != AppNavItem.MyPageScreen.routeName){
                 IconButton(onClick = { navController.navigate(AppNavItem.MyPageScreen.routeName) }) {
                     Icon(
