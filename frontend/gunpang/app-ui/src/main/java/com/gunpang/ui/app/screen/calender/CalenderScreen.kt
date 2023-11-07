@@ -196,6 +196,8 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
                 modifier = Modifier.weight(1f),
                 textAlign = TextAlign.Center,
                 text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN),
+                color = Gray900
+
             )
         }
     }
@@ -224,6 +226,7 @@ fun SimpleCalendarTitle(
             text = currentMonth.displayText(),
             fontSize = 22.sp,
             textAlign = TextAlign.Center,
+            color = Gray900,
             fontWeight = FontWeight.Medium,
         )
         CalendarNavigationIcon(
@@ -252,6 +255,7 @@ private fun CalendarNavigationIcon(
             .fillMaxSize()
             .padding(4.dp)
             .align(Alignment.Center),
+        tint = Gray900,
         painter = icon,
         contentDescription = contentDescription,
     )
