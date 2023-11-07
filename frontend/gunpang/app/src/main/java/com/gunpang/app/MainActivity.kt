@@ -44,9 +44,6 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     companion object {
         private const val CAPABILITY_WEAR_APP = "watch_gunpang"
         private const val PLAY_STORE_APP_URI = "market://details?id=com.gunpang"
-
-        // 컨텍스트에 데이터 저장
-//         private lateinit var gunpangPreferenceUtil: GunpangPreferenceUtil
     }
 
     // 모바일-워치 간 연결
@@ -70,9 +67,6 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     private lateinit var appViewModel: AppViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // 컨텍스트에 데이터 저장
-//        gunpangPreferenceUtil = GunpangPreferenceUtil(applicationContext)
-
         super.onCreate(savedInstanceState)
         Log.v("Android", "SDK_INT : " + Build.VERSION.SDK_INT)
 
@@ -164,6 +158,9 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
             // Log
             val msg = "This is my FCM token: ${token}"
             Log.d(ContentValues.TAG, msg)
+
+            // save token
+            DataApplicationRepository().setValue("fcmToken", token)
         })
     }
     // [알림 관련 코드 END]
