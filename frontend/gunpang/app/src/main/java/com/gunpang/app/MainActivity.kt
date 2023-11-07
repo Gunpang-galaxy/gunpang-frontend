@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         signInIntent = mGoogleSignInClient.signInIntent
 
         // 로그인 view model
-        landingViewModelFactory = LandingViewModelFactory(signInIntent, resultLauncher, this.application)
+        landingViewModelFactory = LandingViewModelFactory(signInIntent, resultLauncher, wearableAppInstallRequest(), this.application)
         landingViewModel =
             ViewModelProvider(this@MainActivity, landingViewModelFactory)[LandingViewModel::class.java]
 
@@ -220,7 +220,6 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
                     targetIntent = intent,
                     targetNodeId = node.id
                 )
-
         }
     }
 
@@ -258,8 +257,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
                         Log.d("wearOS", "allConnectedNodes: displayName ${it.displayName} / id ${it.id} / nearby ${it.isNearby}")
                     }
                 )
-
-//                wearableAppInstallRequest()
+                // TODO: setContent to LandingVIewModel
             } else {
                 // Task failed with an exception
                 Log.e("wearOS", "Failed CapabilityApi: " + task.exception)

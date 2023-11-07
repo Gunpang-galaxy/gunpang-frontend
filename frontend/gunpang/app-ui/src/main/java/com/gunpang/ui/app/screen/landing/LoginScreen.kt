@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.gunpang.common.R
 import com.gunpang.domain.app.landing.LandingViewModel
+import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.galmuriTyop
 
 @Composable
@@ -31,7 +32,8 @@ fun Login(
     ) {
         Text(
             text = "건팡",
-            style = galmuriTyop.displayLarge
+            style = galmuriTyop.displayLarge,
+            color = Gray900
         )
         Image(
             painter = painterResource(id = R.drawable.logo),
@@ -41,7 +43,8 @@ fun Login(
         )
         Text(
             text = "\"어디로든 갈래 무한한 galaxy\"",
-            style = galmuriTyop.bodySmall
+            style = galmuriTyop.bodySmall,
+            color = Gray900
         )
         Spacer(
             modifier = Modifier.size(70.dp)
