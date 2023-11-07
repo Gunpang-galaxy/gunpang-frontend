@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.gunpang.common.code.GenderCode
 import com.gunpang.common.navigation.AppNavItem
+import com.gunpang.domain.app.landing.NotificationViewModel
 import com.gunpang.domain.app.landing.PersonalInfoViewModel
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
@@ -211,7 +213,8 @@ fun GenderInfo(onGenderChange: (GenderCode?) -> Unit) {
 @Composable
 fun PersonalInfo(
     navController: NavController,
-    personalInfoViewModel: PersonalInfoViewModel = viewModel()
+    personalInfoViewModel: PersonalInfoViewModel = viewModel(),
+    notificationViewModel: NotificationViewModel = viewModel()
 ) {
     var birthYear by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
@@ -220,48 +223,53 @@ fun PersonalInfo(
     var isHeightInfoFilled by remember { mutableStateOf(false) }
     var isGenderInfoFilled by remember { mutableStateOf(false) }
 
+    LaunchedEffect(key1 = true) {
+        // 등록된 개인 정보가 있다면 메인화면으로 이동
+        if (personalInfoViewModel.hasPersonalInfo()) {
+            notificationViewModel.registerFCMTokens() // fcm 토큰 등록
+            navController.navigate(AppNavItem.MainScreen.routeName) // 페이지 이동
+        }
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         // 등록된 개인 정보가 있다면 메인화면으로 이동
-        if (personalInfoViewModel.hasPersonalInfo()) {
-            navController.navigate(AppNavItem.MainScreen.routeName)
-        } else {
-            Text(
-                text = "신체 정보",
-                style = gmarketsansTypo.headlineLarge,
-                color = Gray900,
-                modifier = Modifier.padding(bottom = 50.dp),
-                textAlign = TextAlign.Center
-            )
-            AgeInfo {
-                birthYear = it
-                isBirthYearInfoFilled = it.isNotEmpty()
-            }
-            Spacer( // 나이, 키 입력 사이 구간
-                modifier = Modifier.height(30.dp)
-            )
-            HeightInfo {
-                height = it
-                isHeightInfoFilled = it.isNotEmpty()
-            }
-            GenderInfo {
-                gender = it!!.engUppercase
-                isGenderInfoFilled = it != null
-            }
-            Spacer( // 성별 선택 버튼과 입력 완료 버튼의 간격
-                modifier = Modifier.height(100.dp)
-            )
-            CommonButton(
-                text = "입력 완료",
-                enabled = isHeightInfoFilled && isGenderInfoFilled,
-                onClick = {
-                    personalInfoViewModel.registerPersonalInfo(birthYear, height, gender)
-                    navController.navigate(AppNavItem.MainScreen.routeName)
-                }
-            )
+        Text(
+            text = "신체 정보",
+            style = gmarketsansTypo.headlineLarge,
+            color = Gray900,
+            modifier = Modifier.padding(bottom = 50.dp),
+            textAlign = TextAlign.Center
+        )
+        AgeInfo {
+            birthYear = it
+            isBirthYearInfoFilled = it.isNotEmpty()
         }
+        Spacer( // 나이, 키 입력 사이 구간
+            modifier = Modifier.height(30.dp)
+        )
+        HeightInfo {
+            height = it
+            isHeightInfoFilled = it.isNotEmpty()
+        }
+        GenderInfo {
+            gender = it!!.engUppercase
+            isGenderInfoFilled = it != null
+        }
+        Spacer( // 성별 선택 버튼과 입력 완료 버튼의 간격
+            modifier = Modifier.height(100.dp)
+        )
+        CommonButton(
+            text = "입력 완료",
+            enabled = isHeightInfoFilled && isGenderInfoFilled,
+            onClick = {
+                personalInfoViewModel.registerPersonalInfo(birthYear, height, gender) // 회원가입 + 개인 정보 등록
+                notificationViewModel.registerFCMTokens() // fcm 토큰 등록
+                navController.navigate(AppNavItem.MainScreen.routeName)
+            }
+        )
     }
 }
