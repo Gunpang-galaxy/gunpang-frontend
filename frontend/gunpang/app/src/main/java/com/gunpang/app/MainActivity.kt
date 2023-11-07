@@ -34,7 +34,8 @@ import com.google.firebase.messaging.ktx.messaging
 import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.AppViewModelFactory
-import com.gunpang.domain.app.landing.LoginViewModel
+import com.gunpang.domain.app.landing.LandingViewModel
+import com.gunpang.domain.app.landing.LandingViewModelFactory
 import com.gunpang.ui.app.AppMain
 import com.gunpang.ui.app.screen.notification.NotificationDialogFragment
 
@@ -61,8 +62,8 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     private lateinit var signInIntent: Intent
 
     // 로그인 view model
-    private lateinit var loginViewModelFactory: LoginViewModel.LoginViewModelFactory
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var landingViewModelFactory: LandingViewModelFactory
+    private lateinit var landingViewModel: LandingViewModel
 
     // 앱 ViewModel -> Factory로 관리
     private lateinit var appViewModelFactory: AppViewModelFactory
@@ -95,9 +96,9 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         signInIntent = mGoogleSignInClient.signInIntent
 
         // 로그인 view model
-        loginViewModelFactory = LoginViewModel.LoginViewModelFactory(signInIntent, resultLauncher, this.application)
-        loginViewModel =
-            ViewModelProvider(this@MainActivity, loginViewModelFactory)[LoginViewModel::class.java]
+        landingViewModelFactory = LandingViewModelFactory(signInIntent, resultLauncher, this.application)
+        landingViewModel =
+            ViewModelProvider(this@MainActivity, landingViewModelFactory)[LandingViewModel::class.java]
 
 
         // 앱 ViewModel (전역으로 관리하는지 확인 필요)
@@ -106,7 +107,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
             ViewModelProvider(this@MainActivity, appViewModelFactory)[AppViewModel::class.java]
 
         setContent {
-            AppMain(loginViewModel = loginViewModel)
+            AppMain(landingViewModel = landingViewModel)
         }
 
     }
@@ -176,8 +177,8 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             task.addOnSuccessListener {
                 handleSignInResult(task)
-                loginViewModel.doLoginRequest()
-                Log.d("login", "initCode: ${loginViewModel.initCode}")
+                landingViewModel.doLoginRequest()
+                Log.d("login", "initCode: ${landingViewModel.initCode}")
             }
         }
     }
@@ -225,6 +226,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
 
     // 웨어러블 등록 여부 (근처에 있는지)
     private fun findWearDevicesWithApp() {
+        Log.d("wearOS", "findWearDevicesWithApp 진입")
         val pendingResult = Wearable.getCapabilityClient(this)
             .getCapability(CAPABILITY_WEAR_APP, CapabilityClient.FILTER_REACHABLE)
 
@@ -232,6 +234,12 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
             if (task.isSuccessful) {
                 val capabilityInfo = task.result
                 wearNodesWithApp = capabilityInfo.nodes
+                Log.d("wearOS", "wearNodesWithApp: ${wearNodesWithApp.size}")
+                wearNodesWithApp.forEach(
+                    {
+                        Log.d("wearOS", "wearNodesWithApp: displayName ${it.displayName} / id ${it.id} / nearby ${it.isNearby}")
+                    }
+                )
             } else {
                 Log.d("wearOS", "Failed CapabilityApi: " + task.result)
             }
@@ -245,8 +253,12 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         pendingResult.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 allConnectedNodes = task.result
-//                Log.d("wearOS", "allConnectedNodes: ${allConnectedNodes.get(0).displayName}")
-//                Log.d("wearOS", "allConnectedNodes: ${allConnectedNodes.get(0).id}")
+                allConnectedNodes.forEach(
+                    {
+                        Log.d("wearOS", "allConnectedNodes: displayName ${it.displayName} / id ${it.id} / nearby ${it.isNearby}")
+                    }
+                )
+
 //                wearableAppInstallRequest()
             } else {
                 // Task failed with an exception

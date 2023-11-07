@@ -11,19 +11,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.gunpang.common.R
-import com.gunpang.domain.app.landing.LoginViewModel
+import com.gunpang.domain.app.landing.LandingViewModel
 import com.gunpang.ui.theme.galmuriTyop
 
 @Composable
 fun Login(
-    loginViewModel: LoginViewModel
+    landingViewModel: LandingViewModel
 ) {
     Column(
         modifier = Modifier.fillMaxSize().background(Color.White),
@@ -52,7 +51,7 @@ fun Login(
             contentDescription = "구글 로그인 버튼",
             modifier = Modifier
                 .height(50.dp)
-                .clickable { loginViewModel.login() }
+                .clickable { landingViewModel.login() }
         )
     }
 }

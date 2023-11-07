@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gunpang.common.R
 import com.gunpang.ui.app.common.CommonButton
+import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansTypo
 
 @Composable
@@ -32,6 +33,7 @@ fun LinkSamsungHealth(
         Text(
             text = "건강 데이터를 연동해 주세요",
             style = gmarketsansTypo.headlineLarge,
+            color = Gray900,
             textAlign = TextAlign.Center
         )
         Image(
@@ -44,11 +46,13 @@ fun LinkSamsungHealth(
         Text(
             text = "헬스 커넥트를 연동하면\n삼성헬스에서 기록을 가지고 올 수 있어요",
             style = gmarketsansTypo.titleSmall,
+            color = Gray900,
             textAlign = TextAlign.Center
         )
         Text(
             text = "*안드로이드 버전 9이상부터 연동 가능합니다",
             style = gmarketsansTypo.bodyMedium,
+            color = Gray900,
             textAlign = TextAlign.Center
         )
         Spacer( // 헬스 커넥트 설명과 버튼 사이의 간격

@@ -103,7 +103,8 @@ fun ExerciseTime(
     ) {
         Text(
             text = "회당",
-            style = gmarketsansTypo.titleLarge
+            style = gmarketsansTypo.titleLarge,
+            color = Gray900
         )
         CommonTextField(
             defaultValue = minute,
@@ -116,7 +117,8 @@ fun ExerciseTime(
         )
         Text(
             text = "분",
-            style = gmarketsansTypo.titleLarge
+            style = gmarketsansTypo.titleLarge,
+            color = Gray900
         )
     }
 }
@@ -145,6 +147,7 @@ fun ExerciseGoal(
         Text(
             text = "목표 운동 시간을\n입력해 주세요",
             style = gmarketsansTypo.headlineLarge,
+            color = Gray900,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(bottom = 50.dp)
         )
