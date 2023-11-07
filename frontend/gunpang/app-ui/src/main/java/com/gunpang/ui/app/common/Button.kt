@@ -1,5 +1,7 @@
 package com.gunpang.ui.app.common
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -27,24 +29,25 @@ fun CommonButton(
     enabled: Boolean = true,
     onClick: () -> Unit = { }
 ){
-    Button(
-        enabled = enabled,
-        onClick = onClick,
-        shape= Shapes.medium,
-        modifier = Modifier
-            .width(203.dp)
-            .height(58.dp)
-            .alpha(alpha),
-        colors = ButtonDefaults.buttonColors(Navy200),
+    Box(modifier = Modifier.width(203.dp).height(58.dp)) {
+        if(!enabled) return
+        Button(
+            onClick = onClick,
+            shape = Shapes.medium,
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(alpha),
+            colors = ButtonDefaults.buttonColors(Navy200),
         ) {
             Text(
                 text = text,
-                modifier= Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 fontFamily = gmarketsans,
                 fontWeight = FontWeight.Medium,
-                color= Gray900,
+                color = Gray900,
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center
             )
         }
+    }
 }
