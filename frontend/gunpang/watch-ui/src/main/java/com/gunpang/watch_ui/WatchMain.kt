@@ -27,7 +27,6 @@ import com.gunpang.watch_ui.landing.LandingScreen
 
 @Composable
 fun WatchMain(watchLandingViewModel: WatchLandingViewModel) {
-/*
 
     if(watchLandingViewModel.initCode == InitCode.FINISH){
         // [2] 성공
@@ -36,8 +35,6 @@ fun WatchMain(watchLandingViewModel: WatchLandingViewModel) {
     }
     // [1] 랜딩 중
     LandingScreen(watchLandingViewModel)
-    */
-    WatchMainNavigation()
 }
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

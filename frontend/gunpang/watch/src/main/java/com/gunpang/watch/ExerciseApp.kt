@@ -1,7 +1,7 @@
 package com.gunpang.watch
 
-import android.app.Application
+import com.gunpang.data.DataApplication
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class ExerciseApp : Application()
+class ExerciseApp : DataApplication()
