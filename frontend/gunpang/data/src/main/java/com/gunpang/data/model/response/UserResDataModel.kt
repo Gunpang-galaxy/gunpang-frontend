@@ -14,6 +14,6 @@ data class SignUpResDto(
 data class UserInfoResDto(
     val email : String,
     val gender : String,
-    val birth : Int,
+    val birthYear : Int,
     val height : Int
 )

@@ -27,7 +27,7 @@ fun MainContent(
         .fillMaxHeight(),
     avatarViewModel: AvatarViewModel
     ){
-    BoxWithConstraints(
+    Box(
         modifier = Modifier
         .fillMaxSize(),
         contentAlignment = Alignment.Center

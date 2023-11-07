@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit
 interface Api {
     companion object {
         private const val BASE_URL = "http://k9a207.p.ssafy.io:8080/api/"
-        private const val LOGIN_URL = "${BASE_URL}/users"
-        private const val TOKEN_RECREATE_URL = "${LOGIN_URL}/users/jwt/recreate"
+        private const val LOGIN_URL = "${BASE_URL}users"
+        private const val TOKEN_RECREATE_URL = "${LOGIN_URL}/jwt/recreate"
         private const val TIMEOUT_LIMIT = 60L // api 연결 시간 제한
 
         class GsonDateFormatAdapter : JsonSerializer<LocalDateTime?>,

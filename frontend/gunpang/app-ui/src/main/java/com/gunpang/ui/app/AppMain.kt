@@ -1,11 +1,14 @@
 package com.gunpang.ui.app
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -42,7 +45,10 @@ fun AppMain(
     loginViewModel.login() // 초기 상태 확인
     GunpangTheme {
         Scaffold { fullScreen ->
-            Box(modifier = Modifier.padding(fullScreen)) {
+            Box(modifier = Modifier
+                .padding(fullScreen)
+                .background(Color.White)
+            ) {
                 /**
                  * 앱 로딩 시
                  * - 로그인 X: 로그인-> 설명 -> 메인

@@ -25,13 +25,14 @@ import com.gunpang.ui.theme.gmarketsans
 @Composable
 fun TopBar(
     navController: NavController,
-    title: String = "",
+    title: String,
     contentColor: Color = Color.White,
     titleContentColor: Color = Gray900,
     hasUndo : Boolean = false,
     iconTint: Color = Gray600,
 ){
     Log.d("[현재 스크린 이름]", navController.currentDestination?.route!!)
+    Log.d("[현재 메뉴 title]", title)
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = contentColor,

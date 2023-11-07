@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.screen.mypage
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -52,7 +54,10 @@ fun MyPageScreen(
         containerColor = Color.White
     ) {
         it ->
-        Surface(modifier = Modifier.padding(it)) {
+        Surface(
+            modifier = Modifier
+                .padding(it)
+        ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -123,6 +128,7 @@ fun infoText (
                 fontFamily = gmarketsans,
                 color = Gray900,
                 fontSize = 20.sp,
+                textAlign = TextAlign.Right
             )
         }
     }

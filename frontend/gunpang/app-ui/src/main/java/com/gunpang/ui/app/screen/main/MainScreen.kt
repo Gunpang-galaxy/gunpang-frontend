@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.screen.main
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -54,7 +55,7 @@ fun MainScreen(
     LaunchedEffect(key1 = true){
         // ui 접근 시 한번만 실행
         avatarViewModel.init()
-
+        Log.d("[main avatar]", avatarViewModel.appAvatar.toString())
         // 현재 아바타가 살아있는 상태가 아닐 경우
         if(avatarViewModel.appAvatar.status != AvatarStatusCode.ALIVE){
             navController.navigate(AppNavItem.AvatarFinishScreen.routeName)
@@ -65,6 +66,7 @@ fun MainScreen(
         topBar={
             TopBar(
                 navController = navController,
+                title= ""
             ) },
         containerColor= Color.White,
         bottomBar = { BottomNavBar(navController = navController) },
@@ -74,7 +76,6 @@ fun MainScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .background(Color.White)
                     .padding(paddingValues),
                 color = Color.White
             ){

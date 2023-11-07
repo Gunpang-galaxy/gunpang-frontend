@@ -25,7 +25,7 @@ fun BottomNavBar(
         contentColor = contentColor
     ) {
 
-        Log.d("[바텀바 현재 스크린]", navController.currentDestination?.route!!)
+        //Log.d("[바텀바 현재 스크린]", navController.currentDestination?.route!!)
 
         NavigationBarItem(
             selected = navController.currentDestination?.route!! == AppNavItem.CalenderScreen.routeName,
