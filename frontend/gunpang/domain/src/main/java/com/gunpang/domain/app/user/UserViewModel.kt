@@ -1,7 +1,6 @@
 package com.gunpang.domain.app.user
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -30,7 +29,7 @@ class UserViewModel : ViewModel()  {
                     userInfo = UserInfo(
                         data.email,
                         GenderCode.fromString(data.gender), //genderCode 수정되면 변경
-                        data.birth,
+                        data.birthYear,
                         data.height
                     )
                 }
