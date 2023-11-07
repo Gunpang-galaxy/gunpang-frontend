@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.watch_ui.common.GunpangScreenWrapper
 import kotlinx.coroutines.CoroutineScope
@@ -42,7 +43,13 @@ fun OnExercise(
             ) { page ->
                 when (page) {
                     0 -> CurrentStatusScreen(uiState)
-                    1 -> ExerciseMenuScreen(navController,exerciseViewModel)
+                    1 -> ExerciseMenuScreen(
+                        navController = navController,
+                        exerciseViewModel = exerciseViewModel,
+                        onSummary={
+                            navController.navigate(WatchNavItem.AfterExercise
+                                .createRoute(it.elapsedTime,it.totalCalories,it.totalDistance))
+                        })
                 }
             }
 
