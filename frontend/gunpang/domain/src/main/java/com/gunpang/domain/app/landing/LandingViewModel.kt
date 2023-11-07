@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 class LandingViewModel(
     private val signInIntent: Intent,
     private val resultLauncher: ActivityResultLauncher<Intent>,
+    private val wearableAppInstallRequest: Unit,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -27,6 +28,7 @@ class LandingViewModel(
 
     private val userRepository: UserRepository = UserRepository()
 
+    // [회원 관리 관련 코드 START]
     // 건팡 로그인
     fun login() {
         resultLauncher.launch(signInIntent)
@@ -53,17 +55,26 @@ class LandingViewModel(
                 }
         }
     }
+    // [회원 관리 관련 코드 END]
+
+    // [웨어러블 코드 START]
+    // 웨어러블 앱 설치 요청
+    fun requestWearableAppInstall() {
+        wearableAppInstallRequest
+    }
+    // [웨어러블 코드 END]
 
 }
 
 class LandingViewModelFactory(
     private val signInIntent: Intent,
     private val resultLauncher: ActivityResultLauncher<Intent>,
+    private val wearableAppInstallRequest: Unit,
     private val application: Application
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LandingViewModel::class.java)) {
-            return LandingViewModel(signInIntent, resultLauncher, application) as T
+            return LandingViewModel(signInIntent, resultLauncher, wearableAppInstallRequest, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }
