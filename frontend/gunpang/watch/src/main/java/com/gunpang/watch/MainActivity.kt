@@ -7,11 +7,14 @@
 package com.gunpang.watch
 
 import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.wear.remote.interactions.RemoteActivityHelper
 
@@ -42,8 +45,13 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("테스트","onCreate")
         // 필수 권한 부여
         grantPermissions()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BODY_SENSORS)
+            != PackageManager.PERMISSION_GRANTED) {
+            Log.d("테스트", "권한 설정 안되어있음")
+        }
 
         // 모바일 - 워치 연결
         capabilityClient = Wearable.getCapabilityClient(this)
@@ -71,7 +79,6 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         //TODO("필요한 권한 확인후, list에 넣을 것")
         val needPermissions = listOf(
             Manifest.permission.BODY_SENSORS,
-            Manifest.permission.BODY_SENSORS_BACKGROUND,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACTIVITY_RECOGNITION).toTypedArray()
