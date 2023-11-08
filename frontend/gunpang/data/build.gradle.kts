@@ -74,6 +74,12 @@ dependencies {
     implementation("com.google.android.horologist:horologist-health-service:0.5.9")
 
     //implementation("androidx.health:health-services-client:1.0.0-beta02")
+
+    //stomp
+    implementation("com.github.NaikSoftware:StompProtocolAndroid:1.6.6")
+    implementation ("io.reactivex.rxjava2:rxjava:2.2.5")
+    implementation ("io.reactivex.rxjava2:rxandroid:2.1.0")
+
 }
 kapt {
     correctErrorTypes = true
