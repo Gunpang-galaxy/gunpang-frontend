@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gunpang.common.R
@@ -39,18 +40,21 @@ fun LandingExceptionHandler(
             contentDescription = "건팡 예외 발생",
             modifier = Modifier
                 .size(200.dp)
+
         )
         Text(
             text = errorMessage,
             style = gmarketsansTypo.displaySmall,
             color = Gray900,
             modifier = Modifier
-                .padding(top = 20.dp, bottom = 20.dp)
+                .padding(top = 20.dp, bottom = 20.dp),
+            textAlign = TextAlign.Center
         )
         Text(
             text = explanation,
             style = gmarketsansTypo.titleMedium,
-            color = Gray900
+            color = Gray900,
+            textAlign = TextAlign.Center
         )
         Spacer(
             modifier = Modifier.size(70.dp)
@@ -81,14 +85,16 @@ fun LoginFailException(
 
 @Composable
 fun WatchNotConnectedException(
-    navController: NavController
+    navController: NavController,
+    landingViewModel: LandingViewModel
 ) {
     LandingExceptionHandler(
         errorMessage = "갤럭시워치와\n연동할 수 없어요",
-        explanation = "핸드폰과 갤럭시워치가 연결되어있는지 확인해주세요",
+        explanation = "핸드폰과 갤럭시워치가\n연결되어있는지 확인해주세요",
         pageNavigateText = "연결하기",
         onClick = {
-
+            landingViewModel.requestWearableConnection()
+            navController.navigate(AppNavItem.AppMain.routeName)
         }
     )
 }
@@ -104,6 +110,7 @@ fun WatchAppNotInstalledException(
         pageNavigateText = "워치에 앱 설치하기",
         onClick = {
             landingViewModel.requestWearableAppInstall()
+            navController.navigate(AppNavItem.AppMain.routeName)
         }
     )
 }

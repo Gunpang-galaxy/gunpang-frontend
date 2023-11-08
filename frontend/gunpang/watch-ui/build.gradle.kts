@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.gunpang.watch_ui"
+    namespace = "com.gunpang.ui"
     compileSdk = 34
 
     defaultConfig {

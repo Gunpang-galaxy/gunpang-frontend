@@ -1,11 +1,13 @@
 package com.gunpang.ui.app
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
@@ -44,17 +46,22 @@ import com.gunpang.ui.theme.GunpangTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppMain(
-    landingViewModel: LandingViewModel,
+    landingViewModel: LandingViewModel
 ) {
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
 
-    landingViewModel.login() // 초기 상태 확인
+    // 워치 연결 여부 확인 후 AppMain 재접속 시 실행
+    LaunchedEffect(key1 = true) {
+        landingViewModel.login()
+    }
+
     GunpangTheme {
         Scaffold { fullScreen ->
-            Box(modifier = Modifier
-                .padding(fullScreen)
-                .background(Color.White)
+            Box(
+                modifier = Modifier
+                    .padding(fullScreen)
+                    .background(Color.White)
             ) {
                 /**
                  * 앱 로딩 시
@@ -71,21 +78,46 @@ fun AppMain(
                  *   - 목표 입력 O: 메인
                  */
                 when (landingViewModel.initCode) {
+                    InitCode.NOT_FOUND -> { // 기기 없음
+                        AppNavGraph(
+                            startDestination = AppNavItem.WatchNotConnectedException.routeName,
+                            landingViewModel = landingViewModel
+                        )
+                    }
+
+                    InitCode.NOT_INSTALL -> { // 워치에 앱 설치 안됨
+                        AppNavGraph(
+                            startDestination = AppNavItem.WatchAppNotInstalledException.routeName,
+                            landingViewModel = landingViewModel
+                        )
+                    }
+
                     InitCode.NOT_LOGIN -> { // 로그인 되지 않은 상태
                         Login(landingViewModel = landingViewModel)
                     }
+
                     InitCode.REGISTER -> { // 회원가입 필요
-                        AppNavGraph(startDestination = AppNavItem.Introduction.routeName)
+                        AppNavGraph(
+                            startDestination = AppNavItem.Introduction.routeName,
+                            landingViewModel = landingViewModel
+                        )
                     }
+
                     InitCode.NOT_CONFIG -> { // 신체 정보 입력 X
-                        AppNavGraph(startDestination = AppNavItem.PersonalInfo.routeName)
+                        AppNavGraph(
+                            startDestination = AppNavItem.PersonalInfo.routeName,
+                            landingViewModel = landingViewModel
+                        )
                     }
+
                     InitCode.FINISH -> {
-                        AppNavGraph()
+                        AppNavGraph(
+                            landingViewModel = landingViewModel
+                        )
                     }
+
                     else -> {
-                        // TODO : 예외 페이지로 이동
-                        Login(landingViewModel = landingViewModel)
+
                     }
                 }
             }
@@ -96,12 +128,12 @@ fun AppMain(
 
 @Composable
 fun AppNavGraph(
-    startDestination: String = AppNavItem.MainScreen.routeName
+    startDestination: String = AppNavItem.MainScreen.routeName,
+    landingViewModel: LandingViewModel
 ) {
     val navController = rememberNavController()
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
-    val landingViewModel = viewModel<LandingViewModel>(viewModelStoreOwner)
     val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
     val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner)
     val calendarRecordViewModel = viewModel<CalendarRecordViewModel>(viewModelStoreOwner)
@@ -111,6 +143,9 @@ fun AppNavGraph(
         navController = navController,
         startDestination = startDestination
     ) {
+        composable(AppNavItem.AppMain.routeName) {
+            AppMain(landingViewModel)
+        }
         composable(AppNavItem.Introduction.routeName) {
             Introduction(navController)
         }
@@ -151,7 +186,7 @@ fun AppNavGraph(
             LoginFailException(navController)
         }
         composable(AppNavItem.WatchNotConnectedException.routeName) {
-            WatchNotConnectedException(navController)
+            WatchNotConnectedException(navController, landingViewModel)
         }
         composable(AppNavItem.WatchAppNotInstalledException.routeName) {
             WatchAppNotInstalledException(navController, landingViewModel)

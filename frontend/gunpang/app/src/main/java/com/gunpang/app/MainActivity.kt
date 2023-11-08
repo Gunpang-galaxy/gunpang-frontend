@@ -25,7 +25,6 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.CapabilityInfo
 import com.google.android.gms.wearable.MessageClient
-import com.google.android.gms.wearable.Node
 import com.google.android.gms.wearable.NodeClient
 import com.google.android.gms.wearable.Wearable
 import com.google.firebase.ktx.Firebase
@@ -51,8 +50,8 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     private lateinit var nodeClient: NodeClient
     private lateinit var remoteActivityHelper: RemoteActivityHelper
     private lateinit var messageClient: MessageClient
-    private lateinit var wearNodesWithApp: Set<Node>
-    private lateinit var allConnectedNodes: List<Node>
+    private lateinit var bluetoothIntent: Intent
+    private lateinit var appInstallIntent: Intent
 
     // 구글 로그인
     private lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -79,8 +78,10 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         nodeClient = Wearable.getNodeClient(this)
         remoteActivityHelper = RemoteActivityHelper(this)
         messageClient = Wearable.getMessageClient(this)
-        wearNodesWithApp = emptySet()
-        allConnectedNodes = emptyList()
+        bluetoothIntent = Intent(Settings.ACTION_BLUETOOTH_SETTINGS)
+        appInstallIntent = Intent(Intent.ACTION_VIEW)
+            .addCategory(Intent.CATEGORY_BROWSABLE)
+            .setData(Uri.parse(PLAY_STORE_APP_URI))
 
         // 구글 로그인
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -90,7 +91,12 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         signInIntent = mGoogleSignInClient.signInIntent
 
         // 로그인 view model
-        landingViewModelFactory = LandingViewModelFactory(signInIntent, resultLauncher, wearableAppInstallRequest(), this.application)
+        landingViewModelFactory = LandingViewModelFactory(
+            signInIntent, resultLauncher,
+            capabilityClient, nodeClient,
+            remoteActivityHelper, bluetoothIntent, appInstallIntent,
+            this.application
+        )
         landingViewModel =
             ViewModelProvider(this@MainActivity, landingViewModelFactory)[LandingViewModel::class.java]
 
@@ -197,84 +203,19 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     // [로그인 관련 코드 END]
 
     // [웨어러블 관련 코드 START]
-    // 앱 설치 요청 (웨어러블)
-    private fun wearableAppInstallRequest() {
-        Log.d("wearOS", "wearableAppInstallRequest 진입")
-
-        val wearNodesWithApp = wearNodesWithApp ?: return
-        val allConnectedNodes = allConnectedNodes ?: return
-        val nodesWithoutApp = allConnectedNodes - wearNodesWithApp
-        Log.d("wearOS", "nodesWithoutApp: ${nodesWithoutApp.size}")
-
-        val intent = Intent(Intent.ACTION_VIEW)
-            .addCategory(Intent.CATEGORY_BROWSABLE)
-            .setData(Uri.parse(PLAY_STORE_APP_URI))
-
-        nodesWithoutApp.forEach { node ->
-            Log.d("wearOS", "node: ${node.id}")
-            remoteActivityHelper
-                .startRemoteActivity(
-                    targetIntent = intent,
-                    targetNodeId = node.id
-                )
-        }
-    }
-
-    // 웨어러블 등록 여부 (근처에 있는지)
-    private fun findWearDevicesWithApp() {
-        Log.d("wearOS", "findWearDevicesWithApp 진입")
-        val pendingResult = Wearable.getCapabilityClient(this)
-            .getCapability(CAPABILITY_WEAR_APP, CapabilityClient.FILTER_REACHABLE)
-
-        pendingResult.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val capabilityInfo = task.result
-                wearNodesWithApp = capabilityInfo.nodes
-                Log.d("wearOS", "wearNodesWithApp: ${wearNodesWithApp.size}")
-                wearNodesWithApp.forEach(
-                    {
-                        Log.d("wearOS", "wearNodesWithApp: displayName ${it.displayName} / id ${it.id} / nearby ${it.isNearby}")
-                    }
-                )
-            } else {
-                Log.d("wearOS", "Failed CapabilityApi: " + task.result)
-            }
-        }
-    }
-
-    // 웨어러블 기기 찾기
-    private fun findAllWearDevices() {
-        val pendingResult = Wearable.getNodeClient(this).connectedNodes
-
-        pendingResult.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                allConnectedNodes = task.result
-                allConnectedNodes.forEach(
-                    {
-                        Log.d("wearOS", "allConnectedNodes: displayName ${it.displayName} / id ${it.id} / nearby ${it.isNearby}")
-                    }
-                )
-                // TODO: setContent to LandingVIewModel
-            } else {
-                // Task failed with an exception
-                Log.e("wearOS", "Failed CapabilityApi: " + task.exception)
-            }
-        }
-    }
-
     private fun connected() {
         capabilityClient.addListener(this, Uri.parse("wear://"), CapabilityClient.FILTER_REACHABLE)
         capabilityClient.addListener(this, CAPABILITY_WEAR_APP)
 
         // 워치 연결 확인(앱 설치 여부)
-        findWearDevicesWithApp()
-        findAllWearDevices()
+        landingViewModel.findWearDevicesWithApp()
+        landingViewModel.findAllWearDevices()
     }
 
     // 웨어러블 연결 여부 확인 후
     override fun onCapabilityChanged(capabilityInfo: CapabilityInfo) {
-        wearNodesWithApp = capabilityInfo.nodes
-        findAllWearDevices()
+        landingViewModel.wearNodesWithApp = capabilityInfo.nodes
+        landingViewModel.findAllWearDevices()
     }
     // [웨어러블 관련 코드 END]
 
