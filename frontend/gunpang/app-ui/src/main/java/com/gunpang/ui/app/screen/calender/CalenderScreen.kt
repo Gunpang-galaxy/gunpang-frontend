@@ -1,6 +1,7 @@
 package com.gunpang.ui.app.screen.calender
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -49,7 +50,6 @@ import com.kizitonwose.calendar.core.previousMonth
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.YearMonth
-import com.gunpang.domain.app.AppViewModel
 import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.TopBar
 import com.kizitonwose.calendar.compose.CalendarLayoutInfo
@@ -61,19 +61,29 @@ import java.time.Month
 import java.time.format.TextStyle
 import java.util.Locale
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import com.gunpang.domain.app.calendar.CalendarRecordViewModel
+import com.gunpang.ui.app.common.ContentsNoRecord
+import com.gunpang.ui.theme.Gray600
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.Navy200
 import com.gunpang.ui.theme.gmarketsansBold
+import com.gunpang.ui.theme.gmarketsansLight
 
 @SuppressLint("RememberReturnType")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalenderScreen(
     navController: NavController,
-    appViewModel: AppViewModel
+    calendarRecordViewModel: CalendarRecordViewModel,
 ) {
+
     Scaffold(
         topBar = {
             TopBar(navController = navController, title = "내 기록")
@@ -82,19 +92,26 @@ fun CalenderScreen(
         containerColor = Color.White
     ) { it ->
         Surface(
-            modifier = Modifier.padding(it).fillMaxSize().background(Color.White)
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize()
+                .background(Color.White),
+            color = Color.White
 
         ) {
             val currentMonth = remember { YearMonth.now() }
             val startMonth = remember { currentMonth.minusMonths(100) } // Adjust as needed
             val endMonth = remember { currentMonth.plusMonths(100) } // Adjust as needed
             val daysOfWeek = remember { daysOfWeek(firstDayOfWeek = DayOfWeek.SUNDAY) }
-            var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
-
+            var selectedDate by remember {
+                mutableStateOf<LocalDate?>(null)
+            }
             Column(
-                modifier = Modifier.fillMaxSize(),
-                //verticalArrangement = Arrangement.Center, // 세로 중앙 정렬
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally // 가로 중앙 정렬
+
             ) {
                 val state = rememberCalendarState(
                     startMonth = startMonth,
@@ -104,7 +121,7 @@ fun CalenderScreen(
                 )
                 val coroutineScope = rememberCoroutineScope()
                 val visibleMonth = rememberFirstMostVisibleMonth(state, viewportPercent = 90f)
-                //이거...한글로 고쳐야함
+
                 SimpleCalendarTitle(
                     modifier = Modifier.padding(vertical = 10.dp, horizontal = 8.dp),
                     currentMonth = visibleMonth.yearMonth,
@@ -121,38 +138,208 @@ fun CalenderScreen(
                 )
                 DaysOfWeekTitle(daysOfWeek = daysOfWeek)
                 HorizontalCalendar(
-                    modifier = Modifier.testTag("Calendar"),
+                    modifier = Modifier
+                        .testTag("Calendar")
+                        .size(400.dp, 350.dp),
                     state = state,
                     userScrollEnabled = true,
+                    //day.date로 다 요청 보내고 있는지 판단
+                    //있으면 점표시
                     dayContent = { day ->
                         Day(day, isSelected = selectedDate == day.date) { day ->
-                            selectedDate = if (selectedDate == day.date) null else day.date
+                            selectedDate = if (selectedDate == day.date) null
+                            else day.date
+                            if (selectedDate == null)
+                                calendarRecordViewModel.init()
+                            if (selectedDate != null) {
+                                calendarRecordViewModel.init()
+                                calendarRecordViewModel.requestApi(selectedDate.toString())
+                            }
                         }
+                        //Log.d("selectedDate : ", selectedDate.toString());
+                        Log.d("day.date : ", day.date.toString());
                     },
                 )
-                Spacer(modifier = Modifier.weight(1f))
-                Image(
-                    painter = painterResource(id = com.gunpang.common.R.drawable.loading_cloud),
-                    contentDescription = "기록이 없을 때",
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.padding(horizontal = 16.dp) // 좌우에 패딩 추가
-                )
-                Spacer(modifier = Modifier.weight(0.3f))
-                Text(
-                    text= "기록이 없어요...",
-                    textAlign = TextAlign.Center,
-                    fontFamily = gmarketsansBold,
-                    fontSize = 25.sp,
-                    color = Gray900,
-                )
-                Spacer(modifier = Modifier.weight(1f))
-            }
-            //기록이 있는 경우 하루 기록과 운동 기록을 보여줘야함
-            //기록이 없는 경우 구름 사진을 보여줘야 함
+                Spacer(modifier = Modifier.height(7.dp))
+                if (!isValidRecord(calendarRecordViewModel))
+                    ContentsNoRecord()
+                else {
+                    Column(
+                        modifier = Modifier.padding(horizontal = 50.dp) // 좌우에 패딩 추가
+                    ) {
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "하루 요약",
+                            textAlign = TextAlign.Left,
+                            fontFamily = gmarketsansBold,
+                            fontSize = 20.sp,
+                            color = Gray900,
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        //운동기록 출력
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
 
+                        ) {
+                            Text(
+                                text = when {
+                                    isValidRecord(calendarRecordViewModel) ->
+                                        "운동"
+
+                                    else -> "00시간 00분"
+                                },
+                                textAlign = TextAlign.Center,
+                                fontFamily = gmarketsansLight,
+                                fontSize = 20.sp,
+                                color = Gray900,
+                            )
+                            Spacer(modifier = Modifier.width(85.dp))
+                            Text(
+                                text = when {
+                                    isValidRecord(calendarRecordViewModel) ->
+                                        "${calendarRecordViewModel.exerciseTime}"
+
+                                    else -> ""
+                                },
+                                textAlign = TextAlign.Center,
+                                fontFamily = gmarketsansLight,
+                                fontSize = 20.sp,
+                                color = Gray900,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        //수면기록 출력
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+
+                        ) {
+                            if (calendarRecordViewModel.sleepAt == "-1" && calendarRecordViewModel.awakeAt == "-1")
+                                Spacer(modifier = Modifier.width(10.dp))
+                            Text(
+                                text = when {
+                                    isValidRecord(calendarRecordViewModel) ->
+                                        " 수면"
+
+                                    else -> ""
+                                },
+                                textAlign = TextAlign.Center,
+                                fontFamily = gmarketsansLight,
+                                fontSize = 20.sp,
+                                color = Gray900,
+                            )
+                            if (calendarRecordViewModel.sleepAt == "-1" && calendarRecordViewModel.awakeAt == "-1")
+                                Spacer(modifier = Modifier.width(60.dp))
+                            else
+                                Spacer(modifier = Modifier.width(66.dp))
+                            Text(
+                                text = when {
+                                    (isValidRecord(calendarRecordViewModel) && calendarRecordViewModel.sleepAt != "-1" && calendarRecordViewModel.awakeAt != "-1") ->
+                                        "${calendarRecordViewModel.awakeAt} - ${calendarRecordViewModel.sleepAt}"
+
+                                    else -> "00:00 - 00:00"
+                                },
+                                textAlign = TextAlign.Center,
+                                fontFamily = gmarketsansLight,
+                                fontSize = 20.sp,
+                                color = Gray900,
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        //식사기록 출력
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+
+                        ) {
+                            Text(
+                                text = when {
+                                    isValidRecord(calendarRecordViewModel) -> "식사"
+                                    else -> ""
+                                },
+                                textAlign = TextAlign.Center,
+                                fontFamily = gmarketsansLight,
+                                fontSize = 20.sp,
+                                color = Gray900,
+                            )
+                            Spacer(modifier = Modifier.width(68.dp))
+                            Log.d("아침 음식 타입", calendarRecordViewModel.breakfastFoodType.foodType)
+                            Image(
+                                painter = painterResource(id = calendarRecordViewModel.breakfastFoodType.imageId),
+                                contentDescription = "아침 기록", // 이 부분은 필요에 따라 설정
+                                modifier = Modifier.size(40.dp), // 아이콘의 크기 설정                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 er = Modifier.size(40.dp), // 아이콘의 크기 설정
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Log.d("점심 음식 타입", calendarRecordViewModel.lunchFoodType.foodType)
+                            Image(
+                                painter = painterResource(id = calendarRecordViewModel.lunchFoodType.imageId),
+                                contentDescription = "점심 기록", // 이 부분은 필요에 따라 설정
+                                modifier = Modifier.size(40.dp), // 아이콘의 크기 설정
+                            )
+                            Spacer(modifier = Modifier.width(10.dp))
+                            Log.d("저녁 음식 타입", calendarRecordViewModel.dinnerFoodType.foodType)
+                            Image(
+                                painter = painterResource(id = calendarRecordViewModel.dinnerFoodType.imageId),
+                                contentDescription = "저녁 기록", // 이 부분은 필요에 따라 설정
+                                modifier = Modifier.size(40.dp), // 아이콘의 크기 설정
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    //운동기록 출력
+                    Column(
+                        modifier = Modifier.padding(horizontal = 50.dp) // 좌우에 패딩 추가
+                    ) {
+                        Text(
+                            text = "운동 기록",
+                            textAlign = TextAlign.Left,
+                            fontFamily = gmarketsansBold,
+                            fontSize = 20.sp,
+                            color = Gray900,
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            //horizontalArrangement = Arrangement.End
+                        ) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            for (i in calendarRecordViewModel.exercisesOnDate.indices) {
+                                Text(
+                                    text =
+                                    "${calendarRecordViewModel.exercisesOnDate.get(i).exerciseIntensity.exerciseIntensity} 운동을 ${
+                                        calendarRecordViewModel.exercisesOnDate.get(i).exerciseAccTime
+                                    } 지속했음",
+                                    textAlign = TextAlign.Center,
+                                    fontFamily = gmarketsansLight,
+                                    fontSize = 18.sp,
+                                    color = Gray900,
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
+}
 
+private fun isValidRecord(calendarRecordViewModel: CalendarRecordViewModel): Boolean {
+
+    if (calendarRecordViewModel.breakfastFoodType.foodType != "음식 기록 안함")
+        return true
+    if (calendarRecordViewModel.lunchFoodType.foodType != "음식 기록 안함")
+        return true
+    if (calendarRecordViewModel.dinnerFoodType.foodType != "음식 기록 안함")
+        return true
+    if (calendarRecordViewModel.sleepAt != "-1")
+        return true
+    if (calendarRecordViewModel.awakeAt != "-1")
+        return true
+    if (calendarRecordViewModel.exerciseTime != "00시간 00분")
+        return true
+    return false
 }
 
 @Composable
@@ -197,7 +384,6 @@ fun DaysOfWeekTitle(daysOfWeek: List<DayOfWeek>) {
                 textAlign = TextAlign.Center,
                 text = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN),
                 color = Gray900
-
             )
         }
     }
@@ -215,7 +401,7 @@ fun SimpleCalendarTitle(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CalendarNavigationIcon(
-            icon = painterResource(id =  com.gunpang.common.R.drawable.ic_chevron_left),
+            icon = painterResource(id = com.gunpang.common.R.drawable.ic_chevron_left),
             contentDescription = "Previous",
             onClick = goToPrevious,
         )
@@ -228,10 +414,11 @@ fun SimpleCalendarTitle(
             textAlign = TextAlign.Center,
             color = Gray900,
             fontWeight = FontWeight.Medium,
+            fontFamily = gmarketsansBold,
         )
         CalendarNavigationIcon(
 
-            icon = painterResource(id =  com.gunpang.common.R.drawable.ic_chevron_right),
+            icon = painterResource(id = com.gunpang.common.R.drawable.ic_chevron_right),
             contentDescription = "Next",
             onClick = goToNext,
         )
@@ -243,6 +430,8 @@ private fun CalendarNavigationIcon(
     icon: Painter,
     contentDescription: String,
     onClick: () -> Unit,
+    //이렇게 넣으면 한번에 정의 가넝
+    tint: Color = Gray600
 ) = Box(
     modifier = Modifier
         .fillMaxHeight()
@@ -255,7 +444,7 @@ private fun CalendarNavigationIcon(
             .fillMaxSize()
             .padding(4.dp)
             .align(Alignment.Center),
-        tint = Gray900,
+        tint = tint,
         painter = icon,
         contentDescription = contentDescription,
     )
