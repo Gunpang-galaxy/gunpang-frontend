@@ -51,14 +51,14 @@ fun AvatarTodayInfo(
             TodayInfoDetail(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(36.dp),
+                    .height(40.dp),
                 title = "운동",
                 content = when{
-                    contents.exerciseTime == "00시간00분" -> "아직 운동 안했어.."
+                    contents.exerciseTime == "00시간00분" -> "운동 안했네.."
                     else -> contents.exerciseTime
                 }
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             TodayInfoDetail(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -69,7 +69,7 @@ fun AvatarTodayInfo(
                 else -> "${contents.sleepAt} - ${contents.awakeAt}"
             }
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             TodayInfoDetail(
                 modifier = Modifier
                     .fillMaxWidth()

@@ -57,13 +57,15 @@ fun MyPageScreen(
         Surface(
             modifier = Modifier
                 .padding(it)
+                .fillMaxSize(),
+            color = Color.White
         ) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(90.dp))
-                val infoModifier = Modifier.fillMaxWidth().height(54.dp)
+                val infoModifier = Modifier.fillMaxWidth().height(70.dp)
                 infoText(
                     modifier = infoModifier,
                     fieldName = "이메일",

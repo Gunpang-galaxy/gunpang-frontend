@@ -10,7 +10,7 @@ enum class StageCode(
     LAND(level=2, imageId = R.drawable.background_land),
     SKY(level=3, imageId = R.drawable.background_sky),
     SPACE(level=4, imageId = R.drawable.background_space),
-    NOT_FOUND(level=-1, imageId = R.drawable.question_mark);
+    NOT_FOUND(level=0, imageId = R.drawable.question_mark);
     companion object {
         fun fromString(stage: String): StageCode {
             var findResult : StageCode? = values().find { it.name == stage }
