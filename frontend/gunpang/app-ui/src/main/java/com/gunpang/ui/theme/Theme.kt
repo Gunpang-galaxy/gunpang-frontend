@@ -2,6 +2,7 @@ package com.gunpang.ui.theme
 
 import android.app.Activity
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -16,6 +17,14 @@ import androidx.compose.ui.platform.LocalView
 //    secondary = Gray500,
 //    tertiary = Pink100
 //)
+
+class BottomNavTheme {
+    val selectedIconColor: Color = Gray800
+    val selectedTextColor: Color = Gray800
+    val selectedIndicatorColor: Color = Navy500
+    val unselectedIconColor: Color = Gray500
+    val unselectedTextColor: Color = Gray500
+}
 
 private val LightColorScheme = lightColorScheme(
     primary = Navy500,
@@ -66,3 +75,4 @@ fun GunpangTheme(
         content = content
     )
 }
+

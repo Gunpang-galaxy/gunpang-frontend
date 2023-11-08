@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.screen.main
 
+import android.text.format.DateFormat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,12 +24,15 @@ import com.gunpang.common.code.AvatarStatusCode
 import com.gunpang.common.R
 import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.domain.app.avatar.AvatarViewModel
+import com.gunpang.domain.entity.AppAvatar
 import com.gunpang.domain.entity.AppAvatarDeadContent
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.screen.main.composable.LivingDate
 import com.gunpang.ui.app.screen.main.composable.AvatarName
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansBold
+import java.time.LocalDate
+import java.util.Date
 
 @Composable
 fun AvatarFinishedScreen(
@@ -92,7 +96,8 @@ fun AvatarFinishedScreen(
         // 아바타 산날
         Box(){
             val finishedDate : String = if(avatarViewModel.appAvatar.finishedDate != null)
-                avatarViewModel.appAvatar.finishedDate!! else "9999-99-99"
+                avatarViewModel.appAvatar.finishedDate!! else
+                DateFormat.format("yyyy.MM.dd", Date()).toString()
             LivingDate(
                 startedDate = avatarViewModel.appAvatar.startedDate,
                 finishedDate = finishedDate
@@ -128,8 +133,10 @@ fun AvatarFinishedScreen(
         CommonButton(
             text = text,
             onClick = {
-                // TODO : 아바타 다시 만드려면 어떻게 해야함?
-                navController.navigate(AppNavItem.MainScreen.routeName)
+                // 혹시 몰라서 avatarViewModel.appAvatar 초기화
+                avatarViewModel.appAvatar = AppAvatar()
+                // 아바타 다시 시작하기 위해 아바타 생성 페이지로 navigate
+                navController.navigate(AppNavItem.AvatarEgg.routeName)
             }
         )
 

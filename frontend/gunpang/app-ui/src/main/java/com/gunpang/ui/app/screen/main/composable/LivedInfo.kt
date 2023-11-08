@@ -24,7 +24,7 @@ fun LivingDate(
 ){
     Text(
         modifier = modifier.padding(top = 4.dp),
-        text = "$finishedDate - $startedDate",
+        text = "$startedDate - $finishedDate",
         fontFamily = gmarketsansLight,
         fontSize = 20.sp,
         textAlign = TextAlign.Center,

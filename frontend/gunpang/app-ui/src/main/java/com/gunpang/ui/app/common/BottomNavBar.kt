@@ -6,6 +6,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -13,6 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.gunpang.common.R
 import com.gunpang.common.navigation.AppNavItem
+import com.gunpang.ui.theme.BottomNavTheme
+import com.gunpang.ui.theme.galmuri
 
 @Composable
 fun BottomNavBar(
@@ -24,7 +27,7 @@ fun BottomNavBar(
         containerColor = containerColor,
         contentColor = contentColor
     ) {
-
+        //val bottomNavTheme : BottomNavTheme = BottomNavTheme();
         //Log.d("[바텀바 현재 스크린]", navController.currentDestination?.route!!)
 
         NavigationBarItem(
@@ -50,7 +53,7 @@ fun BottomNavBar(
                 Icon(painterResource(id = R.drawable.ic_bottom_nav_home),
                     contentDescription = "메인 화면")
 
-            } },
+                } },
         )
         NavigationBarItem(
             selected = navController.currentDestination?.route == AppNavItem.BodyCompositionScreen.routeName,
