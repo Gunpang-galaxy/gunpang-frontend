@@ -19,6 +19,7 @@ import com.gunpang.domain.app.avatar.AvatarViewModel
 import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.TopBar
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,11 +31,12 @@ fun MainScreen(
     LaunchedEffect(key1 = true){
         // ui 접근 시 한번만 실행
         avatarViewModel.init()
-        delay(200) // 0.2초 딜레이(아바타 존재여부 확인을 위한 딜레이)
+        delay(2000) // 0.2초 딜레이(아바타 존재여부 확인을 위한 딜레이)
+
+        Log.d("[main avatar]", "현재 아바타 존재 여부: ${avatarViewModel.currentAvatarExist.toString()}")
         Log.d("[main avatar]", avatarViewModel.appAvatar.toString())
 
         // 현재 아바타가 없는 경우
-        Log.d("[main avatar]", "현재 아바타 존재 여부: ${avatarViewModel.currentAvatarExist.toString()}")
         if (!avatarViewModel.currentAvatarExist) {
             navController.navigate(AppNavItem.AvatarNotCreatedException.routeName)
         }

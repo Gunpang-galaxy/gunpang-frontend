@@ -11,7 +11,7 @@ data class AppAvatar(
     val stage: StageCode,
     val healthPoint: Float,
     val startedDate: String,
-    val finishedDate: String?,
+    val finishedDate: String,
 ) {
     constructor() : this(
         avatarType=AvatarCode.AVATAR_NOT_FOUND,
@@ -20,6 +20,6 @@ data class AppAvatar(
         stage = StageCode.NOT_FOUND,
         healthPoint=0f,
         startedDate="",
-        finishedDate=null,
+        finishedDate="",
     )
 }

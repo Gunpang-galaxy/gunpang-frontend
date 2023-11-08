@@ -27,6 +27,7 @@ fun MainContent(
         .fillMaxHeight(),
     avatarViewModel: AvatarViewModel
     ){
+
     Box(
         modifier = Modifier
         .fillMaxSize(),

@@ -13,7 +13,7 @@ enum class MealRecordCode (
 
     companion object {
         fun fromString(foodType: String): MealRecordCode {
-            var findResult : MealRecordCode? = values().find { it.foodType == foodType }
+            var findResult : MealRecordCode? = values().find { it.name == foodType }
             return when {
                 findResult != null -> findResult
                 else -> NOT_RECORD

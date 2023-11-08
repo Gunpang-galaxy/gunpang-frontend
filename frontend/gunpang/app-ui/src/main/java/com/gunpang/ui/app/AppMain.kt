@@ -18,6 +18,7 @@ import com.gunpang.common.code.InitCode
 import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.avatar.AvatarViewModel
+import com.gunpang.domain.app.landing.GoalViewModel
 import com.gunpang.domain.app.landing.LandingViewModel
 import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.screen.avatar.AvatarEgg
@@ -103,7 +104,7 @@ fun AppNavGraph(
     val landingViewModel = viewModel<LandingViewModel>(viewModelStoreOwner)
     val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
     val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner)
-
+    val goalViewModel = viewModel<GoalViewModel>(viewModelStoreOwner)
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -124,10 +125,10 @@ fun AppNavGraph(
             NameAvatar(navController)
         }
         composable(AppNavItem.SleepGoal.routeName) {
-            SleepGoal(navController)
+            SleepGoal(navController, goalViewModel)
         }
         composable(AppNavItem.ExerciseGoal.routeName) {
-            ExerciseGoal(navController)
+            ExerciseGoal(navController, goalViewModel)
         }
         composable(AppNavItem.MainScreen.routeName) {
             MainScreen(navController, appViewModel, avatarViewModel)

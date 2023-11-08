@@ -14,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gunpang.common.code.DayCode
+import com.gunpang.common.navigation.AppNavItem
+import com.gunpang.domain.app.landing.GoalViewModel
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
 import com.gunpang.ui.theme.Gray900
@@ -134,7 +137,8 @@ fun exerciseAvailable(minute: String): Boolean {
 
 @Composable
 fun ExerciseGoal(
-    navController: NavController
+    navController: NavController,
+    goalViewModel: GoalViewModel
 ) {
     var selectedDay by remember { mutableIntStateOf(0) } // 선택한 날짜
     var minute by remember { mutableStateOf("") } // 입력한 시간
@@ -173,7 +177,13 @@ fun ExerciseGoal(
             text = "입력",
             enabled = (selectedDay > 0 && exerciseAvailable(minute)),
             onClick = {
-                navController.navigate("mainScreen")
+                // TODO : 목표 설정 API 호출
+                goalViewModel.setExerciseGoal(
+                    selectedDay = selectedDay,
+                    minute = minute
+                )
+                if(goalViewModel.setAvatarGoal())
+                    navController.navigate("mainScreen")
             }
         )
     }

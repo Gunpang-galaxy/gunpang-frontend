@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.gunpang.domain.app.landing.GoalViewModel
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
 import com.gunpang.ui.theme.Gray900
@@ -69,7 +70,8 @@ fun timeAvailable(hour: String, minute: String ): Boolean {
 
 @Composable
 fun SleepGoal(
-    navController: NavController
+    navController: NavController,
+    goalViewModel: GoalViewModel
 ) {
     var startHour by remember { mutableStateOf("") }
     var startMinute by remember { mutableStateOf("") }
@@ -112,6 +114,13 @@ fun SleepGoal(
             text = "입력",
             enabled = (timeAvailable(startHour, startMinute) && timeAvailable(endHour, endMinute)),
             onClick = {
+                // TODO: 입력한 시간을 viewmodel에 전송
+                goalViewModel.setSleepGoal(
+                    startHour = startHour,
+                    startMinute = startMinute,
+                    endHour = endHour,
+                    endMinute = endMinute
+                )
                 navController.navigate("exerciseGoal")
             }
         )

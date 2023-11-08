@@ -10,7 +10,7 @@ enum class AvatarStatusCode(
 
     companion object {
         fun fromString(status: String): AvatarStatusCode {
-            var findResult : AvatarStatusCode? = values().find { it.status == status }
+            var findResult : AvatarStatusCode? = values().find { it.name == status }
             return when {
                 findResult != null -> findResult
                 else -> NONE
