@@ -4,6 +4,7 @@ sealed class AppNavItem(
     val routeName: String,
     val description: String
 ) {
+    object AppMain: AppNavItem("appMain", "앱 접속 후 정보 확인")
     object Login: AppNavItem("login", "로그인 화면")
     object Introduction: AppNavItem("introduction", "앱 소개 화면")
     object PersonalInfo: AppNavItem("personalInfo", "개인 신체 정보 화면")

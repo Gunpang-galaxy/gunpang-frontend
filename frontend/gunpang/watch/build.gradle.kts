@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.gunpang.watch"
+    namespace = "com.gunpang.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.gunpang.watch"
+        applicationId = "com.gunpang.app"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
