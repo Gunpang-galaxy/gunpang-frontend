@@ -13,7 +13,6 @@ import com.gunpang.common.code.DayCode
 import com.gunpang.common.code.DeathCauseCode
 import com.gunpang.common.code.MealRecordCode
 import com.gunpang.common.code.StageCode
-import com.gunpang.data.model.response.AppAvatarInfoResDto
 import com.gunpang.data.repository.AvatarRepository
 import com.gunpang.domain.entity.AppAvatar
 import com.gunpang.domain.entity.AppAvatarAliveContent
@@ -57,49 +56,49 @@ class AvatarViewModel : ViewModel(){
                         return@collect
                     }
                     avatarGoal = AvatarGoal(
-                        data.goal.sleepStart,
-                        data.goal.sleepEnd,
-                        DayCode.fromBitCount(data.goal.exerciseDay),
-                        data.goal.exerciseTime,
-                        "건강한 음식 먹기"
+                        sleepStart = data.goal.sleepStart,
+                        sleepEnd = data.goal.sleepEnd,
+                        exerciseDay= DayCode.fromBitCount(data.goal.exerciseDay),
+                        exerciseTime = data.goal.exerciseTime,
+                        foodGoal = "건강한 음식 먹기"
                     )
                     appAvatar = AppAvatar(
-                        AvatarCode.fromString(data.avatarType),
-                        data.name,
-                        AvatarStatusCode.fromString(data.status),
-                        StageCode.fromString(data.stage),
-                        data.healthPoint,
-                        data.startedDate,
-                        data.finishedDate?:""
+                        avatarType = AvatarCode.fromString(data.avatarType),
+                        avatarName = data.name,
+                        status = AvatarStatusCode.fromString(data.status),
+                        stage = StageCode.fromString(data.stage),
+                        healthPoint = data.healthPoint,
+                        startedDate = data.startedDate,
+                        finishedDate = data.finishedDate?:""
                     )
                     when {
                         data.status == "GRAUDATED" -> {
                             avatarGraduatedContents = AppAvatarGraduatedContent(
-                                data.contents["exerciseTotal"] as Int,
-                                data.contents["exerciseSuccessCnt"] as Int,
-                                data.contents["foodTotal"] as Int,
-                                data.contents["foodSuccessCnt"] as Int,
-                                data.contents["sleepTotal"] as Int,
-                                data.contents["sleepSuccessCnt"] as Int
+                                exerciseTotal= data.contents["exerciseTotal"] as Int,
+                                exerciseSuccessCnt = data.contents["exerciseSuccessCnt"] as Int,
+                                foodTotal = data.contents["foodTotal"] as Int,
+                                foodSuccessCnt = data.contents["foodSuccessCnt"] as Int,
+                                sleepTotal = data.contents["sleepTotal"] as Int,
+                                sleepSuccessCnt = data.contents["sleepSuccessCnt"] as Int
                             )
                         }
                         data.status == "DEAD" -> {
                             avatarDeadContents = AppAvatarDeadContent(
-                                DeathCauseCode.fromString(data.contents["deathCause"].toString())
+                                deathCause = DeathCauseCode.fromString(data.contents["deathCause"].toString())
                             )
                         }
                         else ->
                             avatarAliveContents = AppAvatarAliveContent(
-                                MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
-                                MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
-                                MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
-                                data.contents["exerciseTime"].toString(),
-                                data.contents["sleepAt"].toString(),
-                                data.contents["awakeAt"].toString()
+                                breakfastFoodType= MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
+                                lunchFoodType = MealRecordCode.fromString(data.contents["lunchFoodType"].toString()),
+                                dinnerFoodType = MealRecordCode.fromString(data.contents["dinnerFoodType"].toString()),
+                                exerciseTime = data.contents["exerciseTime"].toString(),
+                                sleepAt = data.contents["sleepAt"].toString(),
+                                awakeAt = data.contents["awakeAt"].toString()
                             )
                     }
-                    prevId = data.hasPrev
-                    nextId = data.hasNext
+                    prevId = data.prev
+                    nextId = data.next
                 }
         }
     }
@@ -113,49 +112,49 @@ class AvatarViewModel : ViewModel(){
                 }
                 .collect {data ->
                     avatarGoal = AvatarGoal(
-                        data.goal.sleepStart,
-                        data.goal.sleepEnd,
-                        DayCode.fromBitCount(data.goal.exerciseDay),
-                        data.goal.exerciseTime,
-                        "건강한 음식 먹기"
+                        sleepStart = data.goal.sleepStart,
+                        sleepEnd = data.goal.sleepEnd,
+                        exerciseDay= DayCode.fromBitCount(data.goal.exerciseDay),
+                        exerciseTime = data.goal.exerciseTime,
+                        foodGoal = "건강한 음식 먹기"
                     )
                     appAvatar = AppAvatar(
-                        AvatarCode.fromString(data.avatarType),
-                        data.name,
-                        AvatarStatusCode.fromString(data.status),
-                        StageCode.fromString(data.stage),
-                        data.healthPoint,
-                        data.startedDate,
-                        data.finishedDate?:""
+                        avatarType = AvatarCode.fromString(data.avatarType),
+                        avatarName = data.name,
+                        status = AvatarStatusCode.fromString(data.status),
+                        stage = StageCode.fromString(data.stage),
+                        healthPoint = data.healthPoint,
+                        startedDate = data.startedDate,
+                        finishedDate = data.finishedDate?:""
                     )
                     when {
                         data.status == "GRAUDATED" -> {
                             avatarGraduatedContents = AppAvatarGraduatedContent(
-                                data.contents["exerciseTotal"] as Int,
-                                data.contents["exerciseSuccessCnt"] as Int,
-                                data.contents["foodTotal"] as Int,
-                                data.contents["foodSuccessCnt"] as Int,
-                                data.contents["sleepTotal"] as Int,
-                                data.contents["sleepSuccessCnt"] as Int
+                                exerciseTotal= data.contents["exerciseTotal"] as Int,
+                                exerciseSuccessCnt = data.contents["exerciseSuccessCnt"] as Int,
+                                foodTotal = data.contents["foodTotal"] as Int,
+                                foodSuccessCnt = data.contents["foodSuccessCnt"] as Int,
+                                sleepTotal = data.contents["sleepTotal"] as Int,
+                                sleepSuccessCnt = data.contents["sleepSuccessCnt"] as Int
                             )
                         }
                         data.status == "DEAD" -> {
                             avatarDeadContents = AppAvatarDeadContent(
-                                DeathCauseCode.fromString(data.contents["deathCause"].toString())
+                                deathCause = DeathCauseCode.fromString(data.contents["deathCause"].toString())
                             )
                         }
                         else ->
                             avatarAliveContents = AppAvatarAliveContent(
-                                MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
-                                MealRecordCode.fromString(data.contents["lunchFoodType"].toString()),
-                                MealRecordCode.fromString(data.contents["dinnerFoodType"].toString()),
-                                data.contents["exerciseTime"].toString(),
-                                data.contents["sleepAt"].toString(),
-                                data.contents["awakeAt"].toString()
+                                breakfastFoodType= MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
+                                lunchFoodType = MealRecordCode.fromString(data.contents["lunchFoodType"].toString()),
+                                dinnerFoodType = MealRecordCode.fromString(data.contents["dinnerFoodType"].toString()),
+                                exerciseTime = data.contents["exerciseTime"].toString(),
+                                sleepAt = data.contents["sleepAt"].toString(),
+                                awakeAt = data.contents["awakeAt"].toString()
                             )
                     }
-                    prevId = data.hasPrev
-                    nextId = data.hasNext
+                    prevId = data.prev
+                    nextId = data.next
                 }
         }
     }

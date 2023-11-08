@@ -24,8 +24,8 @@ data class AppAvatarInfoResDto( // 메인 화면 아바타 정보 (app-current)
     val healthPoint: Float, // 체력
     val startedDate: String, // 시작 날짜
     val finishedDate: String?, // 아바타 마지막 생존 날짜
-    val hasPrev: Int, // 이전 아바타 id, 없으면 -1
-    val hasNext: Int, // 다음 아바타 id, 없으면 -1
+    val prev: Int, // 이전 아바타 id, 없으면 -1
+    val next: Int, // 다음 아바타 id, 없으면 -1
     val contents: Map<String, Any> // 아바타 상세 정보
 )
 

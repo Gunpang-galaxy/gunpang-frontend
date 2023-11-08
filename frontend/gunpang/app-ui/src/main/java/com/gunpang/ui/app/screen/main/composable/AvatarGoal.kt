@@ -94,6 +94,8 @@ fun exerciseGoal(
 ) : String {
     if(exerciseDay.isEmpty())
         return "운동 날짜, 시간 설정 안했어"
+    if(exerciseDay.size == 7)
+        return "매일 ${getTimeFromString(exerciseTime)} 운동하기"
     var goalText = ""
     exerciseDay.forEachIndexed {index, day ->
         if(index == exerciseDay.size - 1)
