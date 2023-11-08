@@ -23,6 +23,7 @@ import com.gunpang.common.R
 import com.gunpang.common.code.AvatarStatusCode
 import com.gunpang.common.code.DayCode
 import com.gunpang.domain.entity.AvatarGoal
+import com.gunpang.ui.app.util.getTimeFromString
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansBold
 
@@ -96,7 +97,7 @@ fun exerciseGoal(
     var goalText = ""
     exerciseDay.forEachIndexed {index, day ->
         if(index == exerciseDay.size - 1)
-            goalText += "${day.kor}요일 ${exerciseTime}분 운동하기"
+            goalText += "${day.kor}요일 ${getTimeFromString(exerciseTime)} 운동하기"
         else
             goalText += "${day.kor}, "
     }

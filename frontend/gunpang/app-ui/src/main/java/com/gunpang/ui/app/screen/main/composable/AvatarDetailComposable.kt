@@ -54,7 +54,7 @@ fun AvatarTodayInfo(
                     .height(40.dp),
                 title = "운동",
                 content = when{
-                    contents.exerciseTime == "00시간00분" -> "운동 안했네.."
+                    contents.exerciseTime == "00시간 00분" -> "운동 안했네.."
                     else -> contents.exerciseTime
                 }
             )

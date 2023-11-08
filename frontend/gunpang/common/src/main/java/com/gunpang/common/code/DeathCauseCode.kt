@@ -10,7 +10,7 @@ enum class DeathCauseCode (
 
     companion object {
         fun fromString(deathCause: String): DeathCauseCode {
-            var findResult : DeathCauseCode? = values().find { it.status == deathCause }
+            var findResult : DeathCauseCode? = values().find { it.name == deathCause }
             return when {
                 findResult != null -> findResult
                 else -> NOT_FOUND

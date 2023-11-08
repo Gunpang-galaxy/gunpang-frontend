@@ -42,7 +42,7 @@ class AvatarViewModel : ViewModel(){
     private val avatarRepository : AvatarRepository = AvatarRepository() // 아바타 관련 Repository
 
     //현재 아바타 정보 가져오기
-    private fun getCurrentAvatar() {
+   private fun getCurrentAvatar() {
         viewModelScope.launch(Dispatchers.IO) {
             avatarRepository.getAvatarCurrentInfo()
                 .catch {
@@ -70,7 +70,7 @@ class AvatarViewModel : ViewModel(){
                         StageCode.fromString(data.stage),
                         data.healthPoint,
                         data.startedDate,
-                        data.finishedDate
+                        data.finishedDate?:""
                     )
                     when {
                         data.status == "GRAUDATED" -> {
@@ -126,7 +126,7 @@ class AvatarViewModel : ViewModel(){
                         StageCode.fromString(data.stage),
                         data.healthPoint,
                         data.startedDate,
-                        data.finishedDate
+                        data.finishedDate?:""
                     )
                     when {
                         data.status == "GRAUDATED" -> {
