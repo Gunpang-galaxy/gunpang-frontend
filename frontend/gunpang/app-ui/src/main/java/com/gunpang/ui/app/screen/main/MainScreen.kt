@@ -31,7 +31,7 @@ fun MainScreen(
     LaunchedEffect(key1 = true){
         // ui 접근 시 한번만 실행
         avatarViewModel.init()
-        delay(2000) // 0.2초 딜레이(아바타 존재여부 확인을 위한 딜레이)
+        delay(200) // 0.2초 딜레이(아바타 존재여부 확인을 위한 딜레이)
 
         Log.d("[main avatar]", "현재 아바타 존재 여부: ${avatarViewModel.currentAvatarExist.toString()}")
         Log.d("[main avatar]", avatarViewModel.appAvatar.toString())

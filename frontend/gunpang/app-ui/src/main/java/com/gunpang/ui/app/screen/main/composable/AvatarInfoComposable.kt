@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.screen.main.composable
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,6 +52,7 @@ fun AvatarInfo(
                 .fillMaxHeight(),
             contentAlignment = Alignment.Center
         ){
+            Log.d("[avatar info]", "prevId: ${avatarViewModel.prevId}]")
             if(avatarViewModel.prevId != -1){
                 IconButton(onClick = {
                     avatarViewModel.getAvatar(avatarViewModel.prevId)
@@ -77,6 +79,7 @@ fun AvatarInfo(
                 .fillMaxHeight(),
             contentAlignment = Alignment.Center
         ){
+            Log.d("[avatar info]", "nextId: ${avatarViewModel.nextId}]")
             if(avatarViewModel.nextId != -1){
                 IconButton(onClick = {
                     avatarViewModel.getAvatar(avatarViewModel.nextId)
