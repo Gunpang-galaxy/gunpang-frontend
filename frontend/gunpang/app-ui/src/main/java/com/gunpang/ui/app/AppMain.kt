@@ -2,7 +2,6 @@ package com.gunpang.ui.app
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -20,6 +19,7 @@ import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.avatar.AvatarViewModel
 import com.gunpang.domain.app.landing.GoalViewModel
 import com.gunpang.domain.app.landing.LandingViewModel
+import com.gunpang.domain.app.calendar.CalendarRecordViewModel
 import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.screen.avatar.AvatarEgg
 import com.gunpang.ui.app.screen.avatar.NameAvatar
@@ -104,6 +104,8 @@ fun AppNavGraph(
     val landingViewModel = viewModel<LandingViewModel>(viewModelStoreOwner)
     val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
     val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner)
+    val calendarRecordViewModel = viewModel<CalendarRecordViewModel>(viewModelStoreOwner)
+
     val goalViewModel = viewModel<GoalViewModel>(viewModelStoreOwner)
     NavHost(
         navController = navController,
@@ -137,7 +139,7 @@ fun AppNavGraph(
             MyPageScreen(navController, userViewModel)
         }
         composable(AppNavItem.CalenderScreen.routeName) {
-            CalenderScreen(navController, appViewModel)
+            CalenderScreen(navController,calendarRecordViewModel)
         }
         composable(AppNavItem.BodyCompositionScreen.routeName) {
             BodyCompositionScreen(navController)
