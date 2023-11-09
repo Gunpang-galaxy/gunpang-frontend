@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.gunpang.ui.app.common.CommonButton
+import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.galmuriTyop
 import com.gunpang.ui.theme.Navy500
 import com.tbuonomo.viewpagerdotsindicator.compose.DotsIndicator
@@ -43,12 +44,14 @@ fun IntroductionStructure(
             text = title,
             style = galmuriTyop.titleLarge,
             modifier = Modifier.padding(bottom = 50.dp),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = Gray900
         )
         Text(
             text = description,
             style = galmuriTyop.bodyMedium,
             textAlign = TextAlign.Center,
+            color = Gray900
         )
     }
 }

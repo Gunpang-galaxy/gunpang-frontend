@@ -23,5 +23,5 @@ sealed class AppNavItem(
     object WatchAppNotInstalledException: AppNavItem("watchAppNotInstalledException", "워치 앱 미설치 예외 화면")
     object AvatarNotCreatedException: AppNavItem("avatarNotCreatedException", "아바타 생성 실패 예외 화면")
     object GoalNotCreatedException: AppNavItem("goalNotCreatedException", "목표 생성 실패 예외 화면")
-
+    object LookForConnection: AppNavItem("lookForConnection", "워치 연결 상태 확인 중")
 }

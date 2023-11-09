@@ -181,7 +181,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
             task.addOnSuccessListener {
                 handleSignInResult(task)
                 landingViewModel.doLoginRequest()
-                Log.d("login", "initCode: ${landingViewModel.initCode}")
+                Log.d("landing", "initCode1: ${landingViewModel.initCode}")
             }
         }
     }
