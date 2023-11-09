@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
 import ua.naiksoftware.stomp.dto.LifecycleEvent
+import java.time.LocalDateTime
 import javax.inject.Inject
 class ExerciseServiceMonitor @Inject constructor(
     private val exerciseClientManager: ExerciseClientManager,
@@ -30,7 +31,7 @@ class ExerciseServiceMonitor @Inject constructor(
         )
     )
     // Heart Data Socket Send
-    private val GUNPANG_SOCKET_URL = "ws://10.0.2.2:8080/watch-data-to-server/websocket"
+    private val GUNPANG_SOCKET_URL = "ws://10.0.2.2:8180/live/bigdata/watch-data-to-server/websocket"
 //    private val client = OkHttpClient()
 //    private lateinit var ws: WebSocket
     private lateinit var stompClient: StompClient
@@ -113,23 +114,23 @@ class ExerciseServiceMonitor @Inject constructor(
         // 연결을 시작
         stompClient.connect()
 
-        stompClient.topic("/topic/heartbeat").subscribe({ topicMessage ->
-            // 메시지 처리
-            println("Received: ${topicMessage.payload}")
-            val heartbeat = Gson().fromJson(topicMessage.payload, Heartbeat::class.java)
-            Log.d("HEARTBEAT",heartbeat.toString());
-        }, { throwable ->
-            // 에러 처리
-            println("Error on subscribe topic$throwable")
-        })
+//        stompClient.topic("/sub/heartbeat").subscribe({ topicMessage ->
+//            // 메시지 처리
+//            println("Received: ${topicMessage.payload}")
+//            val heartbeat = Gson().fromJson(topicMessage.payload, Heartbeat::class.java)
+//            Log.d("HEARTBEAT",heartbeat.toString());
+//        }, { throwable ->
+//            // 에러 처리
+//            println("Error on subscribe topic$throwable")
+//        })
     }
     private fun sendHeartRate(heartRate: Double) {
         //ws.send(heartRate.toString())
         if (stompClient.isConnected) { // 연결 상태 체크
             val playerId = "0" // TODO: 로그인 성공시 넣기
-            val heartbeat = Heartbeat(playerId, heartRate)
+            val heartbeat = Heartbeat(playerId, heartRate,LocalDateTime.now().toString())
             val jsonHeartbeat = Gson().toJson(heartbeat)
-            stompClient.send("/watch/heartbeat", jsonHeartbeat).subscribe({
+            stompClient.send("/topic/heartbeat", jsonHeartbeat).subscribe({
                 // TODO:메시지 전송 성공
             }, { throwable ->
                 // 에러 처리
@@ -148,4 +149,4 @@ class ExerciseServiceMonitor @Inject constructor(
         }
     }
 }
-data class Heartbeat(val id: String, val rate: Double)
+data class Heartbeat(val playerId: String, val heartbeat: Double, val createdAt: String)
