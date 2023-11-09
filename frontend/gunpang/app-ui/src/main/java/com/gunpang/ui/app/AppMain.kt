@@ -35,6 +35,7 @@ import com.gunpang.ui.app.screen.landing.Introduction
 import com.gunpang.ui.app.screen.landing.LinkSamsungHealth
 import com.gunpang.ui.app.screen.landing.Login
 import com.gunpang.ui.app.screen.landing.LoginFailException
+import com.gunpang.ui.app.screen.landing.LookForConnection
 import com.gunpang.ui.app.screen.landing.PersonalInfo
 import com.gunpang.ui.app.screen.landing.WatchAppNotInstalledException
 import com.gunpang.ui.app.screen.landing.WatchNotConnectedException
@@ -42,6 +43,7 @@ import com.gunpang.ui.app.screen.main.AvatarFinishedScreen
 import com.gunpang.ui.app.screen.main.MainScreen
 import com.gunpang.ui.app.screen.mypage.MyPageScreen
 import com.gunpang.ui.theme.GunpangTheme
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,10 +53,12 @@ fun AppMain(
     val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
     val appViewModel = viewModel<AppViewModel>(viewModelStoreOwner)
 
-    // 워치 연결 여부 확인 후 AppMain 재접속 시 실행
+    // 워치 연동 여부, 로그인 여부 확인
     LaunchedEffect(key1 = true) {
+        delay(300) // Mainactivity onResume실행을 위한 대기 시간
         landingViewModel.login()
     }
+    Log.d("landing", "initCode2: ${landingViewModel.initCode}")
 
     GunpangTheme {
         Scaffold { fullScreen ->
@@ -78,6 +82,13 @@ fun AppMain(
                  *   - 목표 입력 O: 메인
                  */
                 when (landingViewModel.initCode) {
+                    InitCode.NOT_CONFIG -> { // 초기 설정 안됨
+                        AppNavGraph(
+                            startDestination = AppNavItem.LookForConnection.routeName,
+                            landingViewModel = landingViewModel
+                        )
+                    }
+
                     InitCode.NOT_FOUND -> { // 기기 없음
                         AppNavGraph(
                             startDestination = AppNavItem.WatchNotConnectedException.routeName,
@@ -103,13 +114,6 @@ fun AppMain(
                         )
                     }
 
-                    InitCode.NOT_CONFIG -> { // 신체 정보 입력 X
-                        AppNavGraph(
-                            startDestination = AppNavItem.PersonalInfo.routeName,
-                            landingViewModel = landingViewModel
-                        )
-                    }
-
                     InitCode.FINISH -> {
                         AppNavGraph(
                             landingViewModel = landingViewModel
@@ -117,7 +121,8 @@ fun AppMain(
                     }
 
                     else -> {
-
+                        // 인터넷 연결 X
+                        // wearOS 앱 X
                     }
                 }
             }
@@ -196,6 +201,9 @@ fun AppNavGraph(
         }
         composable(AppNavItem.GoalNotCreatedException.routeName) {
             GoalNotCreatedException(navController)
+        }
+        composable(AppNavItem.LookForConnection.routeName) {
+            LookForConnection(navController)
         }
     }
 }

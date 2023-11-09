@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,6 +23,7 @@ import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.galmuriTyop
 import com.gunpang.ui.theme.gmarketsansTypo
+import kotlinx.coroutines.delay
 
 @Composable
 fun LandingExceptionHandler(
@@ -104,6 +106,10 @@ fun WatchAppNotInstalledException(
     navController: NavController,
     landingViewModel: LandingViewModel
 ) {
+    LaunchedEffect(key1 = true) {
+        delay(500)
+    }
+
     LandingExceptionHandler(
         errorMessage = "갤럭시워치에\n건팡을 설치해주세요",
         explanation = "갤럭시워치에 건팡이\n설치되어 있는지 확인해주세요",
@@ -143,3 +149,28 @@ fun GoalNotCreatedException(
     )
 }
 
+@Composable
+fun LookForConnection(
+    navController: NavController
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "워치 연결 상태를\n확인하고 있어요",
+            style = gmarketsansTypo.displaySmall,
+            color = Gray900,
+            modifier = Modifier
+                .padding(top = 20.dp, bottom = 20.dp),
+            textAlign = TextAlign.Center
+        )
+        Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "건팡 로딩 중",
+            modifier = Modifier
+                .size(150.dp)
+        )
+    }
+}

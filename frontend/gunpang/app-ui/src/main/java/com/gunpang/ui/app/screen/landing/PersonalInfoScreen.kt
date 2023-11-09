@@ -17,11 +17,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,7 +35,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.gunpang.common.code.GenderCode
 import com.gunpang.common.navigation.AppNavItem
-import com.gunpang.domain.app.landing.NotificationViewModel
 import com.gunpang.domain.app.landing.PersonalInfoViewModel
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.CommonTextField
@@ -73,14 +72,15 @@ fun AgeInfo(onAgeChange: (String) -> Unit) {
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 modifier = Modifier
                     .menuAnchor()
-                    .width(130.dp)
+                    .width(150.dp)
                     .padding(start = 20.dp)
                     .border(color = Gray500, width = 1.dp, shape = Shapes.medium),
                 colors = TextFieldDefaults.textFieldColors(
                     containerColor = Color.Transparent,
                     cursorColor = Gray800,
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+                    unfocusedIndicatorColor = Color.Transparent,
+                    textColor = Gray900
                 ),
                 singleLine = true, // enter 입력 불가
                 textStyle = LocalTextStyle.current.copy(
@@ -101,8 +101,10 @@ fun AgeInfo(onAgeChange: (String) -> Unit) {
                             onAgeChange(year)
                             expanded = false
                         },
-                        modifier = Modifier
-                            .width(130.dp)
+                        modifier = Modifier.width(100.dp),
+                        colors = MenuDefaults.itemColors(
+                            textColor = Gray900,
+                        )
                     )
                 }
             }
@@ -213,8 +215,7 @@ fun GenderInfo(onGenderChange: (GenderCode?) -> Unit) {
 @Composable
 fun PersonalInfo(
     navController: NavController,
-    personalInfoViewModel: PersonalInfoViewModel = viewModel(),
-    notificationViewModel: NotificationViewModel = viewModel()
+    personalInfoViewModel: PersonalInfoViewModel = viewModel()
 ) {
     var birthYear by remember { mutableStateOf("") }
     var height by remember { mutableStateOf("") }
@@ -222,14 +223,6 @@ fun PersonalInfo(
     var isBirthYearInfoFilled by remember { mutableStateOf(false) }
     var isHeightInfoFilled by remember { mutableStateOf(false) }
     var isGenderInfoFilled by remember { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = true) {
-        // 등록된 개인 정보가 있다면 메인화면으로 이동
-        if (personalInfoViewModel.hasPersonalInfo()) {
-            notificationViewModel.registerFCMTokens() // fcm 토큰 등록
-            navController.navigate(AppNavItem.MainScreen.routeName) // 페이지 이동
-        }
-    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -267,7 +260,6 @@ fun PersonalInfo(
             enabled = isHeightInfoFilled && isGenderInfoFilled,
             onClick = {
                 personalInfoViewModel.registerPersonalInfo(birthYear, height, gender) // 회원가입 + 개인 정보 등록
-                notificationViewModel.registerFCMTokens() // fcm 토큰 등록
                 navController.navigate(AppNavItem.MainScreen.routeName)
             }
         )

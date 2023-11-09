@@ -11,11 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.gunpang.common.code.AvatarStatusCode
 import com.gunpang.common.navigation.AppNavItem
+import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.avatar.AvatarViewModel
+import com.gunpang.domain.app.landing.NotificationViewModel
 import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.TopBar
 import kotlinx.coroutines.delay
@@ -26,7 +29,8 @@ import kotlinx.coroutines.launch
 fun MainScreen(
     navController: NavController,
     appViewModel: AppViewModel,
-    avatarViewModel: AvatarViewModel
+    avatarViewModel: AvatarViewModel,
+    notificationViewModel: NotificationViewModel = viewModel()
 ){
     LaunchedEffect(key1 = true){
         // ui 접근 시 한번만 실행
@@ -45,6 +49,11 @@ fun MainScreen(
         if(avatarViewModel.appAvatar.status != AvatarStatusCode.ALIVE){
             navController.navigate(AppNavItem.AvatarFinishScreen.routeName)
         }
+    }
+
+    // fcm 토큰 등록
+    LaunchedEffect(key1 = DataApplicationRepository().getValue("fcmToken")) {
+        notificationViewModel.registerFCMTokens()
     }
 
     Scaffold(

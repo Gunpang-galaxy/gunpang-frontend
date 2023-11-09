@@ -36,7 +36,7 @@ class LandingViewModel(
         private const val CAPABILITY_WEAR_APP = "watch_gunpang"
     }
 
-    var initCode by mutableStateOf(InitCode.NOT_FOUND)
+    var initCode by mutableStateOf(InitCode.NOT_CONFIG)
 
     private val userRepository: UserRepository = UserRepository()
 
@@ -48,7 +48,7 @@ class LandingViewModel(
     fun login() {
         // 워치에 앱이 설치된 경우에만 실행
         if (findWearableConnectedStatus()) {
-            resultLauncher.launch(signInIntent)
+            resultLauncher.launch(signInIntent) // 로그인 상태 확인
         }
     }
 
@@ -63,7 +63,7 @@ class LandingViewModel(
                 .collect { data ->
                     initCode = if (data && DataApplicationRepository().getValue("accessToken").isNotEmpty()
                     ) { // 로그인 성공
-                        InitCode.NOT_CONFIG
+                        InitCode.FINISH
                     } else if (data && DataApplicationRepository().getValue("accessToken").isEmpty()
                     ) { // 회원가입 필요
                         InitCode.REGISTER
