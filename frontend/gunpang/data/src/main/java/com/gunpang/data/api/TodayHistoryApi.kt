@@ -13,5 +13,5 @@ interface TodayHistoryApi {
     @GET("records/watch")
     suspend fun watchTodayRecord(@Query("date") date:String): Response<TodayRecordResDto>
     @POST("records/food")
-    suspend fun watchRecordFood(@Query("foodType") foodType : String): Response<String>
+    suspend fun watchRecordFood(@Body foodType : MealRecordCode): Response<String>
 }
