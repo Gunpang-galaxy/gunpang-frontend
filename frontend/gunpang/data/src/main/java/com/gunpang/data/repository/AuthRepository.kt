@@ -1,5 +1,6 @@
 package com.gunpang.data.repository
 
+import android.util.Log
 import com.gunpang.data.api.Api
 import com.gunpang.data.api.AuthApi
 import com.gunpang.data.model.request.LoginReqDto
@@ -13,8 +14,9 @@ class AuthRepository (
     private val api: AuthApi = Api.getInstance().create(AuthApi::class.java)
 
     @Throws(IOException::class)
-    fun watchLogin(loginReqDto: LoginReqDto): Flow<Boolean> = flow {
-        val response = api.login(loginReqDto)
+    fun watchLogin(playerId: String): Flow<Boolean> = flow {
+        Log.d("테스트", playerId)
+        val response = api.login(playerId)
         if (response.code() == 200) {
             response.body()?.let {
                 DataApplicationRepository().setValue("accessToken", response.body()!!.accessToken)

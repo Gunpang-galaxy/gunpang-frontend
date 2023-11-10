@@ -13,14 +13,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.google.android.gms.wearable.CapabilityClient
+import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Node
 import com.google.android.gms.wearable.NodeClient
 import com.gunpang.common.code.InitCode
 import com.gunpang.data.model.request.LoginReqDto
 import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.data.repository.UserRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class LandingViewModel(
     private val signInIntent: Intent,
@@ -28,11 +32,13 @@ class LandingViewModel(
     private val capabilityClient: CapabilityClient,
     private val nodeClient: NodeClient,
     private val remoteActivityHelper: RemoteActivityHelper,
+    private var messageClient: MessageClient,
     private val bluetoothIntent: Intent,
     private val appInstallIntent: Intent,
     private val application: Application
 ) : AndroidViewModel(application) {
     companion object {
+        private const val START_WEAR_ACTIVITY_PATH = "/start-activity"
         private const val CAPABILITY_WEAR_APP = "watch_gunpang"
     }
 
@@ -42,6 +48,7 @@ class LandingViewModel(
 
     var wearNodesWithApp: Set<Node>? = null // 핸드폰과 연결된 wearable 기기 중 워치에 건팡 앱이 설치된 기기의 수
     var allConnectedNodes: List<Node>? = null // 핸드폰과 연결된 wearable 기기의 수
+    private var playerId by mutableStateOf("")
 
     // [회원 관리 관련 코드 START]
     // 건팡 로그인
@@ -150,6 +157,36 @@ class LandingViewModel(
         }
         return true
     }
+
+    // 초기 설정을 위해 원격으로 웨어러블 앱 실행하는 함수
+    fun registerWearable() {
+        viewModelScope.launch {
+            try {
+                val nodes = capabilityClient
+                    .getCapability(CAPABILITY_WEAR_APP, CapabilityClient.FILTER_REACHABLE)
+                    .await()
+                    .nodes
+                nodes.map { node ->
+                    async {
+                        Log.d("테스트", "앱 playerId : $playerId")
+                        Log.d("테스트", "앱 repo : ${DataApplicationRepository().getValue("playerId")}")
+                        Log.d("테스트", "앱 at : ${DataApplicationRepository().getValue("accessToken")}")
+                        Log.d("테스트", "앱 rt : ${DataApplicationRepository().getValue("refreshToken")}")
+                        if (node.id != "") {
+                            DataApplicationRepository().setValue("watchId", node.id)
+                            messageClient.sendMessage(
+                                node.id,
+                                START_WEAR_ACTIVITY_PATH,
+                                DataApplicationRepository().getValue("playerId").toByteArray()
+                            )
+                                .await()
+                        }
+                    }
+                }.awaitAll()
+                initCode = InitCode.FINISH
+            } catch (_: Exception) {}
+        }
+    }
     // [웨어러블 코드 END]
 
 }
@@ -160,6 +197,7 @@ class LandingViewModelFactory(
     private val capabilityClient: CapabilityClient,
     private val nodeClient: NodeClient,
     private val remoteActivityHelper: RemoteActivityHelper,
+    private val messageClient: MessageClient,
     private val bluetoothIntent: Intent,
     private val appInstallIntent: Intent,
     private val application: Application
@@ -169,7 +207,7 @@ class LandingViewModelFactory(
             return LandingViewModel(
                 signInIntent, resultLauncher,
                 capabilityClient, nodeClient,
-                remoteActivityHelper, bluetoothIntent, appInstallIntent,
+                remoteActivityHelper, messageClient, bluetoothIntent, appInstallIntent,
                 application
             ) as T
         }

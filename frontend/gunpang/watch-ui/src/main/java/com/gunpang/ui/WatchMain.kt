@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
+import com.gunpang.common.code.InitCode
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.domain.watch.WatchLandingViewModel
@@ -31,14 +32,14 @@ import java.time.Duration
 @Composable
 fun WatchMain(watchLandingViewModel: WatchLandingViewModel) {
 
-//    if(watchLandingViewModel.initCode == InitCode.FINISH){
-//        // [2] 성공
-//        WatchMainNavigation()
-//        return
-//    }
-//    // [1] 랜딩 중
-//    LandingScreen(watchLandingViewModel)
-    WatchMainNavigation()
+    if(watchLandingViewModel.initCode == InitCode.FINISH){
+        // [2] 성공
+        WatchMainNavigation()
+        return
+    }
+    // [1] 랜딩 중
+    LandingScreen(watchLandingViewModel)
+//    WatchMainNavigation()
 
 }
 @OptIn(ExperimentalFoundationApi::class)

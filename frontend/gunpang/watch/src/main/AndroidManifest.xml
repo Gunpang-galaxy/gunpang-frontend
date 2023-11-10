@@ -15,6 +15,7 @@
     <uses-feature android:name="android.hardware.type.watch" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 
     <application
@@ -55,7 +56,7 @@
             android:foregroundServiceType="location" />
 
         <service
-            android:name="com.gunpang.app.WatchDataLayerListenerService"
+            android:name=".WatchDataLayerListenerService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />

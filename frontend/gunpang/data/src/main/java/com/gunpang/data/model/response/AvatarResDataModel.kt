@@ -31,7 +31,7 @@ data class AppAvatarInfoResDto( // 메인 화면 아바타 정보 (app-current)
 
 
 data class WatchCurrentAvatarResDto(
-    val avatarTypeId: AvatarCode,
+    val avatarType: AvatarCode,
     val stage: String, // 배경 단계
     val status: AvatarStatusCode, // 상태(생존/사망/졸업)
     val healthPoint: Float, // 체력

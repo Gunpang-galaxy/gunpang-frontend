@@ -1,6 +1,7 @@
 package com.gunpang.app
 
 import android.content.Intent
+import android.util.Log
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.WearableListenerService
 import com.gunpang.data.repository.DataApplicationRepository
@@ -19,6 +20,7 @@ class WatchDataLayerListenerService : WearableListenerService() {
             START_WEAR_ACTIVITY_PATH -> {
                 // 모바일 기기와 연동시 playId 저장 후 앱 실행
                 val playerId = messageEvent.data.decodeToString()
+                Log.d("테스트", "리스너 : $playerId")
                 dataApplicationRepository.setValue("accessToken", "")
                 dataApplicationRepository.setValue("refreshToken", "")
                 dataApplicationRepository.setValue("playerId", playerId)

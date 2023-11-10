@@ -183,7 +183,7 @@ fun AppNavGraph(
             MainScreen(navController, appViewModel, avatarViewModel)
         }
         composable(AppNavItem.MyPageScreen.routeName) {
-            MyPageScreen(navController, userViewModel)
+            MyPageScreen(navController, userViewModel, landingViewModel)
         }
         composable(AppNavItem.CalenderScreen.routeName) {
             CalenderScreen(navController,calendarRecordViewModel)

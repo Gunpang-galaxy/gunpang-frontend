@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.gunpang.common.code.AvatarCode
 import com.gunpang.data.model.response.WatchCurrentAvatarResDto
 import com.gunpang.data.repository.AvatarRepository
+import com.gunpang.data.repository.DataApplicationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -21,30 +22,22 @@ class WatchAvatarViewModel (
     var avatarTypeId by mutableStateOf(AvatarCode.AVATAR_CAT)
     var status by mutableStateOf("")
     var healthPoint by mutableStateOf(0.5f)
-    var stage by mutableStateOf("GROUND")
+    var stage by mutableStateOf("SEA")
 
-    private val avatarRepository : AvatarRepository = AvatarRepository()
+//    private val avatarRepository : AvatarRepository = AvatarRepository()
     fun init() {
-
-        viewModelScope.launch(Dispatchers.IO) {
-            avatarRepository.findWatchCurrentAvatar()
-                .catch {
-                    Log.d("AVATAR_VIEW_MODEL",it.printStackTrace().toString())
-                }
-                .collect{data->
-                   updateStates(data)
-
-                }
-
-        }
+        avatarTypeId = AvatarCode.fromString(DataApplicationRepository().getValue("avatarType"))
+        status = DataApplicationRepository().getValue("status")
+        healthPoint = DataApplicationRepository().getValue("healthPoint").toFloat()
+        stage = DataApplicationRepository().getValue("stage")
     }
 
-    private fun updateStates(data: WatchCurrentAvatarResDto) {
-        avatarTypeId = data.avatarTypeId
-        status = data.status.toString()
-        healthPoint = data.healthPoint;
-        stage = data.stage
-    }
+//    private fun updateStates(data: WatchCurrentAvatarResDto) {
+//        avatarTypeId = data.avatarTypeId
+//        status = data.status.toString()
+//        healthPoint = data.healthPoint;
+//        stage = data.stage
+//    }
 
 
 }

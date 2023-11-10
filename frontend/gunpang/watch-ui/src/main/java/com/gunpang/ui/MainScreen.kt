@@ -1,6 +1,7 @@
 package com.gunpang.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -44,19 +45,26 @@ fun MainScreen(
 
     LaunchedEffect(true){
         // TODO : DB연결시 주석 해제
-        // watchAvatarViewModel.init()
+        watchAvatarViewModel.init()
+        Log.d("테스트", watchAvatarViewModel.status)
     }
     GunpangScreenWrapper {
-        if(isAvatarInfoConfigured())
+        if(isAvatarInfoConfigured(watchAvatarViewModel))
             MainSwipe( mainPagerState, coroutineScope , navController ,watchAvatarViewModel, exerciseViewModel)
         else
             Loading()
     }
 }
 
-fun isAvatarInfoConfigured(): Boolean {
+fun isAvatarInfoConfigured(
+    watchAvatarViewModel: WatchAvatarViewModel
+): Boolean {
     //TODO: 아바타 어떤 정보가 필요한지
-    return true
+    if(watchAvatarViewModel.status.isNotBlank()){
+        return true
+    }
+
+    return false
 }
 
 @OptIn(ExperimentalFoundationApi::class)
