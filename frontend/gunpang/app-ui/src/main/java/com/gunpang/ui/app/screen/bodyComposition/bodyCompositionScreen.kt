@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.gunpang.domain.app.AppViewModel
 import com.gunpang.ui.app.common.BottomNavBar
+import com.gunpang.ui.app.common.ContentsNoRecord
 import com.gunpang.ui.app.common.TopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +24,7 @@ fun BodyCompositionScreen(
         topBar = {
             TopBar(
             navController = navController,
-            title = "채성분 분석"
+            title = "체성분 분석"
             ) },
         bottomBar = {
             BottomNavBar(navController = navController)
@@ -33,10 +34,11 @@ fun BodyCompositionScreen(
             modifier = Modifier
                 .padding(it)
                 .fillMaxSize()
-                .background(color= Color.White),
+                .background(color = Color.White),
             color = Color.White
         ) {
             // TODO : 채성분 화면 구성
+            ContentsNoRecord( reason = "추후 개발...")
         }
     }
 }
