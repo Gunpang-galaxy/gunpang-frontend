@@ -58,22 +58,22 @@ fun IntroductionStructure(
 
 @Composable
 fun GoalIntroduction() {
-    val title = "목표를 설정해보세요"
-    val desc = "운동, 수명, 식습관에 대한\n목표를 설정할 수 있어요"
+    val title = "목표를 설정해 보세요"
+    val desc = "운동, 수면, 식습관에 대한\n목표를 설정할 수 있어요"
     IntroductionStructure(title, desc)
 }
 
 @Composable
 fun ChangeIntroduction() {
-    val title = "변화를 확인해보세요"
-    val desc = "한 달뒤 변화를 확인해보세요"
+    val title = "변화를 확인해 보세요"
+    val desc = "한 달뒤 변화를 확인해 보세요"
     IntroductionStructure(title, desc)
 }
 
 @Composable
 fun HabitIntroduction() {
-    val title = "좋은 습관을\n유지시키도록\n도와줄께요"
-    val desc = "건팡이가 습관을 키워줄거에요"
+    val title = "좋은 습관을\n유지하도록\n도와줄게요"
+    val desc = "건팡이가 습관을 키워줄 거예요"
     IntroductionStructure(title, desc)
 }
 

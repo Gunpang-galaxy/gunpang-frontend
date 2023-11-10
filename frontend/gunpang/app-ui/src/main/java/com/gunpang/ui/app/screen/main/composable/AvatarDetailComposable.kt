@@ -65,7 +65,7 @@ fun AvatarTodayInfo(
                         .height(36.dp),
             title = "수면",
             content = when{
-                contents.sleepAt == "-1" || contents.awakeAt == "-1" -> "기록이 안됬네.."
+                contents.sleepAt == "-1" || contents.awakeAt == "-1" -> "기록이 안됐네.."
                 else -> "${contents.sleepAt} - ${contents.awakeAt}"
             }
             )
