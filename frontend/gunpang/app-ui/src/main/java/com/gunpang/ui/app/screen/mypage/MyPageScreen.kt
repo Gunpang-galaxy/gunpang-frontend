@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.screen.mypage
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.gunpang.common.navigation.AppNavItem
+import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.domain.app.AppViewModel
+import com.gunpang.domain.app.landing.PersonalInfoViewModel
 import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.TopBar
@@ -37,7 +40,7 @@ import com.gunpang.ui.theme.gmarketsansBold
 @OptIn(ExperimentalMaterial3Api::class)
 fun MyPageScreen(
     navController: NavController,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
 ){
     LaunchedEffect(key1 = true){
         userViewModel.init()
@@ -90,9 +93,12 @@ fun MyPageScreen(
                 CommonButton(
                     text = "로그아웃",
                     onClick = {
-                              //TODO : LogOut 로직 처리  + 페이지 이동
-                        //userViewModel.logout()
-                        //navController.navigate(AppNavItem.MainScreen.routeName)
+                        Log.d("MyPageScreen", "버튼 클릭")
+                        userViewModel.logout() // LogOut 로직 처리
+
+                        Log.d("MyPageScreen", "LogOut 로직 처리 후")
+                        DataApplicationRepository().removeValue("playerId")
+                        navController.navigate(AppNavItem.Login.routeName) // 페이지 이동
                     },
                 )
             }

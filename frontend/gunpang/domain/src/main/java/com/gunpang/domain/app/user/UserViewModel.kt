@@ -1,5 +1,6 @@
 package com.gunpang.domain.app.user
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,7 +10,9 @@ import com.gunpang.common.code.GenderCode
 import com.gunpang.data.repository.UserRepository
 import com.gunpang.domain.entity.UserInfo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 /**
@@ -39,4 +42,16 @@ class UserViewModel : ViewModel()  {
     fun init(){
         getUserInfo()
     }
+
+    fun logout() {
+        Log.d("UserViewModel", "appLogout 전")
+        viewModelScope.launch {
+            userRepository.appLogout()
+                .catch {  }
+                .collect {
+
+                }
+        }
+    }
+
 }

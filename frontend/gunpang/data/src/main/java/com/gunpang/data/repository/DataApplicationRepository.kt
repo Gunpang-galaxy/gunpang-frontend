@@ -8,4 +8,7 @@ class DataApplicationRepository {
     fun setValue(key: String, value: String) {
         DataApplication.prefs.setString(key,value)
     }
+    fun removeValue(key: String) {
+        DataApplication.prefs.removeString(key)
+    }
 }

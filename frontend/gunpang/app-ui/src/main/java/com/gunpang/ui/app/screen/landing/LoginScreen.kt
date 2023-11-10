@@ -16,13 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.gunpang.common.R
+import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.domain.app.landing.LandingViewModel
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.galmuriTyop
 
 @Composable
 fun Login(
+    navController: NavController,
     landingViewModel: LandingViewModel
 ) {
     Column(
@@ -54,7 +57,10 @@ fun Login(
             contentDescription = "구글 로그인 버튼",
             modifier = Modifier
                 .height(50.dp)
-                .clickable { landingViewModel.login() }
+                .clickable {
+                    landingViewModel.login()
+                    navController.navigate(AppNavItem.Introduction.routeName)
+                }
         )
     }
 }
