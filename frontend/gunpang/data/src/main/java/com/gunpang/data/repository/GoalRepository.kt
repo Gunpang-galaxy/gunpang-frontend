@@ -4,6 +4,8 @@ import android.util.Log
 import com.gunpang.data.api.Api
 import com.gunpang.data.api.GoalApi
 import com.gunpang.data.model.request.SleepGoalReqDto
+import com.gunpang.data.model.response.MonthlyGoalResDto
+import com.gunpang.data.model.response.MonthlyGoalResDtos
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -36,4 +38,20 @@ class GoalRepository(
             emit(false)
         }
     }
+
+    fun getMonthlyGoal(
+        year : Int,
+        month : Int
+    ): Flow<MonthlyGoalResDtos> = flow {
+        val response = api.getMonthlyGoal(
+            year = year,
+            month = month)
+        if (response.code() == 200) {
+            Log.d("goalRepository responseBody", response.body().toString())
+            response.body()?.let {
+                emit(response.body()!!)
+            }
+        }
+    }
+
 }

@@ -8,8 +8,12 @@ data class AvatarGoalResDto(
     val food: String // 음식 목표
 )
 
-// api 요청 후 List<MontlyGoalResDto> 형태로 받아옴
+// api 요청 후 List<MontHlyGoalResDto> 형태로 받아옴
+data class MonthlyGoalResDtos(
+    var data : List<MonthlyGoalResDto>,
+)
+
 data class MonthlyGoalResDto(
     val date: Int, // 조회 일
-    val record: Int, // 목표 달성 여부(0: 모두 달성, 1: 일부 달성, 2: 미달성)
+    val record: Int, // 미달성 개수
 )

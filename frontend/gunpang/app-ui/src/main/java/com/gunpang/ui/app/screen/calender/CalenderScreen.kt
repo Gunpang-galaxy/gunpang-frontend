@@ -63,12 +63,13 @@ import java.util.Locale
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import com.gunpang.common.code.CalenderDailyCode
 import com.gunpang.domain.app.calendar.CalendarRecordViewModel
+import com.gunpang.domain.app.landing.GoalViewModel
 import com.gunpang.ui.app.common.ContentsNoRecord
 import com.gunpang.ui.theme.Gray600
 import com.gunpang.ui.theme.Gray900
@@ -76,14 +77,16 @@ import com.gunpang.ui.theme.Navy200
 import com.gunpang.ui.theme.gmarketsansBold
 import com.gunpang.ui.theme.gmarketsansLight
 
+//@Preview
 @SuppressLint("RememberReturnType")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalenderScreen(
     navController: NavController,
     calendarRecordViewModel: CalendarRecordViewModel,
-) {
+    goalViewModel: GoalViewModel,
 
+    ) {
     Scaffold(
         topBar = {
             TopBar(navController = navController, title = "내 기록")
@@ -140,34 +143,52 @@ fun CalenderScreen(
                 HorizontalCalendar(
                     modifier = Modifier
                         .testTag("Calendar")
-                        .size(400.dp, 350.dp),
+                        .size(400.dp, 430.dp),
                     state = state,
                     userScrollEnabled = true,
-                    //day.date로 다 요청 보내고 있는지 판단
-                    //있으면 점표시
+                    //월별 목표 달성 기록 api 요청
                     dayContent = { day ->
-                        Day(day, isSelected = selectedDate == day.date) { day ->
-                            selectedDate = if (selectedDate == day.date) null
-                            else day.date
-                            if (selectedDate == null)
-                                calendarRecordViewModel.init()
-                            if (selectedDate != null) {
-                                calendarRecordViewModel.init()
-                                calendarRecordViewModel.requestApi(selectedDate.toString())
+                        if (day.position == DayPosition.MonthDate) {
+                            goalViewModel.getMonthlyGoal(day.date.year, day.date.monthValue)
+                            Log.d("monthlyGoals", goalViewModel.monthlyGoalDtos.data.toString())
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally // 가로 중앙 정렬
+                            ) {
+                            Day(day, isSelected = selectedDate == day.date) { day ->
+                                selectedDate = if (selectedDate == day.date) null
+                                else day.date
+                                if (selectedDate == null)
+                                    calendarRecordViewModel.init()
+                                if (selectedDate != null) {
+                                    calendarRecordViewModel.init()
+                                    calendarRecordViewModel.requestApi(selectedDate.toString())
+                                }
+                            }
+                            for (i in goalViewModel.monthlyGoalDtos.data.indices) {
+                                if( day.date.dayOfMonth == goalViewModel.monthlyGoalDtos.data.get(i).date){
+                                Image(
+                                    //record 값 수정
+                                    painter = painterResource(id = CalenderDailyCode.fromRecord(goalViewModel.monthlyGoalDtos.data.get(i).record).imageId),
+                                    contentDescription = "목표 달성 기록",
+                                    modifier = Modifier.size(16.dp),
+                                )
+                                }
                             }
                         }
+                        }
+                        //calendarRecordViewModel.requestApi(day.date.toString())
                         //Log.d("selectedDate : ", selectedDate.toString());
                         Log.d("day.date : ", day.date.toString());
                     },
                 )
-                Spacer(modifier = Modifier.height(7.dp))
+                //Spacer(modifier = Modifier.height(7.dp))
                 if (!isValidRecord(calendarRecordViewModel))
                     ContentsNoRecord()
                 else {
                     Column(
                         modifier = Modifier.padding(horizontal = 50.dp) // 좌우에 패딩 추가
                     ) {
-                        Spacer(modifier = Modifier.width(10.dp))
+                        //Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = "하루 요약",
                             textAlign = TextAlign.Left,
@@ -350,6 +371,7 @@ private fun Day(day: CalendarDay, isSelected: Boolean, onClick: (CalendarDay) ->
             .testTag("MonthDay")
             .padding(6.dp)
             .clip(CircleShape)
+//            .size(if(isRecorded) 2.dp else 10.dp)
             .background(color = if (isSelected) Navy200 else Color.Transparent)
             // Disable clicks on inDates/outDates
             .clickable(
@@ -370,7 +392,6 @@ private fun Day(day: CalendarDay, isSelected: Boolean, onClick: (CalendarDay) ->
             } else {
                 Color.White
             }
-
         )
     }
 }
