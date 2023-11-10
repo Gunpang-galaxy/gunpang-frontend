@@ -16,7 +16,7 @@ data class ExerciseGoalReqDto(
     val exerciseTime: Int // 목표 운동 시간[분]
 )
 
-data class MonthlyGaolReqDto(
+data class MonthlyGoalReqDto(
     val year: Int, // 조회 연도
     val month: Int // 조회 월
 )

@@ -146,8 +146,8 @@ fun AppNavGraph(
     val avatarViewModel = viewModel<AvatarViewModel>(viewModelStoreOwner)
     val userViewModel = viewModel<UserViewModel>(viewModelStoreOwner)
     val calendarRecordViewModel = viewModel<CalendarRecordViewModel>(viewModelStoreOwner)
-
     val goalViewModel = viewModel<GoalViewModel>(viewModelStoreOwner)
+
     NavHost(
         navController = navController,
         startDestination = startDestination
@@ -186,7 +186,7 @@ fun AppNavGraph(
             MyPageScreen(navController, userViewModel, landingViewModel)
         }
         composable(AppNavItem.CalenderScreen.routeName) {
-            CalenderScreen(navController,calendarRecordViewModel)
+            CalenderScreen(navController, calendarRecordViewModel, goalViewModel)
         }
         composable(AppNavItem.BodyCompositionScreen.routeName) {
             BodyCompositionScreen(navController)
