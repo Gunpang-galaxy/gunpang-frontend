@@ -31,7 +31,7 @@ class TodayRecordRepository (
     }
     fun updateTodayRecord(foodType: MealRecordCode):Flow<Boolean> = flow{
         Log.d("TODAY_RECORD_REPO", "api 시작 전")
-        val response = api.watchRecordFood(foodType.name)
+        val response = api.watchRecordFood(foodType)
         Log.d("TODAY_RECORD_REPO", response.toString())
         if(response.code()==201){
             emit(true)
