@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         landingViewModelFactory = LandingViewModelFactory(
             signInIntent, resultLauncher,
             capabilityClient, nodeClient,
-            remoteActivityHelper, bluetoothIntent, appInstallIntent,
+            remoteActivityHelper, messageClient, bluetoothIntent, appInstallIntent,
             this.application
         )
         landingViewModel =

@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.domain.app.AppViewModel
+import com.gunpang.domain.app.landing.LandingViewModel
 import com.gunpang.domain.app.landing.PersonalInfoViewModel
 import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.common.CommonButton
@@ -41,6 +42,7 @@ import com.gunpang.ui.theme.gmarketsansBold
 fun MyPageScreen(
     navController: NavController,
     userViewModel: UserViewModel,
+    landingViewModel: LandingViewModel
 ){
     LaunchedEffect(key1 = true){
         userViewModel.init()
@@ -89,7 +91,14 @@ fun MyPageScreen(
                     fieldName = "키",
                     fieldValue = userViewModel.userInfo.height.toString()
                 )
-                Spacer(modifier = Modifier.height(232.dp))
+                Spacer(modifier = Modifier.height(24.dp))
+                CommonButton(
+                    text = "워치 로그인",
+                    onClick = {
+                        landingViewModel.registerWearable()
+                    },
+                )
+                Spacer(modifier = Modifier.height(24.dp))
                 CommonButton(
                     text = "로그아웃",
                     onClick = {

@@ -3,6 +3,7 @@ package com.gunpang.domain.watch
 import android.app.Application
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -16,8 +17,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import androidx.wear.phone.interactions.PhoneTypeHelper
 import com.google.android.gms.wearable.MessageClient
-import com.gunpang.data.model.request.LoginReqDto
 import com.gunpang.data.repository.AuthRepository
+import com.gunpang.data.repository.AvatarRepository
 import com.gunpang.data.repository.DataApplicationRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -42,6 +43,7 @@ class WatchLandingViewModel(
     }
     private val authRepository: AuthRepository = AuthRepository()
     private val dataApplicationRepository = DataApplicationRepository()
+    private val avatarRepository: AvatarRepository = AvatarRepository()
     var initCode by mutableStateOf(InitCode.NOT_FOUND)
     var androidPhoneNodeWithApp: Node? = null
     var playerId: String? = null
@@ -52,6 +54,7 @@ class WatchLandingViewModel(
 
             if (playerId != "") {
                 login()
+                config()
             }else{
                 checkIfAppInstalled()
             }
@@ -70,6 +73,7 @@ class WatchLandingViewModel(
                     androidPhoneNodeWithApp = capabilityInfo.nodes.firstOrNull()
                     // 모바일 앱 설치 안됨
                     initCode = if (androidPhoneNodeWithApp == null) {
+                        Log.d("테스트", "모바일 앱 설치 안됨")
                         InitCode.NOT_INSTALL
                     } else {
                         InitCode.NOT_LOGIN
@@ -82,12 +86,13 @@ class WatchLandingViewModel(
     fun login(){
         viewModelScope.launch {
             initPlayerId()
-            authRepository.watchLogin(LoginReqDto(playerId!!))
+            authRepository.watchLogin(playerId!!)
                 .catch {
                     initCode = InitCode.NOT_LOGIN
                 }
                 .collect { data ->
                     initCode = if (data) {
+                        Log.d("테스트", "로그인 성공")
                         InitCode.NOT_CONFIG
                     } else InitCode.NOT_LOGIN
                 }
@@ -97,11 +102,38 @@ class WatchLandingViewModel(
     fun config(){
         viewModelScope.launch {
             //TODO: avatar가 있는 지 확인
+            viewModelScope.launch(Dispatchers.IO) {
+                Log.d("테스트", DataApplicationRepository().getValue("accessToken"))
+                avatarRepository.findWatchCurrentAvatar()
+                    .catch {
+                        Log.d("AVATAR_VIEW_MODEL",it.printStackTrace().toString())
+                    }
+                    .collect{data->
+                        Log.d("테스트", "아바타 -> DataRepo $data")
+                        try {
+                            dataApplicationRepository.setValue(
+                                "avatarType",
+                                data.avatarType.name
+                            )
+                            dataApplicationRepository.setValue("status", data.status.name)
+                            dataApplicationRepository.setValue(
+                                "healthPoint",
+                                data.healthPoint.toString()
+                            )
+                            dataApplicationRepository.setValue("stage", data.stage)
+                            initCode = InitCode.FINISH
+                        }catch (e: Exception){
+                            Log.e("Exception", "${e.message}")
+                        }
+                    }
+
+            }
         }
     }
     private fun initPlayerId(){
-        if (playerId == null) {
+        if (playerId.isNullOrBlank()) {
             playerId = dataApplicationRepository.getValue("playerId")
+            Log.d("테스트", "playerId : $playerId")
         }
     }
 

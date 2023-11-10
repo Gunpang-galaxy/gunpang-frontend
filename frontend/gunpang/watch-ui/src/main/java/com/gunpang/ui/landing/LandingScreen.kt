@@ -1,6 +1,8 @@
 package com.gunpang.ui.landing
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,7 +54,7 @@ fun LandingScreen(watchLandingViewModel : WatchLandingViewModel) {
         }
 
         InitCode.NOT_CONFIG ->{
-            NotConfigued()
+            NotConfigued(watchLandingViewModel)
         }
 
         InitCode.FINISH->{
@@ -66,12 +68,15 @@ fun LandingScreen(watchLandingViewModel : WatchLandingViewModel) {
 
 }
 @Composable
-fun NotConfigued(){
+fun NotConfigued(watchLandingViewModel: WatchLandingViewModel){
     GunpangScreenWrapper {
         Text(
             text = "내가 키울 캐릭터는?\n(터치해서 앱에서 뽑아보세요)",
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .clickable{
+                          watchLandingViewModel.config()
+                },
             fontFamily = galmuri,
             fontSize = 20.sp,
         )
@@ -95,6 +100,7 @@ fun NotLogined(watchLandingViewModel : WatchLandingViewModel){
             Spacer(modifier = Modifier.height(6.dp))
             WatchButton(text = "로그인") {
                 watchLandingViewModel.login()
+                Log.d("테스트", watchLandingViewModel.initCode.name)
             }
 
         }
