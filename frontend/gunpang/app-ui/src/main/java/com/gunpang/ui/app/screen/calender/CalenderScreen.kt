@@ -77,7 +77,6 @@ import com.gunpang.ui.theme.Navy200
 import com.gunpang.ui.theme.gmarketsansBold
 import com.gunpang.ui.theme.gmarketsansLight
 
-//@Preview
 @SuppressLint("RememberReturnType")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -142,8 +141,8 @@ fun CalenderScreen(
                 DaysOfWeekTitle(daysOfWeek = daysOfWeek)
                 HorizontalCalendar(
                     modifier = Modifier
-                        .testTag("Calendar")
-                        .size(400.dp, 430.dp),
+                        .testTag("Calendar"),
+                        //.size(400.dp, 430.dp),
                     state = state,
                     userScrollEnabled = true,
                     //월별 목표 달성 기록 api 요청
@@ -181,7 +180,7 @@ fun CalenderScreen(
                         Log.d("day.date : ", day.date.toString());
                     },
                 )
-                //Spacer(modifier = Modifier.height(7.dp))
+                Spacer(modifier = Modifier.height(40.dp))
                 if (!isValidRecord(calendarRecordViewModel))
                     ContentsNoRecord()
                 else {
