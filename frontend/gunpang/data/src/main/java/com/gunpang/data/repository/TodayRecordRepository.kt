@@ -1,5 +1,7 @@
 package com.gunpang.data.repository
 
+import android.util.Log
+import com.gunpang.common.code.MealRecordCode
 import com.gunpang.data.api.Api
 import com.gunpang.data.api.TodayHistoryApi
 import com.gunpang.data.model.request.FoodReqDto
@@ -27,9 +29,14 @@ class TodayRecordRepository (
             }
         }
     }
-    fun updateTodayRecord(foodReqDto: FoodReqDto):Flow<Boolean> = flow{
-        val response = api.watchRecordFood(foodReqDto)
-        if(response.code()==200){
+    fun updateTodayRecord(foodType: MealRecordCode):Flow<Boolean> = flow{
+        Log.d("TODAY_RECORD_REPO", "api 시작 전")
+        val response = api.watchRecordFood(foodType.name)
+        Log.d("TODAY_RECORD_REPO", response.toString())
+        if(response.code()==201){
+            emit(true)
+        }else{
+            emit(false)
         }
 
     }

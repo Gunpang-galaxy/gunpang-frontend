@@ -46,7 +46,7 @@ fun TodayRecordScreen(
 ) {
     LaunchedEffect(true){
         //TODO:DB 연결시 해제
-        //watchRecordViewModel.init();
+        watchRecordViewModel.init();
     }
     GunpangScreenWrapper {
         val listState = rememberScalingLazyListState()
