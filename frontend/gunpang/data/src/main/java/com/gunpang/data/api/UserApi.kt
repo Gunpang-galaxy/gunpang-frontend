@@ -8,6 +8,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface UserApi {
@@ -22,4 +23,7 @@ interface UserApi {
 
     @GET("users/logout")
     suspend fun appLogout() : Response<Void>
+
+    @PUT("users/signout")
+    suspend fun appSignOut() : Response<Void>
 }

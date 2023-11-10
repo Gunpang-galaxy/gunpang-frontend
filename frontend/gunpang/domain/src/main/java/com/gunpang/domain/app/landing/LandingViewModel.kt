@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.wear.remote.interactions.RemoteActivityHelper
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.Node
@@ -20,13 +21,16 @@ import com.gunpang.common.code.InitCode
 import com.gunpang.data.model.request.LoginReqDto
 import com.gunpang.data.repository.DataApplicationRepository
 import com.gunpang.data.repository.UserRepository
+import com.gunpang.domain.app.user.UserViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+
 class LandingViewModel(
+    private val mGoogleSignInClient: GoogleSignInClient,
     private val signInIntent: Intent,
     private val resultLauncher: ActivityResultLauncher<Intent>,
     private val capabilityClient: CapabilityClient,
@@ -45,6 +49,7 @@ class LandingViewModel(
     var initCode by mutableStateOf(InitCode.NOT_CONFIG)
 
     private val userRepository: UserRepository = UserRepository()
+    private val userViewModel: UserViewModel = UserViewModel()
 
     var wearNodesWithApp: Set<Node>? = null // 핸드폰과 연결된 wearable 기기 중 워치에 건팡 앱이 설치된 기기의 수
     var allConnectedNodes: List<Node>? = null // 핸드폰과 연결된 wearable 기기의 수
@@ -79,6 +84,17 @@ class LandingViewModel(
                     }
                 }
         }
+    }
+
+    // 회원 탈퇴
+    fun quit() {
+        mGoogleSignInClient.revokeAccess()
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    Log.d("UserViewModel", "회원 탈퇴 성공")
+                }
+            }
+        userViewModel.quit()
     }
     // [회원 관리 관련 코드 END]
 
@@ -192,6 +208,7 @@ class LandingViewModel(
 }
 
 class LandingViewModelFactory(
+    private val mGoogleSignInClient: GoogleSignInClient,
     private val signInIntent: Intent,
     private val resultLauncher: ActivityResultLauncher<Intent>,
     private val capabilityClient: CapabilityClient,
@@ -205,7 +222,7 @@ class LandingViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LandingViewModel::class.java)) {
             return LandingViewModel(
-                signInIntent, resultLauncher,
+                mGoogleSignInClient, signInIntent, resultLauncher,
                 capabilityClient, nodeClient,
                 remoteActivityHelper, messageClient, bluetoothIntent, appInstallIntent,
                 application

@@ -1,7 +1,6 @@
 package com.gunpang.ui.app.screen.mypage
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -22,17 +25,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.gunpang.common.navigation.AppNavItem
 import com.gunpang.data.repository.DataApplicationRepository
-import com.gunpang.domain.app.AppViewModel
 import com.gunpang.domain.app.landing.LandingViewModel
-import com.gunpang.domain.app.landing.PersonalInfoViewModel
 import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.TopBar
+import com.gunpang.ui.theme.Gray600
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsans
 import com.gunpang.ui.theme.gmarketsansBold
@@ -58,19 +61,22 @@ fun MyPageScreen(
         },
         containerColor = Color.White
     ) {
-        it ->
         Surface(
             modifier = Modifier
                 .padding(it)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .fillMaxHeight(),
             color = Color.White
         ) {
             Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(modifier = Modifier.height(90.dp))
-                val infoModifier = Modifier.fillMaxWidth().height(70.dp)
+                val infoModifier = Modifier
+                    .fillMaxWidth()
+                    .height(70.dp)
                 infoText(
                     modifier = infoModifier,
                     fieldName = "이메일",
@@ -91,7 +97,7 @@ fun MyPageScreen(
                     fieldName = "키",
                     fieldValue = userViewModel.userInfo.height.toString()
                 )
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(100.dp))
                 CommonButton(
                     text = "워치 로그인",
                     onClick = {
@@ -110,6 +116,25 @@ fun MyPageScreen(
                         navController.navigate(AppNavItem.Login.routeName) // 페이지 이동
                     },
                 )
+                Spacer(modifier = Modifier.height(100.dp))
+                Button(
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Gray600,
+                    ),
+                    onClick = {
+                        landingViewModel.quit()
+                        navController.navigate(AppNavItem.Login.routeName)
+                    }
+                ) {
+                    Text(
+                        text = "회원탈퇴",
+                        textDecoration = TextDecoration.Underline,
+                        fontFamily = gmarketsans,
+                        fontSize = 16.sp,
+                    )
+                }
+                Spacer(modifier = Modifier.height(90.dp))
             }
         }
     }
