@@ -257,7 +257,7 @@ fun CalenderScreen(
                             Text(
                                 text = when {
                                     (isValidRecord(calendarRecordViewModel) && calendarRecordViewModel.sleepAt != "-1" && calendarRecordViewModel.awakeAt != "-1") ->
-                                        "${calendarRecordViewModel.awakeAt} - ${calendarRecordViewModel.sleepAt}"
+                                        "${calendarRecordViewModel.sleepAt} - ${calendarRecordViewModel.awakeAt}"
 
                                     else -> "00:00 - 00:00"
                                 },
