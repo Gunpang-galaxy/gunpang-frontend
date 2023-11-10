@@ -73,4 +73,18 @@ class UserRepository(
         Log.d("UserRepository", "appLogout 끝")
         emit(false)
     }
+
+    // 회원 탈퇴
+    @Throws(IOException::class)
+    fun userQuit(): Flow<Boolean> = flow {
+        val response = api.appSignOut()
+        if (response.code() == 200) {
+            DataApplicationRepository().removeValue("playerId")
+            DataApplicationRepository().removeValue("accessToken")
+            DataApplicationRepository().removeValue("refreshToken")
+            emit(true)
+        } else {
+            emit(false)
+        }
+    }
 }

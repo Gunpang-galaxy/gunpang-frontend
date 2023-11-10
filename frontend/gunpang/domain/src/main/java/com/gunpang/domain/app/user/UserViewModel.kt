@@ -10,9 +10,7 @@ import com.gunpang.common.code.GenderCode
 import com.gunpang.data.repository.UserRepository
 import com.gunpang.domain.entity.UserInfo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 /**
@@ -50,6 +48,16 @@ class UserViewModel : ViewModel()  {
                 .catch {  }
                 .collect {
 
+                }
+        }
+    }
+
+    // 회원 탈퇴
+    fun quit() {
+        viewModelScope.launch {
+            userRepository.userQuit()
+                .catch {  }
+                .collect {
                 }
         }
     }

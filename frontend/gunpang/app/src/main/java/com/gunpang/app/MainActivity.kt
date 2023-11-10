@@ -92,7 +92,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
 
         // 로그인 view model
         landingViewModelFactory = LandingViewModelFactory(
-            signInIntent, resultLauncher,
+            mGoogleSignInClient, signInIntent, resultLauncher,
             capabilityClient, nodeClient,
             remoteActivityHelper, messageClient, bluetoothIntent, appInstallIntent,
             this.application
