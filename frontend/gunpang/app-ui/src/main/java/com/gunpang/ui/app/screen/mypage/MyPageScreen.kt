@@ -109,7 +109,7 @@ fun MyPageScreen(
                     text = "로그아웃",
                     onClick = {
                         Log.d("MyPageScreen", "버튼 클릭")
-                        userViewModel.logout() // LogOut 로직 처리
+                        landingViewModel.logout() // LogOut 로직 처리
 
                         Log.d("MyPageScreen", "LogOut 로직 처리 후")
                         DataApplicationRepository().removeValue("playerId")

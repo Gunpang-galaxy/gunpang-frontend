@@ -86,6 +86,17 @@ class LandingViewModel(
         }
     }
 
+    // 로그아웃
+    fun logout() {
+        mGoogleSignInClient.signOut()
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    Log.d("UserViewModel", "로그아웃 성공")
+                }
+            }
+        userViewModel.logout()
+    }
+
     // 회원 탈퇴
     fun quit() {
         mGoogleSignInClient.revokeAccess()
