@@ -6,7 +6,7 @@ enum class AvatarCode(
     val avatarDefaultName: String,
     val imageId: Int
 ) {
-    AVATAR_CAT(avatarDefaultName = "냥퍙이" ,imageId = R.drawable.avatar_cat),
+    AVATAR_CAT(avatarDefaultName = "냥팡이" ,imageId = R.drawable.avatar_cat),
     AVATAR_CHICK(avatarDefaultName="짹팡이" ,imageId = R.drawable.avatar_chick),
 
     AVATAR_NOT_FOUND(avatarDefaultName = "???", imageId = R.drawable.question_mark);
