@@ -20,10 +20,10 @@ class WatchRecordViewModel(
 ) : AndroidViewModel(application) {
 
     var breakfastFoodType by mutableStateOf(MealRecordCode.NOT_RECORD) // 아침 HEALTH, MEDIUM, UNHEALTH
-    var lunchFoodType by mutableStateOf(MealRecordCode.HEALTHY) // 점심
-    var dinnerFoodType by mutableStateOf(MealRecordCode.BAD) // 저녁
+    var lunchFoodType by mutableStateOf(MealRecordCode.NOT_RECORD) // 점심
+    var dinnerFoodType by mutableStateOf(MealRecordCode.NOT_RECORD) // 저녁
     var exerciseTime by mutableStateOf("00시간 00분")
-    var sleepTime by mutableStateOf("11시간 11분")
+    var sleepTime by mutableStateOf("00시간 00분")
 
     private val todayRecordRepository: TodayRecordRepository = TodayRecordRepository()
 
