@@ -19,4 +19,7 @@ interface UserApi {
 
     @GET("users/info")
     suspend fun userInfo() : Response<UserInfoResDto>
+
+    @GET("users/logout")
+    suspend fun appLogout() : Response<Void>
 }

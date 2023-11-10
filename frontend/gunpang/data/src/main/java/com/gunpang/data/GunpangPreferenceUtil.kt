@@ -13,4 +13,8 @@ class GunpangPreferenceUtil(context:Context) { //사용자의 설정이나 애�
     fun setString(key:String, str:String){
         prefs.edit().putString(key,str).apply()
     }
+
+    fun removeString(key: String) {
+        prefs.edit().remove(key).apply()
+    }
 }

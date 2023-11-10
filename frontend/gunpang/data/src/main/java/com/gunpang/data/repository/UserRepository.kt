@@ -1,5 +1,6 @@
 package com.gunpang.data.repository
 
+import android.util.Log
 import com.gunpang.data.api.Api
 import com.gunpang.data.api.UserApi
 import com.gunpang.data.model.request.LoginReqDto
@@ -10,8 +11,10 @@ import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
 class UserRepository(
+
     private val api: UserApi = Api.getInstance().create(UserApi::class.java)
 ) {
+
     fun appLogin(loginReqDto: LoginReqDto): Flow<Boolean> = flow {
         val response = api.appLogin(loginReqDto.googleId)
         if (response.code() == 200) {
@@ -49,5 +52,25 @@ class UserRepository(
                 emit(response.body()!!)
             }
         }
+    }
+
+    // 로그아웃
+    @kotlin.jvm.Throws(IOException::class)
+    fun appLogout(): Flow<Boolean> = flow {
+        Log.d("UserRepository", "appLogout 시작")
+        val response = api.appLogout()
+        Log.d("UserRepository", response.toString())
+        if (response.code() == 200) {
+            Log.d("UserRepository", "response.code() == 200")
+            Log.d("UserRepository", "토큰 제거 전")
+            DataApplicationRepository().removeValue("accessToken")
+            DataApplicationRepository().removeValue("refreshToken")
+            Log.d("UserRepository", "토큰 제거 후")
+            emit(true)
+        } else {
+            Log.d("UserRepository", "response.code() != 200")
+        }
+        Log.d("UserRepository", "appLogout 끝")
+        emit(false)
     }
 }

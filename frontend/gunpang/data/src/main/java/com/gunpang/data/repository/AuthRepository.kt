@@ -3,6 +3,7 @@ package com.gunpang.data.repository
 import com.gunpang.data.api.Api
 import com.gunpang.data.api.AuthApi
 import com.gunpang.data.model.request.LoginReqDto
+import com.gunpang.data.model.response.JwtRecreateResDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
@@ -25,7 +26,16 @@ class AuthRepository (
         }
     }
 
-    fun recreate() {
-        // 토큰 만료시 재요청
+    // 토큰 만료시 재요청
+    @Throws(IOException::class)
+    fun recreate(): Flow<JwtRecreateResDto> = flow {
+        val refreshToken = DataApplicationRepository().getValue("refreshToken")
+        val response = api.recreate(refreshToken)
+        if (response.code() == 200) {
+            response.body()?.let {
+                DataApplicationRepository().setValue("accessToken", response.body()!!.accessToken)
+                emit(response.body()!!)
+            }
+        }
     }
 }
