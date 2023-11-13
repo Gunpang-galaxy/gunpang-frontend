@@ -114,20 +114,20 @@ class ExerciseServiceMonitor @Inject constructor(
         // 연결을 시작
         stompClient.connect()
 
-//        stompClient.topic("/sub/heartbeat").subscribe({ topicMessage ->
-//            // 메시지 처리
-//            println("Received: ${topicMessage.payload}")
-//            val heartbeat = Gson().fromJson(topicMessage.payload, Heartbeat::class.java)
-//            Log.d("HEARTBEAT",heartbeat.toString());
-//        }, { throwable ->
-//            // 에러 처리
-//            println("Error on subscribe topic$throwable")
-//        })
+        stompClient.topic("/sub/heartbeat").subscribe({ topicMessage ->
+            // 메시지 처리
+            println("Received: ${topicMessage.payload}")
+            val heartbeat = Gson().fromJson(topicMessage.payload, Heartbeat::class.java)
+            Log.d("HEARTBEAT",heartbeat.toString());
+        }, { throwable ->
+            // 에러 처리
+            println("Error on subscribe topic$throwable")
+        })
     }
     private fun sendHeartRate(heartRate: Double) {
         //ws.send(heartRate.toString())
         if (stompClient.isConnected) { // 연결 상태 체크
-            val playerId = "0" // TODO: 로그인 성공시 넣기
+            //val playerId = "0" // TODO: 로그인 성공시 넣기
             val heartbeat = Heartbeat(playerId, heartRate,LocalDateTime.now().toString())
             val jsonHeartbeat = Gson().toJson(heartbeat)
             stompClient.send("/topic/heartbeat", jsonHeartbeat).subscribe({

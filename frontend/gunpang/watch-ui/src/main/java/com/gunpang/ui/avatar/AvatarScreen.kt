@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -47,6 +48,12 @@ fun AvatarScreen(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(id = watchAvatarViewModel.getBackGround()),
+            contentDescription = "watch background",
+            contentScale = ContentScale.Fit
+        )
         /*ProgressBar*/
         LinearProgressIndicator(
             progress = progress,
@@ -63,9 +70,11 @@ fun AvatarScreen(
         Image(
             painter = painterResource(id = watchAvatarViewModel.avatarTypeId.imageId), // 이미지 리소스 변경 필요
             contentDescription = null,
-            modifier = Modifier.size(96.dp).clickable {
-                navController.navigate(WatchNavItem.TodayHistory.route)
-            }
+            modifier = Modifier
+                .size(96.dp)
+                .clickable {
+                    navController.navigate(WatchNavItem.TodayHistory.route)
+                }
         )
     }
 }
