@@ -50,7 +50,7 @@ fun LandingScreen(watchLandingViewModel : WatchLandingViewModel) {
         }
 
         InitCode.NOT_LOGIN ->{
-            NotLogined()
+            NotLogined(watchLandingViewModel)
         }
 
         InitCode.NOT_CONFIG ->{
@@ -74,28 +74,30 @@ fun NotConfigued(watchLandingViewModel: WatchLandingViewModel){
     }
     GunpangScreenWrapper {
         Text(
-            text = "내가 키울 캐릭터는?\n(터치해서 앱에서 뽑아보세요)",
+            text = "앱에서 캐릭터를 뽑아주세요",
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {
-                    watchLandingViewModel.config()
-                },
+                ,
             fontFamily = galmuri,
             fontSize = 20.sp,
         )
+        Spacer(modifier = Modifier.height(6.dp))
+        WatchButton(text = "캐릭터 데려오기") {
+            watchLandingViewModel.config()
+        }
     }
 }
 @Composable
-@Preview(name = "로그인을 진행해주세요", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
-fun NotLogined(){
+//@Preview(name = "로그인을 진행해주세요", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+fun NotLogined(watchLandingViewModel: WatchLandingViewModel){
     GunpangScreenWrapper {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Text(
-                text = "앱 설정에서\n워치 로그인을\n진행해주세요",
+                text = "앱 설정에서\n워치 로그인 후\n버튼을 눌러주세요",
                 textAlign = TextAlign.Center,
                 color = Color.White,
                 fontSize = 20.sp,
@@ -103,8 +105,8 @@ fun NotLogined(){
             )
 
             Spacer(modifier = Modifier.height(6.dp))
-            WatchButton(text = "로그인") {
-//                watchLandingViewModel.login()
+            WatchButton(text = "완료") {
+                watchLandingViewModel.login()
 //                Log.d("테스트", watchLandingViewModel.initCode.name)
             }
 
