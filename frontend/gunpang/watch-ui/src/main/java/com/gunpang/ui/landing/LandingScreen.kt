@@ -50,7 +50,7 @@ fun LandingScreen(watchLandingViewModel : WatchLandingViewModel) {
         }
 
         InitCode.NOT_LOGIN ->{
-            NotLogined(watchLandingViewModel)
+            NotLogined()
         }
 
         InitCode.NOT_CONFIG ->{
@@ -87,15 +87,16 @@ fun NotConfigued(watchLandingViewModel: WatchLandingViewModel){
     }
 }
 @Composable
-//@Preview(name = "로그인을 진행해주세요", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
-fun NotLogined(watchLandingViewModel : WatchLandingViewModel){
+@Preview(name = "로그인을 진행해주세요", device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
+fun NotLogined(){
     GunpangScreenWrapper {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Text(
-                text = "로그인을 진행해주세요",
+                text = "앱 설정에서\n워치 로그인을\n진행해주세요",
+                textAlign = TextAlign.Center,
                 color = Color.White,
                 fontSize = 20.sp,
                 fontFamily = galmuri
@@ -103,8 +104,8 @@ fun NotLogined(watchLandingViewModel : WatchLandingViewModel){
 
             Spacer(modifier = Modifier.height(6.dp))
             WatchButton(text = "로그인") {
-                watchLandingViewModel.login()
-                Log.d("테스트", watchLandingViewModel.initCode.name)
+//                watchLandingViewModel.login()
+//                Log.d("테스트", watchLandingViewModel.initCode.name)
             }
 
         }
@@ -142,7 +143,8 @@ fun NotConnectedDevice(){
         ) {
 
             Text(
-                text = "휴대폰과 연결이 뚜.. 뚜..",
+                text = "휴대폰과 연결이\n뚜.. 뚜..",
+                textAlign = TextAlign.Center,
                 color = Color.White,
                 fontSize = 20.sp,
                 fontFamily = galmuri
@@ -153,7 +155,7 @@ fun NotConnectedDevice(){
             Image(
                 painter = painterResource(id = R.drawable.gunpang_crushed),
                 contentDescription = null,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(60.dp)
             )
         }
     }

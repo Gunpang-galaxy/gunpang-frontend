@@ -92,9 +92,10 @@ fun SelectFoodScreen(
                 // 건강하게
                 WatchButton("기록") {
                     //TODO:기록
-                    watchFeedViewModel.feedFood(items[selectedIndex])
-
-                    navController.navigate(WatchNavItem.Main.route)
+                    if(selectedIndex != -1) {
+                        watchFeedViewModel.feedFood(items[selectedIndex])
+                        navController.navigate(WatchNavItem.Main.route)
+                    }
                 }
             }
 
