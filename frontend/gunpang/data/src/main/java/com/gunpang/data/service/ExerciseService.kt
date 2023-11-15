@@ -92,6 +92,7 @@ class ExerciseService : LifecycleService() {
     suspend fun endExercise() {
         exerciseClientManager.endExercise()
         removeOngoingActivityNotification()
+        exerciseServiceMonitor.closeWebSocket()
     }
 
     /** Wear OS 3.0 reserves two buttons for the OS. For devices with more than 2 buttons,

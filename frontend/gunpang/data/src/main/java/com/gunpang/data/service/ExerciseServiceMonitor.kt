@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Service
 import android.util.Log
 import androidx.health.services.client.data.DataType
+import androidx.health.services.client.data.ExerciseState
 import androidx.health.services.client.data.ExerciseUpdate
 import com.google.gson.Gson
 import com.gunpang.data.DataApplication
@@ -16,6 +17,7 @@ import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 import java.time.LocalDateTime
+import java.time.ZoneId
 import javax.inject.Inject
 class ExerciseServiceMonitor @Inject constructor(
     private val exerciseClientManager: ExerciseClientManager,
@@ -85,7 +87,7 @@ class ExerciseServiceMonitor @Inject constructor(
         }
 
         val heartRate = exerciseUpdate.latestMetrics.getData(DataType.HEART_RATE_BPM).lastOrNull()?.value
-        if (heartRate != null) {
+        if (heartRate != null && exerciseUpdate.exerciseStateInfo.state == ExerciseState.ACTIVE) {
             sendHeartRate(heartRate)
         }
     }
@@ -128,7 +130,7 @@ class ExerciseServiceMonitor @Inject constructor(
         //ws.send(heartRate.toString())
         if (stompClient.isConnected) { // 연결 상태 체크
             //val playerId = "0" // TODO: 로그인 성공시 넣기
-            val heartbeat = Heartbeat(playerId, heartRate,LocalDateTime.now().toString())
+            val heartbeat = Heartbeat(playerId, heartRate,LocalDateTime.now(ZoneId.of("Asia/Seoul")).toString())
             val jsonHeartbeat = Gson().toJson(heartbeat)
             stompClient.send("/topic/heartbeat", jsonHeartbeat).subscribe({
                 // TODO:메시지 전송 성공
