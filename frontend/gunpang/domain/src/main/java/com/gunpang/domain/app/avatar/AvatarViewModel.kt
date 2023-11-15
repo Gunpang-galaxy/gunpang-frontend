@@ -87,7 +87,7 @@ class AvatarViewModel : ViewModel(){
                                 deathCause = DeathCauseCode.fromString(data.contents["deathCause"].toString())
                             )
                         }
-                        else ->
+                        else ->{
                             avatarAliveContents = AppAvatarAliveContent(
                                 breakfastFoodType= MealRecordCode.fromString(data.contents["breakfastFoodType"].toString()),
                                 lunchFoodType = MealRecordCode.fromString(data.contents["lunchFoodType"].toString()),
@@ -96,6 +96,9 @@ class AvatarViewModel : ViewModel(){
                                 sleepAt = data.contents["sleepAt"].toString(),
                                 awakeAt = data.contents["awakeAt"].toString()
                             )
+                            currentAvatarExist = true
+                        }
+
                     }
                     prevId = data.prev
                     nextId = data.next
