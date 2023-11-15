@@ -24,6 +24,7 @@ import com.gunpang.ui.common.GunpangScreenWrapper
 import com.gunpang.ui.exercise.ExerciseScreen
 import com.gunpang.ui.food.FoodScreen
 import com.gunpang.ui.avatar.AvatarScreen
+import com.gunpang.ui.common.BackgroundWrapper
 import com.gunpang.ui.landing.Loading
 import com.gunpang.ui.theme.Gray600
 import com.gunpang.ui.theme.Navy500
@@ -48,12 +49,20 @@ fun MainScreen(
         watchAvatarViewModel.init()
         Log.d("테스트", watchAvatarViewModel.status)
     }
-    GunpangScreenWrapper {
-        if(isAvatarInfoConfigured(watchAvatarViewModel))
-            MainSwipe( mainPagerState, coroutineScope , navController ,watchAvatarViewModel, exerciseViewModel)
-        else
-            Loading()
-    }
+        if(isAvatarInfoConfigured(watchAvatarViewModel)){
+                    MainSwipe(
+                    mainPagerState,
+                    coroutineScope,
+                    navController,
+                    watchAvatarViewModel,
+                    exerciseViewModel
+                )
+                }
+        else{
+            GunpangScreenWrapper {
+                Loading()
+            }
+        }
 }
 
 fun isAvatarInfoConfigured(
@@ -81,7 +90,7 @@ fun MainSwipe(
     Column(
         //modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        ) {
 
 
             HorizontalPager(

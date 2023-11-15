@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.domain.watch.WatchAvatarViewModel
+import com.gunpang.ui.common.BackgroundWrapper
 import com.gunpang.ui.theme.Gray300
 import com.gunpang.ui.theme.Green500
 import kotlinx.coroutines.CoroutineScope
@@ -43,38 +44,34 @@ fun AvatarScreen(
 ){
 
     var progress by remember { mutableStateOf(watchAvatarViewModel.healthPoint) } // Initial progress value (0.5 = 50%)
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = watchAvatarViewModel.getBackGround()),
-            contentDescription = "watch background",
-            contentScale = ContentScale.Fit
-        )
-        /*ProgressBar*/
-        LinearProgressIndicator(
-            progress = progress,
-            color = Green500,
-            trackColor = Gray300,
-            modifier = Modifier
-                .padding(8.dp)
-                .height(12.dp)
-                .width(107.dp)
-                .clip(RoundedCornerShape(size = 100.dp))
-        )
-        Spacer(modifier = Modifier.height(6.dp))
-        /*Avatar*/
-        Image(
-            painter = painterResource(id = watchAvatarViewModel.avatarTypeId.imageId), // 이미지 리소스 변경 필요
-            contentDescription = null,
-            modifier = Modifier
-                .size(96.dp)
-                .clickable {
-                    navController.navigate(WatchNavItem.TodayHistory.route)
-                }
-        )
+    BackgroundWrapper(watchAvatarViewModel = watchAvatarViewModel) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            /*ProgressBar*/
+            LinearProgressIndicator(
+                progress = progress,
+                color = Green500,
+                trackColor = Gray300,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .height(12.dp)
+                    .width(107.dp)
+                    .clip(RoundedCornerShape(size = 100.dp))
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            /*Avatar*/
+            Image(
+                painter = painterResource(id = watchAvatarViewModel.avatarTypeId.imageId), // 이미지 리소스 변경 필요
+                contentDescription = null,
+                modifier = Modifier
+                    .size(96.dp)
+                    .clickable {
+                        navController.navigate(WatchNavItem.TodayHistory.route)
+                    }
+            )
+        }
     }
 }
