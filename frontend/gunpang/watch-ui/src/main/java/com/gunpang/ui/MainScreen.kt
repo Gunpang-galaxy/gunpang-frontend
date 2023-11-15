@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.gunpang.common.code.AvatarStatusCode
 import com.gunpang.domain.watch.WatchAvatarViewModel
 import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.ui.common.GunpangScreenWrapper
@@ -60,7 +61,8 @@ fun isAvatarInfoConfigured(
     watchAvatarViewModel: WatchAvatarViewModel
 ): Boolean {
     //TODO: 아바타 어떤 정보가 필요한지
-    if(watchAvatarViewModel.status.isNotBlank()){
+    if(!watchAvatarViewModel.status.isNullOrBlank()
+        && AvatarStatusCode.fromString(watchAvatarViewModel.status) == AvatarStatusCode.ALIVE){
         return true
     }
 

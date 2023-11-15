@@ -54,7 +54,6 @@ class WatchLandingViewModel(
 
             if (playerId != "") {
                 login()
-                config()
             }else{
                 checkIfAppInstalled()
             }

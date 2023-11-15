@@ -69,13 +69,17 @@ fun LandingScreen(watchLandingViewModel : WatchLandingViewModel) {
 }
 @Composable
 fun NotConfigued(watchLandingViewModel: WatchLandingViewModel){
+    LaunchedEffect(true){
+        watchLandingViewModel.config()
+    }
     GunpangScreenWrapper {
         Text(
             text = "내가 키울 캐릭터는?\n(터치해서 앱에서 뽑아보세요)",
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-                .clickable{
-                          watchLandingViewModel.config()
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    watchLandingViewModel.config()
                 },
             fontFamily = galmuri,
             fontSize = 20.sp,

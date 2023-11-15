@@ -55,6 +55,10 @@ class LandingViewModel(
     var allConnectedNodes: List<Node>? = null // 핸드폰과 연결된 wearable 기기의 수
     private var playerId by mutableStateOf("")
 
+    init {
+        registerWearable()
+    }
+
     // [회원 관리 관련 코드 START]
     // 건팡 로그인
     fun login() {
