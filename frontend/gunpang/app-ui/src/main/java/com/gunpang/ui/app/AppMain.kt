@@ -104,8 +104,8 @@ fun AppMain(
                     }
 
                     InitCode.NOT_LOGIN -> { // 로그인 되지 않은 상태
-                        Login(
-                            navController = rememberNavController(),
+                        AppNavGraph(
+                            startDestination = AppNavItem.Login.routeName,
                             landingViewModel = landingViewModel
                         )
                     }
