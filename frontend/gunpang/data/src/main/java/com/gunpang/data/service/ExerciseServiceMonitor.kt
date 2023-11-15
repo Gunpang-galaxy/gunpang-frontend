@@ -33,7 +33,8 @@ class ExerciseServiceMonitor @Inject constructor(
         )
     )
     // Heart Data Socket Send
-    private val GUNPANG_SOCKET_URL = "ws://10.0.2.2:8180/live/bigdata/watch-data-to-server/websocket"
+//    private val GUNPANG_SOCKET_URL = "ws://10.0.2.2:8180/live/bigdata/watch-data-to-server/websocket"
+    private val GUNPANG_SOCKET_URL = "ws://43.202.219.160:8180/live/bigdata/watch-data-to-server/websocket"
 //    private val client = OkHttpClient()
 //    private lateinit var ws: WebSocket
     private lateinit var stompClient: StompClient
