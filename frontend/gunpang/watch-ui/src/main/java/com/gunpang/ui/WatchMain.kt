@@ -27,6 +27,7 @@ import com.gunpang.ui.exercise.afterExercise.AfterExercise
 import com.gunpang.ui.exercise.onExercise.OnExercise
 import com.gunpang.ui.food.selectFood.SelectFoodScreen
 import com.gunpang.ui.landing.LandingScreen
+import com.gunpang.ui.sleep.recordSleep.RecordSleepScreen
 import java.time.Duration
 
 @Composable
@@ -46,7 +47,7 @@ fun WatchMain(watchLandingViewModel: WatchLandingViewModel) {
 @Composable
 fun WatchMainNavigation() {
     val navController = rememberSwipeDismissableNavController()
-    val pageCount by remember { mutableIntStateOf(3) }
+    val pageCount by remember { mutableIntStateOf(4) }
     val mainPagerState = rememberPagerState(initialPage = 1,pageCount={pageCount})
     val coroutineScope = rememberCoroutineScope()
 
@@ -117,6 +118,16 @@ fun WatchMainNavigation() {
         // SelectFood
         composable(route=WatchNavItem.SelectFood.route){
             SelectFoodScreen(
+                mainPagerState,
+                coroutineScope,
+                navController,
+            )
+        }
+
+        /** 수면 **/
+        // RecordSleep
+        composable(route=WatchNavItem.RecordSleep.route){
+            RecordSleepScreen(
                 mainPagerState,
                 coroutineScope,
                 navController,

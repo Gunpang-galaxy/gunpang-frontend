@@ -27,6 +27,7 @@ import com.gunpang.ui.food.FoodScreen
 import com.gunpang.ui.avatar.AvatarScreen
 import com.gunpang.ui.common.BackgroundWrapper
 import com.gunpang.ui.landing.Loading
+import com.gunpang.ui.sleep.SleepScreen
 import com.gunpang.ui.theme.Gray600
 import com.gunpang.ui.theme.Navy500
 import com.tbuonomo.viewpagerdotsindicator.compose.DotsIndicator
@@ -87,7 +88,7 @@ fun MainSwipe(
     watchAvatarViewModel: WatchAvatarViewModel,
     exerciseViewModel: ExerciseViewModel
 ){
-    val pageCount by remember { mutableIntStateOf(3) }
+    val pageCount by remember { mutableIntStateOf(4) }
     val pagerState = rememberPagerState(initialPage = 1,pageCount={pageCount})
     Column(
         //modifier = Modifier.fillMaxSize(),
@@ -104,6 +105,7 @@ fun MainSwipe(
                     0 -> ExerciseScreen(mainPagerState, coroutineScope, navController)
                     1 -> AvatarScreen(mainPagerState, coroutineScope, navController,watchAvatarViewModel)
                     2 -> FoodScreen(mainPagerState, coroutineScope, navController)
+                    3 -> SleepScreen(mainPagerState, coroutineScope, navController)
                 }
             }
 

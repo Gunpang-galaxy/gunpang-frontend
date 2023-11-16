@@ -5,6 +5,7 @@ import com.gunpang.common.code.MealRecordCode
 import com.gunpang.data.api.Api
 import com.gunpang.data.api.TodayHistoryApi
 import com.gunpang.data.model.request.FoodReqDto
+import com.gunpang.data.model.request.SleepDataReqDto
 import com.gunpang.data.model.response.TodayRecordResDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -33,6 +34,18 @@ class TodayRecordRepository (
         Log.d("TODAY_RECORD_REPO", "api 시작 전")
         val response = api.watchRecordFood(foodType)
         Log.d("TODAY_RECORD_REPO", response.toString())
+        if(response.code()==201){
+            emit(true)
+        }else{
+            emit(false)
+        }
+
+    }
+
+    fun updateTodaySleepRecord(sleepDataReqDto: SleepDataReqDto):Flow<Boolean> = flow{
+        Log.d("TODAY_SLEEP_RECORD_REPO", "api 시작 전")
+        val response = api.watchRecordSleep(sleepDataReqDto)
+        Log.d("TODAY_SLEEP_RECORD_REPO", response.toString())
         if(response.code()==201){
             emit(true)
         }else{
