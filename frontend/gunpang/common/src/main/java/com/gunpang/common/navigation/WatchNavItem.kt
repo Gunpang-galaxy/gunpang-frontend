@@ -18,4 +18,7 @@ sealed class WatchNavItem(val route: String) {
     /** 음식 **/
     object SelectFood: WatchNavItem("select-food")
 
+    /** 수면 **/
+    object RecordSleep: WatchNavItem("record-sleep")
+
 }
