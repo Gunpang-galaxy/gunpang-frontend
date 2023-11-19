@@ -18,11 +18,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.gunpang.data.manager.AppHealthConnectManager
 import com.gunpang.data.model.request.BodyCompositionApiReqDto
+import com.gunpang.data.model.request.SleepHealthConnectReqDto
 import com.gunpang.data.repository.BodyCompositionRepository
+import com.gunpang.data.repository.TodayRecordRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.temporal.ChronoUnit
 import java.util.UUID
@@ -34,8 +37,8 @@ class AppHealthViewModel(
         HealthPermission.getReadPermission(SleepSessionRecord::class),
         HealthPermission.getReadPermission(WeightRecord::class),
         HealthPermission.getReadPermission(BodyFatRecord::class),
-        HealthPermission.getReadPermission(BodyWaterMassRecord::class),
-        HealthPermission.getReadPermission(BoneMassRecord::class)
+//        HealthPermission.getReadPermission(BodyWaterMassRecord::class),
+//        HealthPermission.getReadPermission(BoneMassRecord::class)
     )
 
     // 체중 정보 list
@@ -43,8 +46,8 @@ class AppHealthViewModel(
         private set
 
     // 수면 정보 list
-//    var readingSleepList: MutableState<List<Instant>>  = mutableStateOf(listOf())
-//        private set
+    var readingSleepList: MutableState<List<Instant>>  = mutableStateOf(listOf())
+        private set
 
     // 체지방량 정보 list
     var readingBodyFat: MutableState<Double> = mutableDoubleStateOf(0.0)
@@ -75,22 +78,24 @@ class AppHealthViewModel(
         }
     }
     private suspend fun readAssociatedSessionData() {
-//        readSleepInputs()
+        //readSleepInputs()
         registerBodyComposition()
+        registerSleepByHealthConnect()
 //        readBodyFatInput()
 //        readWeightInput()
 //        readBodyWaterMassInput()
 //        readBoneMassInput()
     }
-//    private suspend fun readSleepInputs(){
-//        val yesterdayStartOfDay = ZonedDateTime.now().minusDays(1).truncatedTo(ChronoUnit.DAYS)
-//        val now = Instant.now()
-//        //val endOfWeek = startOfDay.toInstant().plus(7, ChronoUnit.DAYS)
-//        //이거 기간 조정해서 써보기
-//        readingSleepList.value = appHealthConnectManager.readSleepInputs(yesterdayStartOfDay.toInstant(), now)
-//        Log.d("[reading Sleep List]",
-//            "${readingSleepList.value.forEach { it -> it.toString()}}")
-//    }
+    private suspend fun readSleepInputs(): List<Instant> {
+        val yesterdayStartOfDay = ZonedDateTime.now().minusDays(1).truncatedTo(ChronoUnit.DAYS)
+        val now = Instant.now()
+        //val endOfWeek = startOfDay.toInstant().plus(7, ChronoUnit.DAYS)
+        //이거 기간 조정해서 써보기
+        readingSleepList.value = appHealthConnectManager.readSleepInputs(yesterdayStartOfDay.toInstant(), now)
+        Log.d("[reading Sleep List]",
+            "${readingSleepList.value.forEach { it -> it.toString()}}")
+        return readingSleepList.value
+    }
 
     private suspend fun readBodyFatInput(): Double {
         val oneWeekAgoStartOfDay = ZonedDateTime.now().minusWeeks(1).truncatedTo(ChronoUnit.DAYS)
@@ -135,6 +140,7 @@ class AppHealthViewModel(
 //    }
 
     private val bodyCompositionRepository = BodyCompositionRepository()
+    private val todayRecordRepository = TodayRecordRepository()
 
     suspend fun registerBodyComposition() {
         val fatMassPct: Double = readBodyFatInput()
@@ -143,6 +149,22 @@ class AppHealthViewModel(
         Log.d("registerBodyComposition","registerBodyComposition");
         viewModelScope.launch {
             bodyCompositionRepository.registerBodyComposition(bodyCompositionApiReqDto = bodyCompositionApiReqDto)
+                .catch {  }
+                .collect {
+                }
+        }
+    }
+
+    suspend fun registerSleepByHealthConnect() {
+        val sleepAt: String = readSleepInputs().get(0).plus(9, ChronoUnit.HOURS).toString()
+        val awakeAt: String =readSleepInputs().get(1).plus(9, ChronoUnit.HOURS).toString()
+
+//        val recordDate: String = Instant.now().plus(9, ChronoUnit.HOURS).toString()
+        val recordDate: String = LocalDate.now().toString()
+        val sleepHealthConnectReqDto = SleepHealthConnectReqDto(sleepAt=sleepAt,awakeAt=awakeAt, recordDate = recordDate)
+        Log.d("registerSleepByHealthConnect","registerBodyComposition");
+        viewModelScope.launch {
+            todayRecordRepository.registerSleepByHealthConnect(sleepHealthConnectReqDto = sleepHealthConnectReqDto)
                 .catch {  }
                 .collect {
                 }
