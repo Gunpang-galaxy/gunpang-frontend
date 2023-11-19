@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import com.gunpang.domain.app.AppViewModel
+import com.gunpang.data.manager.AppHealthConnectManager
 import com.gunpang.ui.app.common.BottomNavBar
 import com.gunpang.ui.app.common.ContentsNoRecord
 import com.gunpang.ui.app.common.TopBar
@@ -19,6 +19,7 @@ import com.gunpang.ui.app.common.TopBar
 @Composable
 fun BodyCompositionScreen(
     navController: NavController,
+    healthConnectManager: AppHealthConnectManager,
 ) {
     Scaffold(
         topBar = {

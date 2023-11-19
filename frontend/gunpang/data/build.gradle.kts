@@ -49,7 +49,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.6.4")
 
     //health 관련 라이브러리
-    implementation ("androidx.health:health-services-client:1.0.0-beta02")
+    implementation ("androidx.health:health-services-client:1.1.0-alpha01")
+    implementation ("androidx.health.connect:connect-client:1.1.0-alpha06")
+
     //hilt 라이브러리
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
@@ -57,6 +59,10 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-service:2.6.2")
 
+    // compose runtime
+    implementation("androidx.compose.runtime:runtime:1.5.4")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.5.4")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

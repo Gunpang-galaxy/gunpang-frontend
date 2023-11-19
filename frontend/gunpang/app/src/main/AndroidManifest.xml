@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER"
+        tools:ignore="ProtectedPermissions" />
+    <!-- 헬스 커넥트 권한 부여 -->
+    <uses-permission android:name="android.permission.health.READ_SLEEP" />
+<!--    <uses-permission android:name="androidx.health.permission.SleepSession.READ" />-->
+    <uses-permission android:name="android.permission.health.READ_WEIGHT" />
+<!--    <uses-permission android:name="androidx.health.permission.READ_WEIGHT" />-->
+    <uses-permission android:name="android.permission.health.READ_BODY_FAT" />
+<!--    <uses-permission android:name="androidx.health.permission.READ_BODY_FAT" />-->
+    <uses-permission android:name="android.permission.health.READ_BODY_WATER_MASS" />
+<!--    <uses-permission android:name="androidx.health.permission.READ_BODY_WATER_MASS" />-->
+    <uses-permission android:name="android.permission.health.READ_BONE_MASS" />
+
 
     <application
+        android:name=".AppDataApplication"
+        tools:replace="android:name"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Gunpang">
+        android:theme="@style/Theme.Gunpang"
+        android:enableOnBackInvokedCallback="true"
+        >
 
         <activity
             android:name=".MainActivity"
@@ -18,8 +36,17 @@
             android:theme="@style/Theme.Gunpang">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- intent filter to handle permission rationale intent -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE"/>
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
             </intent-filter>
         </activity>
 
@@ -65,6 +92,15 @@
         <meta-data android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/game_services_project_id"/>
 
+        <!-- Required to specify which Health Connect permissions the app can request -->
+        <meta-data
+            android:name="health_permissions"
+            android:resource="@array/health_permissions" />
+
     </application>
 
+    <!-- declare Health Connect visibility -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
 </manifest>

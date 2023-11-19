@@ -1,5 +1,6 @@
 package com.gunpang.ui.app.screen.main.composable
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -29,14 +31,13 @@ import com.gunpang.domain.entity.AppAvatarDeadContent
 import com.gunpang.domain.entity.AppAvatarGraduatedContent
 import com.gunpang.ui.theme.Gray900
 import com.gunpang.ui.theme.gmarketsansBold
-import java.time.LocalDate
 
 @Composable
 fun AvatarTodayInfo(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(),
-    contents : AppAvatarAliveContent
+    contents: AppAvatarAliveContent
 ){
     Box(
         modifier  = modifier.padding(top = 60.dp),
