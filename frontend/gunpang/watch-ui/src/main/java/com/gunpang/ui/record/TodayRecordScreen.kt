@@ -100,11 +100,11 @@ fun TodayRecordScreen(
                 /*TODO: 아침, 점심, 저녁*/
             }
             item { WatchChip(label = "수면 시간"){
-                Text(text = watchRecordViewModel.sleepTime, fontFamily = galmuri, fontSize = 25.sp)
+                Text(text = watchRecordViewModel.sleepTime, fontFamily = galmuri, fontSize = 22.sp, maxLines=1)
                 }
             }
             item { WatchChip(label = "운동 시간"){
-                    Text(text = watchRecordViewModel.exerciseTime, fontFamily = galmuri, fontSize = 25.sp)
+                    Text(text = watchRecordViewModel.exerciseTime, fontFamily = galmuri, fontSize = 22.sp, maxLines=1)
                 }
             }
 

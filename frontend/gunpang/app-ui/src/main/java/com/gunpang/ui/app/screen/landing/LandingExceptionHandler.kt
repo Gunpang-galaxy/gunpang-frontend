@@ -113,7 +113,7 @@ fun WatchAppNotInstalledException(
     LandingExceptionHandler(
         errorMessage = "갤럭시워치에\n건팡을 설치해주세요",
         explanation = "갤럭시워치에 건팡이\n설치되어 있는지 확인해주세요",
-        pageNavigateText = "워치에 앱 설치하기",
+        pageNavigateText = "워치에 앱 설치",
         onClick = {
             landingViewModel.requestWearableAppInstall()
             navController.navigate(AppNavItem.AppMain.routeName)
