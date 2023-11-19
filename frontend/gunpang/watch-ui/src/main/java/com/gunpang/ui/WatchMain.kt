@@ -67,7 +67,8 @@ fun WatchMainNavigation() {
                 coroutineScope,
                 navController,
                 watchAvatarViewModel,
-                exerciseViewModel
+                exerciseViewModel,
+                watchRecordViewModel
             )
         }
         /** 히스토리 **/

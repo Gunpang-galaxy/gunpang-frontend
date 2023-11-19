@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +21,9 @@ import androidx.navigation.NavHostController
 import androidx.wear.compose.material.Text
 import com.gunpang.common.R.drawable.*
 import com.gunpang.common.navigation.WatchNavItem
+import com.gunpang.domain.watch.WatchRecordViewModel
 import com.gunpang.ui.common.WatchButton
+import com.gunpang.ui.common.WatchChip
 import com.gunpang.ui.theme.galmuri
 import kotlinx.coroutines.CoroutineScope
 
@@ -30,8 +33,12 @@ import kotlinx.coroutines.CoroutineScope
 fun SleepScreen(
     pagerState: PagerState,
     coroutineScope: CoroutineScope,
-    navController: NavHostController
+    navController: NavHostController,
+    watchRecordViewModel: WatchRecordViewModel
 ) {
+    LaunchedEffect(true){
+        watchRecordViewModel.init()
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -54,8 +61,14 @@ fun SleepScreen(
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        WatchButton(text = "언제 잤어?") {
-            navController.navigate(WatchNavItem.RecordSleep.route)
+        if(watchRecordViewModel.sleepTime == "00시00분") {
+            WatchButton(text = "언제 잤어?") {
+                navController.navigate(WatchNavItem.RecordSleep.route)
+            }
+        }else{
+            WatchChip(label = "수면 시간"){
+                Text(text = watchRecordViewModel.sleepTime, fontFamily = galmuri, fontSize = 21.sp)
+            }
         }
     }
 
