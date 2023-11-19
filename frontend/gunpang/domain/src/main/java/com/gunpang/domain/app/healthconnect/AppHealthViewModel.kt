@@ -156,6 +156,7 @@ class AppHealthViewModel(
     }
 
     suspend fun registerSleepByHealthConnect() {
+        if(readSleepInputs().size <= 1) return
         val sleepAt: String = readSleepInputs().get(0).plus(9, ChronoUnit.HOURS).toString()
         val awakeAt: String =readSleepInputs().get(1).plus(9, ChronoUnit.HOURS).toString()
 
