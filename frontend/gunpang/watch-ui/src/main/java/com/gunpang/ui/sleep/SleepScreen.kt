@@ -61,7 +61,7 @@ fun SleepScreen(
 
         Spacer(modifier = Modifier.height(6.dp))
 
-        if(watchRecordViewModel.sleepTime == "00시00분") {
+        if(watchRecordViewModel.sleepTime == "00시간 00분") {
             WatchButton(text = "언제 잤어?") {
                 navController.navigate(WatchNavItem.RecordSleep.route)
             }
