@@ -31,8 +31,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
 import com.gunpang.data.repository.DataApplicationRepository
-import com.gunpang.domain.app.AppViewModel
-import com.gunpang.domain.app.AppViewModelFactory
 import com.gunpang.domain.app.landing.LandingViewModel
 import com.gunpang.domain.app.landing.LandingViewModelFactory
 import com.gunpang.ui.app.AppMain
@@ -43,6 +41,7 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     companion object {
         private const val CAPABILITY_WEAR_APP = "watch_gunpang"
         private const val PLAY_STORE_APP_URI = "market://details?id=com.gunpang"
+
     }
 
     // 모바일-워치 간 연결
@@ -61,9 +60,9 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
     private lateinit var landingViewModelFactory: LandingViewModelFactory
     private lateinit var landingViewModel: LandingViewModel
 
-    // 앱 ViewModel -> Factory로 관리
-    private lateinit var appViewModelFactory: AppViewModelFactory
-    private lateinit var appViewModel: AppViewModel
+    // 헬스 커넥트 앱 ViewModel -> Factory로 관리
+//    private lateinit var appHealthViewModelFactory: AppHealthViewModelFactory
+//    private lateinit var appHealthViewModel: AppHealthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,13 +100,20 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
             ViewModelProvider(this@MainActivity, landingViewModelFactory)[LandingViewModel::class.java]
 
 
-        // 앱 ViewModel (전역으로 관리하는지 확인 필요)
-        appViewModelFactory = AppViewModelFactory(this.application)
-        appViewModel =
-            ViewModelProvider(this@MainActivity, appViewModelFactory)[AppViewModel::class.java]
+
+        // 헬스 커넥트 API
+        val healthConnectManager = (application as AppDataApplication).healthConnectManager
+
+        // 헬스 ViewModel (전역으로 관리하는지 확인 필요)
+//        appHealthViewModelFactory = AppHealthViewModelFactory(healthConnectManager, this.application)
+//        appHealthViewModel =
+//            ViewModelProvider(this@MainActivity, appHealthViewModelFactory)[AppHealthViewModel::class.java]
 
         setContent {
-            AppMain(landingViewModel = landingViewModel)
+            AppMain(
+                landingViewModel = landingViewModel,
+                healthConnectManager = healthConnectManager,
+                )
         }
 
     }
@@ -201,6 +207,14 @@ class MainActivity : ComponentActivity(), CapabilityClient.OnCapabilityChangedLi
         }
     }
     // [로그인 관련 코드 END]
+
+    // [헬스 커넥트 관련 코드 START]
+//    fun AppHealthGetPermissions(){
+//        val needPermissions = listOf{
+//            Manifest.permission.
+//        }
+//    }
+    // [헬스 커넥트 관련 코드 END]
 
     // [웨어러블 관련 코드 START]
     private fun connected() {

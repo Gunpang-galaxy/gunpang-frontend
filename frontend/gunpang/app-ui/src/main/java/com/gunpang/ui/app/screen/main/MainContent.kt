@@ -1,7 +1,6 @@
 package com.gunpang.ui.app.screen.main
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,11 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gunpang.common.code.AvatarStatusCode
+import com.gunpang.data.manager.AppHealthConnectManager
 import com.gunpang.domain.app.avatar.AvatarViewModel
-import com.gunpang.domain.entity.AppAvatarAliveContent
 import com.gunpang.ui.app.screen.main.composable.AvatarGoal
 import com.gunpang.ui.app.screen.main.composable.AvatarInfo
 import com.gunpang.ui.app.screen.main.composable.AvatarTodayInfo
@@ -25,8 +23,9 @@ fun MainContent(
     modifier: Modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight(),
-    avatarViewModel: AvatarViewModel
-    ){
+    avatarViewModel: AvatarViewModel,
+    healthConnectManager: AppHealthConnectManager
+){
     Box(
         modifier = Modifier
         .fillMaxSize(),
@@ -64,7 +63,9 @@ fun MainContent(
             ){
                 when{
                     status == AvatarStatusCode.ALIVE ->
-                        AvatarTodayInfo(contents = avatarViewModel.avatarAliveContents)
+                        AvatarTodayInfo(
+                            contents = avatarViewModel.avatarAliveContents
+                        )
                     status == AvatarStatusCode.DEAD ->
                         FinishedAvatarInfo(
                             statusCode = status,

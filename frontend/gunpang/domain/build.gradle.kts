@@ -59,6 +59,9 @@ dependencies {
     //원격 함수 조정
     implementation("androidx.wear:wear-remote-interactions:1.0.0")
 
+    // health connect
+    implementation ("androidx.health.connect:connect-client:1.1.0-alpha06")
+
     // CapabilityClient
     implementation("com.google.android.gms:play-services-wearable:18.1.0")
     implementation("androidx.wear:wear-phone-interactions:1.0.1")

@@ -82,7 +82,10 @@ dependencies {
     implementation ("com.google.android.gms:play-services-wearable:18.1.0")
 
     // health connect
-    implementation ("androidx.health.connect:connect-client:1.0.0-alpha07")
+    implementation ("androidx.health.connect:connect-client:1.1.0-alpha06")
+    //implementation ("androidx.health.connect.client:1.0.0-alpha11")
+    // samsung health (연동 X)
+    // implementation ("com.samsung.android.sdk.healthdata:1.5.0")
 
     // test
     testImplementation("junit:junit:4.13.2")
