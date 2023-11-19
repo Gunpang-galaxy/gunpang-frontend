@@ -60,19 +60,19 @@ class AppHealthConnectManager (private val context: Context) {
     /**
      * 지난 start - end일 동안의 수면 기록을 들고옮
      */
-//    suspend fun readSleepInputs(start: Instant, end: Instant) : List<Instant> {
-//        val request = ReadRecordsRequest(
-//            recordType = SleepSessionRecord::class,
-//            timeRangeFilter = TimeRangeFilter.between(start, end)
-//        )
-//        val response = healthConnectClient.readRecords(request)
-//        if(response.records.isNotEmpty()) {
-//            Log.d("[readSleepInputsStartTime]", response.records.last().startTime.toString())
-//            Log.d("[readSleepInputsEndTime]", response.records.last().endTime.toString())
-//            return listOf(response.records.last().startTime, response.records.last().endTime)
-//        }
-//        return listOf(Instant.now())
-//    }
+    suspend fun readSleepInputs(start: Instant, end: Instant) : List<Instant> {
+        val request = ReadRecordsRequest(
+            recordType = SleepSessionRecord::class,
+            timeRangeFilter = TimeRangeFilter.between(start, end)
+        )
+        val response = healthConnectClient.readRecords(request)
+        if(response.records.isNotEmpty()) {
+            Log.d("[readSleepInputsStartTime]", response.records.last().startTime.toString())
+            Log.d("[readSleepInputsEndTime]", response.records.last().endTime.toString())
+            return listOf(response.records.last().startTime, response.records.last().endTime)
+        }
+        return listOf(Instant.now())
+    }
 
 
     suspend fun readWeightInputs(start: Instant, end: Instant): Double{

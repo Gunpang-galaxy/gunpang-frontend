@@ -3,15 +3,20 @@ package com.gunpang.data.repository
 import android.util.Log
 import com.gunpang.common.code.MealRecordCode
 import com.gunpang.data.api.Api
+import com.gunpang.data.api.BodyCompositionApi
 import com.gunpang.data.api.TodayHistoryApi
+import com.gunpang.data.model.request.BodyCompositionApiReqDto
 import com.gunpang.data.model.request.FoodReqDto
 import com.gunpang.data.model.request.SleepDataReqDto
+import com.gunpang.data.model.request.SleepHealthConnectReqDto
 import com.gunpang.data.model.response.TodayRecordResDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.io.IOException
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.jvm.Throws
 
 class TodayRecordRepository (
     private val api : TodayHistoryApi =Api.getInstance().create(TodayHistoryApi::class.java)
@@ -52,5 +57,19 @@ class TodayRecordRepository (
             emit(false)
         }
 
+    }
+
+    @Throws(IOException::class)
+    fun registerSleepByHealthConnect(sleepHealthConnectReqDto: SleepHealthConnectReqDto): Flow<Unit> = flow {
+        Log.d("sleepHealthConnectReqDto",sleepHealthConnectReqDto.toString())
+        val response = api.watchRecordSleepFromHealthConnect(sleepHealthConnectReqDto)
+        if (response.code() == 201){
+            Log.d("[registerSleepByHealthConnect]", "registerSleepByHealthConnectSuccess")
+        } else {
+            Log.d("registerSleepByHealthConnectErrorBody",response.errorBody().toString())
+            Log.d("registerSleepByHealthConnectMessage",response.message().toString())
+            Log.d("registerSleepByHealthConnectCode",response.code().toString())
+            Log.d("[registerSleepByHealthConnect]", "registerSleepByHealthConnectFail")
+        }
     }
 }

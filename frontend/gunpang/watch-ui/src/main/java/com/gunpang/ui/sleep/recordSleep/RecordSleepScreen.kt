@@ -136,7 +136,7 @@ fun RecordSleepScreen(
                 modifier = Modifier.size(20.dp)
             )}
             item {
-                WatchButton(
+              WatchButton(
                     text = "기록",
                     onClick = {
                         timeAvailable(startTime, startMinute) && timeAvailable(

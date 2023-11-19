@@ -2,6 +2,7 @@ package com.gunpang.data.api
 
 import com.gunpang.common.code.MealRecordCode
 import com.gunpang.data.model.request.SleepDataReqDto
+import com.gunpang.data.model.request.SleepHealthConnectReqDto
 import com.gunpang.data.model.response.TodayRecordResDto
 import retrofit2.Response
 import retrofit2.http.Body
@@ -17,4 +18,7 @@ interface TodayHistoryApi {
 
     @POST("records/sleep")
     suspend fun watchRecordSleep(@Body sleepDataReqDto : SleepDataReqDto) : Response<String>
+
+    @POST("records/sleep/samsung")
+    suspend fun watchRecordSleepFromHealthConnect(@Body sleepHealthConnectReqDto: SleepHealthConnectReqDto): Response<Unit>
 }

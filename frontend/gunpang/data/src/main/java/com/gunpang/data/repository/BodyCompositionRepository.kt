@@ -17,12 +17,12 @@ class BodyCompositionRepository {
         Log.d("bodyCompositionApiReqDto",bodyCompositionApiReqDto.toString())
         val response = api.registerBodyComposition(bodyCompositionApiReqDto)
         if (response.code() == 201){
-            Log.d("[registerBodyComposition]", "success")
+            Log.d("[registerBodyComposition]", "registerBodyCompositionSuccess")
         } else {
             Log.d("registerBodyCompositionErrorBody",response.errorBody().toString())
             Log.d("registerBodyCompositionMessage",response.message().toString())
             Log.d("registerBodyCompositionCode",response.code().toString())
-            Log.d("[registerBodyComposition]", "fail")
+            Log.d("[registerBodyComposition]", "registerBodyCompositionFail")
         }
     }
 
