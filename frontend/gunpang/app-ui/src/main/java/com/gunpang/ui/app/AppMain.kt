@@ -30,6 +30,7 @@ import com.gunpang.domain.app.avatar.AvatarViewModel
 import com.gunpang.domain.app.calendar.CalendarRecordViewModel
 import com.gunpang.domain.app.healthconnect.AppHealthViewModel
 import com.gunpang.domain.app.healthconnect.AppHealthViewModelFactory
+import com.gunpang.domain.app.bodyComposition.BodyCompositionViewModel
 import com.gunpang.domain.app.landing.GoalViewModel
 import com.gunpang.domain.app.landing.LandingViewModel
 import com.gunpang.domain.app.user.UserViewModel
@@ -109,10 +110,6 @@ fun AppMain(
                  *   - 목표 입력 X: 목표 입력 -> 메인
                  *   - 목표 입력 O: 메인
                  */
-                if (availability != HealthConnectAvailability.INSTALLED) {
-                    // TODO : health connect 안깔려있는 경우 처리
-                    Log.d("[AppMain]", "health connect not installed")
-                }
                 when (landingViewModel.initCode) {
                     InitCode.NOT_CONFIG -> { // 초기 설정 안됨
                         AppNavGraph(
@@ -186,6 +183,7 @@ fun AppNavGraph(
     val calendarRecordViewModel = viewModel<CalendarRecordViewModel>(viewModelStoreOwner)
 
     val goalViewModel = viewModel<GoalViewModel>(viewModelStoreOwner)
+    val bodyCompositionViewModel = viewModel<BodyCompositionViewModel>(viewModelStoreOwner)
     val availability by healthConnectManager.availability
 
     val appHealthViewModel: AppHealthViewModel = viewModel(
@@ -253,7 +251,7 @@ fun AppNavGraph(
             CalenderScreen(navController, calendarRecordViewModel, goalViewModel)
         }
         composable(AppNavItem.BodyCompositionScreen.routeName) {
-            BodyCompositionScreen(navController, healthConnectManager)
+            BodyCompositionScreen(navController, healthConnectManager, bodyCompositionViewModel)
         }
         composable(AppNavItem.AvatarFinishScreen.routeName) {
             AvatarFinishedScreen(navController, avatarViewModel)

@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 
 interface Api {
     companion object {
-        private const val BASE_URL = "https://k9a207.p.ssafy.io/live/api/"
+        private const val BASE_URL = "https://k9a207.p.ssafy.io/api/"
         private const val LOGIN_URL = "${BASE_URL}users"
         private const val TOKEN_RECREATE_URL = "${LOGIN_URL}/jwt/recreate"
         private const val TIMEOUT_LIMIT = 60L // api 연결 시간 제한
