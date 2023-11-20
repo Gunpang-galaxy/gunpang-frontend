@@ -216,12 +216,7 @@ fun CalenderScreen(
                             )
                             Spacer(modifier = Modifier.width(85.dp))
                             Text(
-                                text = when {
-                                    isValidRecord(calendarRecordViewModel) ->
-                                        "${calendarRecordViewModel.exerciseTime}"
-
-                                    else -> ""
-                                },
+                                text = "아래에서 확인",
                                 textAlign = TextAlign.Center,
                                 fontFamily = gmarketsansLight,
                                 fontSize = 20.sp,

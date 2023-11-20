@@ -50,7 +50,7 @@ class BodyCompositionViewModel : ViewModel() {
                 }
                 .collect{data ->
                     updateStates(data)
-                    Log.d("BodyCompositionViewModel",data.toString());
+                    Log.d("BodyCompositionViewModel2",data.toString());
                 }
         }
 

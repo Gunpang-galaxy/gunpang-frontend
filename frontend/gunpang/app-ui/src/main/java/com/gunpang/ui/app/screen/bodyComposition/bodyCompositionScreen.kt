@@ -48,8 +48,10 @@ fun BodyCompositionScreen(
     healthConnectManager: AppHealthConnectManager,
     bodyCompositionViewModel: BodyCompositionViewModel
 ) {
+    LaunchedEffect(true){
+        bodyCompositionViewModel.init()
+    }
 
-    bodyCompositionViewModel.init()
 
     Log.d("BodyCompositionScreen", "화면 진입")
 

@@ -50,7 +50,13 @@ fun SleepTime(defaultHour: String, defaultMinute: String, onHourChange: (Int) ->
             defaultValue = hour,
             onValueChange = {
                 hour = it
-                onHourChange(it.toInt())
+                onHourChange(
+                    if(it.isNullOrBlank()){
+                        0
+                    }else{
+                        it.toInt()
+                    }
+                )
             },
             width = 80,
             rightPadding = 10,
@@ -64,7 +70,12 @@ fun SleepTime(defaultHour: String, defaultMinute: String, onHourChange: (Int) ->
             defaultValue = minute,
             onValueChange = {
                 minute = it
-                onMinuteChange(it.toInt())
+                onMinuteChange(
+                    if(it.isNullOrBlank()){
+                        0
+                    }else{
+                        it.toInt()
+                    })
             },
             width = 80,
             leftPadding = 10,
@@ -112,11 +123,11 @@ fun RecordSleepScreen(
             verticalArrangement = Arrangement.Center
         ) {
             item{
-            SleepTime( // 취침 시간 입력
-                defaultHour = startTime,
-                defaultMinute = startMinute,
-                onHourChange = { startTime = it.toString() }
-            ) { startMinute = it.toString() }
+                SleepTime( // 취침 시간 입력
+                    defaultHour = startTime,
+                    defaultMinute = startMinute,
+                    onHourChange = { startTime = it.toString() }
+                ) { startMinute = it.toString() }
             }
             item {
                 androidx.compose.material3.Text(
@@ -136,7 +147,7 @@ fun RecordSleepScreen(
                 modifier = Modifier.size(20.dp)
             )}
             item {
-              WatchButton(
+                WatchButton(
                     text = "기록",
                     onClick = {
                         timeAvailable(startTime, startMinute) && timeAvailable(
@@ -168,6 +179,3 @@ fun timeAvailable(hour: String, minute: String ): Boolean {
         return false
     }
 }
-
-
-
