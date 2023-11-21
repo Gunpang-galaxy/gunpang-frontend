@@ -22,5 +22,9 @@ enum class DayCode(
             }
             return result
         }
+
+        fun fromKor(kor : String) : DayCode{
+            return values().find { it.kor == kor }!!
+        }
     }
 }

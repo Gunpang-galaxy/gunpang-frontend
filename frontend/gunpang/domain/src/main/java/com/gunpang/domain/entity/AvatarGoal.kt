@@ -13,7 +13,7 @@ data class AvatarGoal(
         sleepStart="",
         sleepEnd="",
         exerciseDay=listOf(),
-        exerciseTime="",
+        exerciseTime="00시간 00분",
         foodGoal="건강한 식사 하기"
     )
 }
