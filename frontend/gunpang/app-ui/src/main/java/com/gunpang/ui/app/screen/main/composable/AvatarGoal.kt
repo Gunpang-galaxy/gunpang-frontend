@@ -63,7 +63,7 @@ fun AvatarGoal(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ){
-            var modifier : Modifier = Modifier.fillMaxWidth(0.55f).height(32.dp)
+            var modifier : Modifier = Modifier.fillMaxWidth(0.6f).height(32.dp)
             Row(
                 modifier = modifier,
                 verticalAlignment = Alignment.CenterVertically,
