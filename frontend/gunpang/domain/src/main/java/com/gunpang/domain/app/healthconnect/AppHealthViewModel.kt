@@ -78,8 +78,9 @@ class AppHealthViewModel(
         }
     }
     private suspend fun readAssociatedSessionData() {
+        Log.d("[readAssociatedSessionData]", "readAssociatedSessionData")
         //readSleepInputs()
-        registerBodyComposition()
+//        registerBodyComposition()
         registerSleepByHealthConnect()
 //        readBodyFatInput()
 //        readWeightInput()

@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
  * BodyComposition 정보를 위한 ViewModel
  */
 class BodyCompositionViewModel : ViewModel() {
-//    var bodyCompositionInfo by mutableStateOf<BodyCompositionInfo>(BodyCompositionInfo())
     var prevWeight by mutableStateOf("0.0")
     var curWeight by mutableStateOf("0.0")
     var prevFatMass by mutableStateOf("0.0")
@@ -66,10 +65,5 @@ class BodyCompositionViewModel : ViewModel() {
         prevBMI = data.prevBMI
         curBMI  = data.curBMI
     }
-
-//    fun init(){
-//        bodyCompositionInfo()
-//    }
-
 
 }

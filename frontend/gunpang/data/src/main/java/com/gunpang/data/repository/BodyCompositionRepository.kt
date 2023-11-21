@@ -29,6 +29,7 @@ class BodyCompositionRepository (
     @Throws(IOException::class)
     fun registerBodyComposition(bodyCompositionApiReqDto: BodyCompositionApiReqDto): Flow<Unit> = flow {
         Log.d("bodyCompositionApiReqDto",bodyCompositionApiReqDto.toString())
+
         val response = api.registerBodyComposition(bodyCompositionApiReqDto)
         if (response.code() == 201){
             Log.d("[registerBodyComposition]", "registerBodyCompositionSuccess")
@@ -39,6 +40,5 @@ class BodyCompositionRepository (
             Log.d("[registerBodyComposition]", "registerBodyCompositionFail")
         }
     }
-
 }
 
