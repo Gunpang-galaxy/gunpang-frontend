@@ -35,8 +35,8 @@ fun MainContent(
         Column(horizontalAlignment = Alignment.CenterHorizontally){
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .weight(weight = 2.5f)
-                .padding(top = 8.dp, bottom = 12.dp),
+                .weight(weight = 3f)
+                .padding(top = 4.dp, bottom = 12.dp),
                 contentAlignment = Alignment.Center
             ){
                 AvatarGoal(
