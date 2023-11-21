@@ -21,4 +21,7 @@ interface TodayHistoryApi {
 
     @POST("records/sleep/samsung")
     suspend fun watchRecordSleepFromHealthConnect(@Body sleepHealthConnectReqDto: SleepHealthConnectReqDto): Response<Unit>
+
+    @POST("records/exercise/complete")
+    suspend fun watchRecordExerciseComplete() : Response<String>
 }

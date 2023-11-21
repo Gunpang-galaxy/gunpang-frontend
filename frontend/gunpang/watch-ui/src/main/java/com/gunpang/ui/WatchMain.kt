@@ -88,7 +88,8 @@ fun WatchMainNavigation() {
                 mainPagerState,
                 coroutineScope,
                 navController,
-                exerciseViewModel
+                exerciseViewModel,
+                watchRecordViewModel
             )
         }
         // AfterExercise

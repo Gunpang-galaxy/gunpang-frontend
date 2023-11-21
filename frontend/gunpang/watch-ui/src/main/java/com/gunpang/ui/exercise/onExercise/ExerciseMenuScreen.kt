@@ -15,12 +15,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.gunpang.common.navigation.WatchNavItem
 import com.gunpang.data.service.SummaryScreenState
+import com.gunpang.domain.watch.WatchRecordViewModel
 import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.ui.common.WatchButton
 
 @Composable
 fun ExerciseMenuScreen(navController: NavHostController,
                        exerciseViewModel: ExerciseViewModel,
+                       watchRecordViewModel: WatchRecordViewModel,
                        onSummary: (SummaryScreenState) -> Unit) {
     val uiState by exerciseViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -48,8 +50,9 @@ fun ExerciseMenuScreen(navController: NavHostController,
             }
         }
 
-        WatchButton(text = "그만하기") {
+        WatchButton(text = "그만하기", onClick = {
             exerciseViewModel.endExercise()
-        }
+            watchRecordViewModel.recordExercise()
+        })
     }
 }
