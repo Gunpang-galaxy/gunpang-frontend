@@ -105,7 +105,7 @@ fun TodayRecordScreen(
             }
             item { WatchChip(label = "운동 시간"){
                     //Text(text = watchRecordViewModel.exerciseTime, fontFamily = galmuri, fontSize = 22.sp, maxLines=1)
-                Text(text = "앱에서 확인", fontFamily = galmuri, fontSize = 22.sp, maxLines=1)
+                Text(text = watchRecordViewModel.exerciseTime, fontFamily = galmuri, fontSize = 22.sp, maxLines=1)
                 }
             }
 

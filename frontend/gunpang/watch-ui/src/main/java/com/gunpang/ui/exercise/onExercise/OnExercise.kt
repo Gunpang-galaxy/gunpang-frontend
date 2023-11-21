@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.gunpang.common.navigation.WatchNavItem
+import com.gunpang.domain.watch.WatchRecordViewModel
 import com.gunpang.domain.watch.exercise.ExerciseViewModel
 import com.gunpang.ui.common.GunpangScreenWrapper
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +26,8 @@ fun OnExercise(
     mainPagerState: PagerState,
     coroutineScope: CoroutineScope,
     navController: NavHostController,
-    exerciseViewModel: ExerciseViewModel
+    exerciseViewModel: ExerciseViewModel,
+    watchRecordViewModel: WatchRecordViewModel
 ) {
     // TODO:  ExerciseMenuScreen, CurrentStatusScreen 으로 이동하기
     val pageCount by remember { mutableIntStateOf(2) }
@@ -45,6 +47,7 @@ fun OnExercise(
                     1 -> ExerciseMenuScreen(
                         navController = navController,
                         exerciseViewModel = exerciseViewModel,
+                        watchRecordViewModel = watchRecordViewModel,
                         onSummary={
                             navController.navigate(WatchNavItem.AfterExercise
                                 .createRoute(it.elapsedTime,it.totalCalories,it.totalDistance))

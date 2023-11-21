@@ -59,6 +59,19 @@ class TodayRecordRepository (
 
     }
 
+    fun updateExerciseRecord():Flow<Boolean> = flow{
+        Log.d("TODAY_RECORD_REPOSITORY", "updateExerciseRecord 함수 시작")
+        val response = api.watchRecordExerciseComplete()
+        response.body()?.let { Log.d("TODAY_RECORD_REPOSITORY", it) }
+        if(response.code()==201){
+            emit(true)
+            Log.d("TODAY_RECORD_REPOSITORY", "updateExerciseRecord 성공")
+        }else{
+            emit(false)
+            Log.d("TODAY_RECORD_REPOSITORY", "updateExerciseRecord 실패")
+        }
+    }
+
     @Throws(IOException::class)
     fun registerSleepByHealthConnect(sleepHealthConnectReqDto: SleepHealthConnectReqDto): Flow<Unit> = flow {
         Log.d("sleepHealthConnectReqDto",sleepHealthConnectReqDto.toString())

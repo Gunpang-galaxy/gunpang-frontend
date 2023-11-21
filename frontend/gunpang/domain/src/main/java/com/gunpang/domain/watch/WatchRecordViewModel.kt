@@ -46,7 +46,17 @@ class WatchRecordViewModel(
         sleepTime  = data.sleepTime
     }
 
-
-
+    fun recordExercise(){
+        viewModelScope.launch(Dispatchers.IO) {
+            // todo: post 실패 시 예외 처리
+            todayRecordRepository.updateExerciseRecord()
+                .catch {
+                    Log.d("WATCH_RECORD_VIEW_MODEL",it.printStackTrace().toString())
+                }.collect{
+                    data -> if(data) Log.d("WATCH_RECORD_VIEW_MODEL", "recordExercise 성공")
+                    else Log.d("WATCH_RECORD_VIEW_MODEL", "recordExercise 실패")
+                }
+        }
+    }
 
 }
