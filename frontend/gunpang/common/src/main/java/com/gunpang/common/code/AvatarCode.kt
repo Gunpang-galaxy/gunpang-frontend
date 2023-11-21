@@ -8,7 +8,9 @@ enum class AvatarCode(
 ) {
     AVATAR_CAT(avatarDefaultName = "냥팡이" ,imageId = R.drawable.avatar_cat),
     AVATAR_CHICK(avatarDefaultName="짹팡이" ,imageId = R.drawable.avatar_chick),
-
+    AVATAR_DOG(avatarDefaultName="멍팡이" ,imageId = R.drawable.avatar_dog),
+    AVATAR_FROG(avatarDefaultName="깨구리" ,imageId = R.drawable.avatar_frog),
+    AVATAR_SEAL(avatarDefaultName = "레오", imageId = R.drawable.avatar_seal),
     AVATAR_NOT_FOUND(avatarDefaultName = "???", imageId = R.drawable.question_mark);
 
     // DB에서 들어온 String값으로 해당 ENUM 객체 반환
