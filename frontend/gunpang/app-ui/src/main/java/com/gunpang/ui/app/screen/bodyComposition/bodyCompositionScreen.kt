@@ -48,10 +48,11 @@ fun BodyCompositionScreen(
     healthConnectManager: AppHealthConnectManager,
     bodyCompositionViewModel: BodyCompositionViewModel
 ) {
+
     LaunchedEffect(true){
+        Log.d("BodyCompositionScreen", "LaunchedEffect")
         bodyCompositionViewModel.init()
     }
-
 
     Log.d("BodyCompositionScreen", "화면 진입")
 
@@ -190,9 +191,9 @@ fun BodyCompositionInfoItemWithPrev(
                         .size(70.dp)
                         .offset(y = 10.dp)
                 )
-                val difference = curValue - prevValue
+                val difference = String.format("%.1f", curValue - prevValue).toDouble()
                 val formattedDifference = getFormattedValue(fieldName, difference.toString())
-                val sign = if (difference >= 0) "+" else "-"
+                val sign = if (difference >= 0) "+" else ""
                 Text(
                     text = "$sign$formattedDifference",
                     fontFamily = gmarketsans,
@@ -238,6 +239,7 @@ fun BodyCompositionInfoItemWithOutPrev(
             color = Gray900,
             fontSize = 20.sp,
         )
+        Spacer(modifier = Modifier.height(15.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -249,16 +251,17 @@ fun BodyCompositionInfoItemWithOutPrev(
                 color = Gray900,
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(end = 20.dp)
+                modifier = Modifier.padding(start = 20.dp)
             )
+
         }
     }
 }
 
 fun getFormattedValue(fieldName: String, value: String): String {
     return when (fieldName) {
-        "체중", "체지방량" -> String.format("%s kg", value)
-        "체지방률" -> String.format("%s %%", value)
+        "체중", "체지방량" -> String.format("%skg", value)
+        "체지방률" -> String.format("%s%%", value)
         "BMI" -> value + "    "
         else -> value
     }
