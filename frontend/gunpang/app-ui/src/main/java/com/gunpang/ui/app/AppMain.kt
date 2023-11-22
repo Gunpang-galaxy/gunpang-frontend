@@ -37,6 +37,7 @@ import com.gunpang.domain.app.user.UserViewModel
 import com.gunpang.ui.app.screen.avatar.AvatarEgg
 import com.gunpang.ui.app.screen.avatar.NameAvatar
 import com.gunpang.ui.app.screen.bodyComposition.BodyCompositionScreen
+import com.gunpang.ui.app.screen.bodyComposition.BodyCompositionRegistration
 import com.gunpang.ui.app.screen.calender.CalenderScreen
 import com.gunpang.ui.app.screen.goal.ExerciseGoal
 import com.gunpang.ui.app.screen.goal.SleepGoal
@@ -221,6 +222,9 @@ fun AppNavGraph(
         composable(AppNavItem.ExerciseGoal.routeName) {
             ExerciseGoal(navController, goalViewModel)
         }
+        composable(AppNavItem.BodyCompositionRegistration.routeName) {
+            BodyCompositionRegistration(navController, appHealthViewModel)
+        }
         composable(AppNavItem.MainScreen.routeName) {
             val permissionGranted by appHealthViewModel.permissionGranted
             val permissions = appHealthViewModel.permissions
@@ -251,7 +255,7 @@ fun AppNavGraph(
             CalenderScreen(navController, calendarRecordViewModel, goalViewModel)
         }
         composable(AppNavItem.BodyCompositionScreen.routeName) {
-            BodyCompositionScreen(navController, healthConnectManager, bodyCompositionViewModel)
+            BodyCompositionScreen(navController, healthConnectManager, bodyCompositionViewModel, appHealthViewModel)
         }
         composable(AppNavItem.AvatarFinishScreen.routeName) {
             AvatarFinishedScreen(navController, avatarViewModel)

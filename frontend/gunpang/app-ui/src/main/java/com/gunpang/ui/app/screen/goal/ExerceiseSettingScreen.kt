@@ -183,7 +183,7 @@ fun ExerciseGoal(
                     minute = minute
                 )
                 if(goalViewModel.setAvatarGoal())
-                    navController.navigate("mainScreen")
+                    navController.navigate("bodyCompositionRegistration")
             }
         )
     }

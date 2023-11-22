@@ -13,6 +13,7 @@ sealed class AppNavItem(
     object NameAvatar: AppNavItem("nameAvatar", "아바타 이름 짓기 화면")
     object SleepGoal: AppNavItem("sleepGoal", "수면 목표 화면")
     object ExerciseGoal: AppNavItem("exerciseGoal", "운동 목표 화면")
+    object BodyCompositionRegistration: AppNavItem("bodyCompositionRegistration", "체성분 정보 등록 화면")
     object MainScreen: AppNavItem("mainScreen", "메인 화면")
     object MyPageScreen: AppNavItem("myPageScreen", "내정보 화면")
     object CalenderScreen: AppNavItem("calenderScreen", "달력 내 기록 화면")

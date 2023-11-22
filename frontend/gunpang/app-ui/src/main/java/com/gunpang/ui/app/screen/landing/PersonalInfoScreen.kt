@@ -267,7 +267,8 @@ fun PersonalInfo(
             enabled = isHeightInfoFilled && isGenderInfoFilled,
             onClick = {
                 personalInfoViewModel.registerPersonalInfo(birthYear, height, gender) // 회원가입 + 개인 정보 등록
-                navController.navigate(AppNavItem.MainScreen.routeName)
+//                navController.navigate(AppNavItem.MainScreen.routeName)
+                navController.navigate(AppNavItem.AvatarEgg.routeName)
             }
         )
     }
