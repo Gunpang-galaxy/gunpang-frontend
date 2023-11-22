@@ -77,6 +77,15 @@ class AppHealthViewModel(
             }
         }
     }
+
+    fun initBodyComposition() {
+        Log.d("AppHealthViewModel", "initBodyComposition")
+        viewModelScope.launch {
+            Log.d("AppHealthViewModel", "viewModelScope.launch")
+            registerBodyComposition()
+        }
+    }
+
     private suspend fun readAssociatedSessionData() {
         Log.d("[readAssociatedSessionData]", "readAssociatedSessionData")
         //readSleepInputs()

@@ -117,7 +117,7 @@ fun AvatarGoal(
                         goal.sleepStart != "" && goal.sleepEnd != "" ->
                             "${goal.sleepStart} - ${goal.sleepEnd}"
                         else ->
-                            "아직 수면 시간 설정 안했어"
+                            "수면 시간 설정 필요"
                     },
                     textAlign = TextAlign.Right,
                     fontFamily = gmarketsansBold,

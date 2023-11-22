@@ -33,8 +33,9 @@ import androidx.navigation.NavController
 import com.gunpang.data.manager.AppHealthConnectManager
 import com.gunpang.common.R
 import com.gunpang.domain.app.bodyComposition.BodyCompositionViewModel
-import com.gunpang.domain.entity.BodyCompositionInfo
+import com.gunpang.domain.app.healthconnect.AppHealthViewModel
 import com.gunpang.ui.app.common.BottomNavBar
+import com.gunpang.ui.app.common.CommonButton
 import com.gunpang.ui.app.common.ContentsNoRecord
 import com.gunpang.ui.app.common.TopBar
 import com.gunpang.ui.theme.Gray900
@@ -46,7 +47,8 @@ import com.gunpang.ui.theme.gmarketsansBold
 fun BodyCompositionScreen(
     navController: NavController,
     healthConnectManager: AppHealthConnectManager,
-    bodyCompositionViewModel: BodyCompositionViewModel
+    bodyCompositionViewModel: BodyCompositionViewModel,
+    appHealthViewModel: AppHealthViewModel
 ) {
 
     LaunchedEffect(true){
@@ -88,6 +90,7 @@ fun BodyCompositionScreen(
                 .height(70.dp)
 
             val showPrevValues = bodyCompositionViewModel.prevValuesExist()
+            val showCurValues = bodyCompositionViewModel.curValuesExist()
 
             if (showPrevValues) {
                 BodyCompositionInfoItemWithPrev(
@@ -114,7 +117,7 @@ fun BodyCompositionScreen(
                     fieldValuePrev = bodyCompositionViewModel.prevBMI,
                     fieldValueCur = bodyCompositionViewModel.curBMI
                 )
-            } else {
+            } else if (showCurValues) {
                 BodyCompositionInfoItemWithOutPrev(
                     modifier = bodyCompositionModifier,
                     fieldName = "체중",
@@ -134,6 +137,20 @@ fun BodyCompositionScreen(
                     modifier = bodyCompositionModifier,
                     fieldName = "BMI",
                     fieldValueCur = bodyCompositionViewModel.curBMI
+                )
+            } else {
+                Spacer(
+                    modifier = Modifier.height(50.dp)
+                )
+                ContentsNoRecord(reason = "체성분 측정을\n해주세요")
+                Spacer(
+                    modifier = Modifier.height(100.dp)
+                )
+                CommonButton(
+                    text = "데이터 가져오기",
+                    onClick = {
+                        appHealthViewModel.initBodyComposition()
+                    }
                 )
             }
         }
@@ -270,4 +287,9 @@ fun getFormattedValue(fieldName: String, value: String): String {
 fun BodyCompositionViewModel.prevValuesExist(): Boolean {
     Log.d("BodyCompositionScreen", "prevValuesExist 확인")
     return prevWeight != "0.0" || prevFatMass != "0.0" || prevFatMassPct != "0.0" || prevBMI != "0.0"
+}
+
+fun BodyCompositionViewModel.curValuesExist(): Boolean {
+    Log.d("BodyCompositionScreen", "curValuesExist 확인")
+    return curWeight != "0.0" || curFatMass != "0.0" || curFatMassPct != "0.0" || curBMI != "0.0"
 }
