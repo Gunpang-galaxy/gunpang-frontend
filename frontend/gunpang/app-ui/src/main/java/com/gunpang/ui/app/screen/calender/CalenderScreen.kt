@@ -185,9 +185,8 @@ fun CalenderScreen(
                     ContentsNoRecord()
                 else {
                     Column(
-                        modifier = Modifier.padding(horizontal = 50.dp) // 좌우에 패딩 추가
+                        modifier = Modifier.padding(horizontal = 50.dp)
                     ) {
-                        //Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = "하루 요약",
                             textAlign = TextAlign.Left,
@@ -196,63 +195,48 @@ fun CalenderScreen(
                             color = Gray900,
                         )
                         Spacer(modifier = Modifier.height(10.dp))
-                        //운동기록 출력
+
+                        // 운동 기록
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = when {
-                                    isValidRecord(calendarRecordViewModel) ->
-                                        "운동"
-
-                                    else -> "00시간 00분"
-                                },
-                                textAlign = TextAlign.Center,
+                                text = "운동",
+                                textAlign = TextAlign.Start,
                                 fontFamily = gmarketsansLight,
                                 fontSize = 20.sp,
                                 color = Gray900,
                             )
-                            Spacer(modifier = Modifier.width(85.dp))
                             Text(
                                 text = "아래에서 확인",
-                                textAlign = TextAlign.Center,
+                                textAlign = TextAlign.End,
                                 fontFamily = gmarketsansLight,
                                 fontSize = 20.sp,
                                 color = Gray900,
                             )
                         }
+
                         Spacer(modifier = Modifier.height(10.dp))
-                        //수면기록 출력
+
+                        // 수면 기록
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            if (calendarRecordViewModel.sleepAt == "-1" && calendarRecordViewModel.awakeAt == "-1")
-                                Spacer(modifier = Modifier.width(10.dp))
                             Text(
-                                text = when {
-                                    isValidRecord(calendarRecordViewModel) ->
-                                        " 수면"
-
-                                    else -> ""
-                                },
-                                textAlign = TextAlign.Center,
+                                text = "수면",
+                                textAlign = TextAlign.Start,
                                 fontFamily = gmarketsansLight,
                                 fontSize = 20.sp,
                                 color = Gray900,
                             )
-                            if (calendarRecordViewModel.sleepAt == "-1" && calendarRecordViewModel.awakeAt == "-1")
-                                Spacer(modifier = Modifier.width(60.dp))
-                            else
-                                Spacer(modifier = Modifier.width(66.dp))
                             Text(
                                 text = when {
-                                    (isValidRecord(calendarRecordViewModel) && calendarRecordViewModel.sleepAt != "-1" && calendarRecordViewModel.awakeAt != "-1") ->
+                                    (isValidRecord(calendarRecordViewModel) &&
+                                            calendarRecordViewModel.sleepAt != "-1" &&
+                                            calendarRecordViewModel.awakeAt != "-1") ->
                                         "${calendarRecordViewModel.sleepAt} - ${calendarRecordViewModel.awakeAt}"
-
                                     else -> "00:00 - 00:00"
                                 },
                                 textAlign = TextAlign.Center,
@@ -261,13 +245,15 @@ fun CalenderScreen(
                                 color = Gray900,
                             )
                         }
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        //식사기록 출력
+
+                        // 식사 기록
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
+
                             Text(
                                 text = when {
                                     isValidRecord(calendarRecordViewModel) -> "식사"
@@ -301,6 +287,7 @@ fun CalenderScreen(
                             )
                         }
                     }
+
                     Spacer(modifier = Modifier.height(10.dp))
                     //운동기록 출력
                     Column(
